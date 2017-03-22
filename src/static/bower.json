@@ -1,0 +1,30 @@
+{
+  "name": "pyflow",
+  "homepage": "https://github.com/gangtao/pyflow",
+  "authors": [
+    "Gang Tao <gang.tao@outlook.com>"
+  ],
+  "description": "",
+  "main": "",
+  "keywords": [
+    "pyflow"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "codemirror": "^5.22.2",
+    "bootstrap": "^3.3.7",
+    "x-editable": "^1.5.1",
+    "json2": "*",
+    "d3": "*",
+    "js-beautify": "*",
+    "jsplumb": "^2.3.2"
+  }
+}

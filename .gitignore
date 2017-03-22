@@ -87,3 +87,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+.DS_*
+src/static/bower_components
