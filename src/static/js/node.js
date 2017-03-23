@@ -1,0 +1,4 @@
+
+function renderNode() {
+	$("#mainUI").empty();
+}
