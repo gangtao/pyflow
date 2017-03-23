@@ -105,7 +105,7 @@
         if (setting.forceCreate || !$this.data('treeView')) {
             var $ul = $("<ul></ul>");
             createTree(data, $ul);
-            $this.addClass('tree well').html($ul);
+            $this.addClass('tree').html($ul);
             $this.append($("<input type='hidden' />").attr("name", setting.selectedIdElementName));
 
             var $hasSubElements = $('li:has(ul)', $this);
