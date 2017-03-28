@@ -16,38 +16,22 @@ function renderFlow() {
 function renderTree() {
     var root = d3.select("#flowTree");
     var panel = addPanel(root, "Nodes");
-    var treeJsonData = [{
-        ItemId: 1,
-        Title: "Parent",
-        Items: [
-            { ItemId: 2, Title: "Inner 1" }, {
-                ItemId: 3,
-                Title: "Inner2",
-                Items: [{ ItemId: 31, Title: "Inner 2 1" },
-                    { ItemId: 32, Title: "Inner 2 2" },
-                    { ItemId: 33, Title: "Inner 2 3" }
-                ]
-            },
-            { ItemId: 4, Title: "Inner 3" }, {
-                ItemId: 5,
-                Title: "Inner 4",
-                Items: [{ ItemId: 51, Title: "Inner 4 1" },
-                    { ItemId: 52, Title: "Inner 4 2" },
-                    { ItemId: 53, Title: "Inner 4 3" }
-                ]
-            }
-
-        ]
-    }];
 
     panel.select(".panel-body").append("div").attr("id", "tree")
-    $('#tree').jsonTree(treeJsonData, {
-                mandatorySelect: true,
-                selectedIdElementName: 'tree',
-                selectedItemId: 'tree'
-            });
 
-    d3.select('#tree').selectAll('li').attr('draggable',true);
+    $.get("/nodes", function(data) {
+        //TODO : handler error
+        /*
+        $('#tree').jsonTree(data, {
+            mandatorySelect: true,
+            selectedIdElementName: 'tree',
+            selectedItemId: 'tree'
+        });
+
+        d3.select('#tree').selectAll('li').attr('draggable', true);
+        */
+        treeview("tree", data);
+    });
 }
 
 function renderCanvas() {
@@ -78,7 +62,7 @@ function renderCanvas() {
     //Add node on drag & drop
     $('#flow-panel').on('drop', function(ev) {
         console.log("A drop happened!");
-        
+
         //avoid event conlict for jsPlumb
         if (ev.target.className.indexOf('_jsPlumb') >= 0) {
             return;
