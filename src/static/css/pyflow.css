@@ -8,13 +8,13 @@
     border-radius: 0.5em;
     opacity: 0.8;
     filter: alpha(opacity=80);
-    width: 7em;
-    height: 5em;
-    line-height: 5em;
+    width: 8em;
+    height: 4em;
+    line-height: 2em;
     text-align: center;
     z-index: 20;
     position: absolute;
-    background-color: #eeeeef;
+    background-color: #eeeeee;
     color: black;
     font-family: helvetica;
     padding: 0.5em;

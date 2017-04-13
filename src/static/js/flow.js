@@ -17,19 +17,9 @@ function renderTree() {
     var root = d3.select("#flowTree");
     var panel = addPanel(root, "Nodes");
 
-    panel.select(".panel-body").append("div").attr("id", "tree")
+    panel.select(".panel-body").append("div").attr("id", "tree");
 
     $.get("/nodes", function(data) {
-        //TODO : handler error
-        /*
-        $('#tree').jsonTree(data, {
-            mandatorySelect: true,
-            selectedIdElementName: 'tree',
-            selectedItemId: 'tree'
-        });
-
-        d3.select('#tree').selectAll('li').attr('draggable', true);
-        */
         treeview("tree", data);
     });
 }
@@ -37,7 +27,7 @@ function renderTree() {
 function renderCanvas() {
     var root = d3.select("#flowCanvas");
     var panel = addPanel(root, "Flow");
-    panel.select(".panel-body").append("div").attr("id", "flow-panel").style("height", "300px").style("width", "100%");
+    panel.select(".panel-body").style("height", "300px").append("div").attr("id", "flow-panel").style("position", "absolute").style("height", "300px").style("width", "100%");
 
     //Initialize JsPlumb
     var color = "#62c462";
@@ -62,7 +52,6 @@ function renderCanvas() {
     //Add node on drag & drop
     $('#flow-panel').on('drop', function(ev) {
         console.log("A drop happened!");
-
         //avoid event conlict for jsPlumb
         if (ev.target.className.indexOf('_jsPlumb') >= 0) {
             return;
@@ -73,7 +62,7 @@ function renderCanvas() {
         var mx = '' + ev.originalEvent.offsetX + 'px';
         var my = '' + ev.originalEvent.offsetY + 'px';
 
-        var uid = "testUID";
+        var uid = "nodeid_" + new Date().getTime();
         var nodeSpec = {};
         nodeSpec.title = "testTitle";
 
@@ -85,8 +74,88 @@ function renderCanvas() {
         ev.preventDefault();
     });
 
-    instance.doWhileSuspended(function() {
-        instance.bind("connection", function(info, originalEvent) {});
+    instance.batch(function() {
+        //instance.bind("connection", function(info, originalEvent) {});
+
+        // declare some common values:
+        var arrowCommon = { foldback: 0.8, fillStyle: color, width: 5 },
+            // use three-arg spec to create two different arrows with the common values:
+            overlays = [
+                ["Arrow", { location: 0.8 }, arrowCommon],
+                ["Arrow", { location: 0.2, direction: -1 }, arrowCommon]
+            ];
+
+        var connectorPaintStyle = {
+                strokeWidth: 2,
+                stroke: "#61B7CF",
+                joinstyle: "round",
+                outlineStroke: "white",
+                outlineWidth: 2
+            },
+            connectorHoverStyle = {
+                strokeWidth: 3,
+                stroke: "#216477",
+                outlineWidth: 5,
+                outlineStroke: "white"
+            },
+            endpointHoverStyle = {
+                fill: "#216477",
+                stroke: "#216477"
+            },
+            sourceEndpoint = {
+                endpoint: "Dot",
+                paintStyle: {
+                    stroke: "#7AB02C",
+                    fill: "transparent",
+                    radius: 7,
+                    strokeWidth: 1
+                },
+                isSource: true,
+                connector: ["Bezier", { curviness: 160 }],
+                connectorStyle: connectorPaintStyle,
+                hoverPaintStyle: endpointHoverStyle,
+                connectorHoverStyle: connectorHoverStyle,
+                dragOptions: {},
+                overlays: [
+                    ["Label", {
+                        location: [0.5, 1.5],
+                        label: "Drag",
+                        cssClass: "endpointSourceLabel",
+                        visible: false
+                    }]
+                ],
+                Container: "flow-panel"
+            },
+            // the definition of target endpoints (will appear when the user drags a connection)
+            targetEndpoint = {
+                endpoint: "Dot",
+                paintStyle: { fill: "#7AB02C", radius: 7 },
+                hoverPaintStyle: endpointHoverStyle,
+                maxConnections: -1,
+                dropOptions: { hoverClass: "hover", activeClass: "active" },
+                isTarget: true,
+                overlays: [
+                    ["Label", { location: [0.5, -0.5], label: "Drop", cssClass: "endpointTargetLabel", visible: false }]
+                ],
+                Container: "flow-panel"
+            };
+
+        var node1 = addNode('flow-panel', 'node1', { "title": "node1" }, { x: '80px', y: '120px' });
+        var node2 = addNode('flow-panel', 'node2', { "title": "node2" }, { x: '280px', y: '120px' });
+
+
+        instance.addEndpoint(node1, sourceEndpoint, {
+            anchor: ["TopLeft"],
+            uuid: "testUUid"
+        });
+
+        //addPorts(instance, node1, ['out1', 'out2'], 'output');
+        //addPorts(instance, node2, ['in', 'in1', 'in2'], 'input');
+
+        //connectPorts(instance, node1, 'out2', node2, 'in');
+
+        instance.draggable($(node1));
+        instance.draggable($(node2));
     });
 
     jsPlumb.fire("jsFlowLoaded", instance);
@@ -98,6 +167,7 @@ function renderInspector() {
 }
 
 
+//Flow UI control logic
 //UI Code to create node and port
 function addNode(parentId, nodeId, nodeSpec, position) {
     var panel = d3.select("#" + parentId);
@@ -109,8 +179,6 @@ function addNode(parentId, nodeId, nodeSpec, position) {
     panel.append('div').datum(data)
         .style('top', position.y)
         .style('left', position.x)
-        .style('position', 'relative')
-        .attr('align', 'center')
         .classed('node', true)
         .attr('id', function(d) {
             return d.nodeId;
@@ -133,54 +201,33 @@ function addNode(parentId, nodeId, nodeSpec, position) {
 }
 
 function addPorts(instance, node, ports, type) {
-    //Assume horizental layout
     var number_of_ports = ports.length;
+
+    var paintStyle = { radius: 5, fillStyle: '#FF8891' };
+    var anchor = [0, 0, 0, 0];
     var i = 0;
-    var height = $(node).height(); //Note, jquery does not include border for height
-    var y_offset = 1 / (number_of_ports + 1);
-    var y = 0;
 
     for (; i < number_of_ports; i++) {
-        var anchor = [0, 0, 0, 0];
-        var labelAnchor = [-1.5, -0.3];
-        var paintStyle = { radius: 5, fillStyle: '#FF8891', strokeStyle: '#225588' };
-        var isSource = false,
-            isTarget = false;
-        if (type === 'output') {
-            anchor[0] = 1;
-            labelAnchor[0] = 1.8
-            paintStyle.fillStyle = '#D4FFD6';
-            paintStyle.strokeStyle = '#225588'
-            isSource = true;
-        } else {
-            isTarget = true;
-        }
-
-        anchor[1] = y + y_offset;
-        y = anchor[1];
-
-        var endpoint = instance.addEndpoint(node, {
-            uuid: node.getAttribute("id") + "-" + ports[i],
-            paintStyle: paintStyle,
-            anchor: anchor,
-            maxConnections: -1,
-            isSource: isSource,
-            isTarget: isTarget
-        });
-
-        endpoint.setLabel({ location: labelAnchor, label: ports[i], cssClass: "endpointLabel" });
-
-        //Show the port name only when mouse over to avoid noise
-        //TODO : improve the Low efficiency to hide all endpoints
-        d3.selectAll(".endpointLabel").style("visibility", "hidden");
-
-        endpoint.bind("mouseover", function(source) {
-            var label = source.getLabel();
-            $(source.canvas).next().css("visibility", "visible");
-        });
-
-        endpoint.bind("mouseout", function(source) {
-            d3.selectAll(".endpointLabel").style("visibility", "hidden");
+        instance.addEndpoint(node, {
+            endpoint: "Dot",
+            anchor: "AutoDefault"
         });
     }
+}
+
+
+function connectPorts(instance, node1, port1, node2, port2) {
+    // declare some common values:
+    var color = "gray";
+    var arrowCommon = { foldback: 0.8, fillStyle: color, width: 5 },
+        // use three-arg spec to create two different arrows with the common values:
+        overlays = [
+            ["Arrow", { location: 0.8 }, arrowCommon],
+            ["Arrow", { location: 0.2, direction: -1 }, arrowCommon]
+        ];
+
+    var uuid_source = node1.getAttribute("id") + "-" + port1;
+    var uuid_target = node2.getAttribute("id") + "-" + port2;
+
+    instance.connect({ uuids: [uuid_source, uuid_target] });
 }

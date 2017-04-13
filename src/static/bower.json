@@ -25,6 +25,7 @@
     "json2": "*",
     "d3": "*",
     "js-beautify": "*",
-    "jsplumb": "^2.3.2"
+    "jsplumb": "^2.3.2",
+    "jquery-ui": "^1.12.1"
   }
 }
