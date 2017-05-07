@@ -16,8 +16,8 @@ def index():
     return app.send_static_file("index.html")
 
 
-@app.route("/nodes", methods=['GET'])
-def nodes():
+@app.route("/nodestree", methods=['GET'])
+def nodestree():
     tree = list()
     repository = fbp.repository()
     node_specs = repository.get("nodespec")
@@ -68,8 +68,21 @@ def _inset_node(parent, node, path):
                 item["children"] = list()
                 parent["children"].append(item)
                 _inset_node(item, node, path[1:])
-
     return
+
+
+@app.route("/nodes", methods=['GET'])
+def nodes():
+    repository = fbp.repository()
+    node_specs = repository.get("nodespec")
+
+    # Adding default output when it is not there
+    for k, v in node_specs.iteritems():
+        if not v["port"].has_key("output"):
+            v["port"]["output"] = list()
+            v["port"]["output"].append({"name": "out"})
+
+    return jsonify(node_specs)
 
 
 def init():

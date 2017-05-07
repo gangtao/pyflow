@@ -26,6 +26,7 @@
     "d3": "*",
     "js-beautify": "*",
     "jsplumb": "^2.3.2",
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "requirejs": "~2.1.22"
   }
 }
