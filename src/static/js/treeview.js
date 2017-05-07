@@ -4,7 +4,7 @@ define([], function() {
     TreeView.rendor = function(rootId, data) {
         var root = d3.select("#" + rootId);
 
-        var level1 = root.append("ul").classed("pyflowtree", true).selectAll("li").data(data).enter().append("li");
+        var level1 = root.append("ul").classed("pyflowtree", true).selectAll("li").data(data).enter().append("li").classed("branch", true);
         level1.append("a").attr("href", "#").text(function(d) {
             return d.title;
         });
@@ -28,6 +28,14 @@ define([], function() {
                 }
             });
 
+            currentLevel.each(function(d) {
+                if (d.children == undefined || d.children.length == 0) {
+                    d3.select(this).classed("leaf", tree);
+                } else {
+                    d3.select(this).classed("branch", tree);
+                }
+            })
+
             currentLevel.append("a").attr("href", "#").text(function(d) {
                 if (d.children && d.children.length > 0) {
                     return d.title + " +";
@@ -50,8 +58,16 @@ define([], function() {
             e.stopPropagation();
         });
 
+        //Disable drag on non-leaf node
+        $('.branch').attr('draggable', 'false').on('dragstart', function(ev) {
+            if ( ev.target.parentNode.className != "leaf" ) {
+                ev.stopPropagation();
+                return false;
+            } 
+        });
+
         //Handle drag and drop
-        $('li').attr('draggable', 'true').on('dragstart', function(ev) {
+        $('.leaf').attr('draggable', 'true').on('dragstart', function(ev) {
             ev.originalEvent.dataTransfer.setData('text', $(ev.target).attr("specId"));
         });
     };
