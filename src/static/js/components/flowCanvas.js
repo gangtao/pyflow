@@ -1,4 +1,4 @@
-define(["util"], function(Util) {
+define(["model/flow", "util"], function(Flow, Util) {
     //Global Paint Styles
     var connectorPaintStyle = {
             strokeWidth: 2,
@@ -55,10 +55,17 @@ define(["util"], function(Util) {
 
     var FLOW_PANEL_ID = 'flow-panel';
 
-    var Canvas = function Canvas(rootId, nodeSpec) {
+    var currentFlow = undefined;
+
+    var inspector = undefined;
+
+    var Canvas = function Canvas(rootId, nodeSpec, nodeInspector) {
         this._rootId = rootId;
         //by default, set the first row as header
         this._nodeSpec = nodeSpec;
+        inspector = nodeInspector;
+
+        currentFlow = new Flow("pyflow.builder.gen","SampleFlow");
     };
 
     Canvas.prototype.getNodeSpecById = function(id) {
@@ -72,6 +79,15 @@ define(["util"], function(Util) {
         var root = d3.select("#" + this._rootId);
         var me = this;
         var panel = Util.addPanel(root, "Flow");
+
+        root.select(".panel-heading").append("button").style("margin-left","2px").classed("glyphicon glyphicon-search", true).on("click", function() {
+            showFlowSource();
+        });
+
+        root.select(".panel-heading").append("button").style("margin-left","2px").classed("glyphicon glyphicon-remove", true).on("click", function() {
+            clear();
+        });
+
         panel.select(".panel-body").style("height", "300px").append("div").attr("id", FLOW_PANEL_ID).style("position", "absolute").style("height", "300px").style("width", "100%");
         //Initialize JsPlumb
         instance = jsPlumb.getInstance({
@@ -108,7 +124,7 @@ define(["util"], function(Util) {
             node_def.ui = {};
             node_def.ui.x = mx;
             node_def.ui.y = my;
-            //currentFlow.nodes.push(node_def);
+            currentFlow.flow().nodes.push(node_def);
 
             var node = addNode(FLOW_PANEL_ID, uid, nodeSpec, { x: mx, y: my });
             var i = 0,
@@ -137,11 +153,18 @@ define(["util"], function(Util) {
             //console.log("dragover");
             ev.preventDefault();
         });
-        instance.batch(function() {
-            instance.bind("connection", function(info, originalEvent) {});
-            drawSampleFlow(instance);
+
+
+        instance.bind("connection", function(info, originalEvent) {
+            var sourceId = info.sourceId;
+            var targetId = info.targetId;
+            var sourcePort = info.sourceEndpoint.getLabel();
+            var targetPort = info.targetEndpoint.getLabel();
+
+            currentFlow.connect(sourceId,targetId,sourcePort,targetPort);
         });
 
+        //drawSampleFlow(instance);
         jsPlumb.fire("jsFlowLoaded", instance);
     }
 
@@ -179,7 +202,7 @@ define(["util"], function(Util) {
             })
             .on('click', function(d) {
                 //console.log(d3.select(this).text() + ' selected');
-                //showNodeDetails(d);
+                inspector.showNodeDetails(d, currentFlow);
             })
             .on('mouseover', function(d) {
                 d3.select(this).style('border', '3px #000 solid');
@@ -213,17 +236,33 @@ define(["util"], function(Util) {
             anchor[1] = y + y_offset;
             y = anchor[1];
 
+            var endpoint = undefined;
+
             if (isSource) {
-                instance.addEndpoint(node, sourceEndpoint, {
+                endpoint = instance.addEndpoint(node, sourceEndpoint, {
                     anchor: anchor,
                     uuid: node.getAttribute("id") + "-" + ports[i]
                 });
             } else {
-                instance.addEndpoint(node, targetEndpoint, {
+                endpoint = instance.addEndpoint(node, targetEndpoint, {
                     anchor: anchor,
                     uuid: node.getAttribute("id") + "-" + ports[i]
                 });
             }
+
+            var labelAnchor = [-1.5, -0.3];
+            endpoint.setLabel({ location: labelAnchor, label: ports[i], cssClass: "endpointLabel" });
+
+            d3.selectAll(".endpointLabel").style("visibility", "hidden");
+
+            endpoint.bind("mouseover", function(source) {
+                var label = source.getLabel();
+                $(source.canvas).next().css("visibility", "visible");
+            });
+
+            endpoint.bind("mouseout", function(source) {
+                d3.selectAll(".endpointLabel").style("visibility", "hidden");
+            });
         }
     }
 
@@ -233,6 +272,19 @@ define(["util"], function(Util) {
         var uuid_target = node2.getAttribute("id") + "-" + port2;
 
         instance.connect({ uuids: [uuid_source, uuid_target] });
+    }
+
+    function showFlowSource() {
+        $("#flow_source_container").empty();
+        d3.select("#flow_source_container").append("pre").attr("id", "flow_source_text");
+        var value = js_beautify(JSON.stringify(currentFlow.flow()));
+        $("#flow_source_text").text(value);
+        $("#flow_source_modal").modal("show");
+    }
+
+    function clear() {
+        $("#" + FLOW_PANEL_ID).empty();
+        currentFlow.clear();
     }
 
     return Canvas;

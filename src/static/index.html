@@ -67,6 +67,22 @@
     <div class="container-fluid" id="mainUI">
     </div> <!-- /container -->
 
+    <div class="modal fade" id="flow_source_modal" tabindex="-1" role="dialog" aria-labelledby="EndLable" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="EndLable">Flow Description</h4>
+          </div>
+          <div id="flow_source_container" class="modal-body" style="overflow:auto">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -86,7 +102,8 @@
       requirejs.config({
           baseUrl: 'js',
           paths: {
-            comp: './components'
+            comp: './components',
+            model: './model'
           }
       });
     </script>

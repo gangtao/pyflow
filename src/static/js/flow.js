@@ -3,14 +3,6 @@ define(["comp/treeview", "comp/flowCanvas", "comp/flowInspector", "util"], funct
 
     // -------------------------------------
     //Global Variables
-    var nodeTreeSpecification = undefined;
-    var currentFlow = {
-        "id": "pyflow.builder.gen",
-        "name": "SampleFlow",
-        "nodes": [],
-        "links": []
-    };
-    var connectionList = [];
 
     // -------------------------------------
 
@@ -26,19 +18,21 @@ define(["comp/treeview", "comp/flowCanvas", "comp/flowInspector", "util"], funct
         var flowCanvas = flowUI.append("div").classed("row", true).attr("id", "flowCanvas");
         var flowInspector = flowUI.append("div").classed("row", true).attr("id", "flowInspector");
 
+        
+
         // Init Tree 
         $.get("/nodes", function(data) {
-            nodeTreeSpecification = data;
+            var nodeTreeSpecification = data;
             var treeView = new TreeView("flowTree", nodeTreeSpecification)
             treeView.render();
-
-            // Init Flow Canvas Panel
-            var flowCanvas = new FlowCanvas("flowCanvas", nodeTreeSpecification);
-            flowCanvas.render();
-
+            
             // Init Flow Inspector
             var inspector = new FlowInspector("flowInspector");
             inspector.render();
+
+            // Init Flow Canvas Panel
+            var flowCanvas = new FlowCanvas("flowCanvas", nodeTreeSpecification, inspector );
+            flowCanvas.render(); 
         });
     }
 
