@@ -1,4 +1,5 @@
 define(["model/flow", "util"], function(Flow, Util) {
+    
     //Global Paint Styles
     var connectorPaintStyle = {
             strokeWidth: 2,
@@ -56,7 +57,6 @@ define(["model/flow", "util"], function(Flow, Util) {
     var FLOW_PANEL_ID = 'flow-panel';
 
     var currentFlow = undefined;
-
     var inspector = undefined;
 
     var Canvas = function Canvas(rootId, nodeSpec, nodeInspector) {

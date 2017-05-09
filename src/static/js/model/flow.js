@@ -6,6 +6,7 @@ define([], function() {
         this._flow.nodes = [];
         this._flow.links = [];
         this._connections = [];
+        this._lastResult = undefined;
     };
 
     Flow.prototype.findSourcePort = function(nodeId, port) {
@@ -50,6 +51,7 @@ define([], function() {
         this._flow.nodes = [];
         this._flow.links = [];
         this._connections = [];
+        this._lastResult = undefined;
     };
 
     Flow.prototype.findSourcePort = function(nodeId, port) {
@@ -61,6 +63,20 @@ define([], function() {
                 return {
                     "id": this._connections[i].sourceId,
                     "port": this._connections[i].sourcePort
+                }
+            }
+        }
+    };
+
+    Flow.prototype.findTargetPort = function(nodeId, port) {
+        var i = 0,
+            length = this._connections.length;
+
+        for (; i < length; i++) {
+            if (this._connections[i].sourceId === nodeId && this._connections[i].sourcePort === port) {
+                return {
+                    "id": this._connections[i].targetId,
+                    "port": this._connections[i].targetPort
                 }
             }
         }
@@ -143,7 +159,42 @@ define([], function() {
                 }
             }
         }
-    }
+    };
+
+    Flow.prototype.getRunResult = function(nodeId, port) {
+        if (this._lastResul === undefined) {
+            return undefined;
+        }
+
+        var i = 0,
+            j = 0,
+            length = this._lastResul.length;
+        for (; i < length; i++) {
+            if (this._lastResul[i].id === nodeId) {;
+                for (; j < this._lastResul[i].ports.length; j++) {
+                    var aport = this._lastResul[i].ports[j];
+                    if (aport.name === port) {
+                        return aport.value;
+                    }
+                }
+            }
+        }
+
+        return undefined;
+    };
+
+    Flow.prototype.setEndNode = function(nodeId) {
+        var nodes = this._flow.nodes;
+        var i = 0,
+            length = nodes.length;
+        for (; i < length; i++) {
+            if (nodes[i].id === nodeId) {
+                nodes[i].is_end = 1;
+            } else {
+            	delete nodes[i]["is_end"];
+            }
+        }
+    };
 
     return Flow;
 });
