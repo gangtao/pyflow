@@ -67,6 +67,5 @@ class TestFBPRunner(unittest.TestCase):
 
         print run_flow(flow_spec)
 
-
 if __name__ == '__main__':
     unittest.main()

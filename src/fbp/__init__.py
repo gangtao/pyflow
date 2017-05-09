@@ -60,10 +60,11 @@ def create_node(spec_id, id, name):
 
     if spec is None:
         raise Exception("No such node specification {}".format(spec_id))
+
     try:
         spec_obj = json.loads(spec, strict=False)
     except Exception as e:
-        raise e
+        raise Exception("Invalid node specification {}".format(spec))
 
     anode = node(id, name, spec_obj)
     return anode
@@ -73,6 +74,7 @@ def create_node(spec_id, id, name):
 
 
 def run_flow(flow_spec):
+    print flow_spec
     try:
         flow_spec_obj = json.loads(flow_spec, strict=False)
     except Exception as e:
@@ -82,6 +84,10 @@ def run_flow(flow_spec):
     aflow = flow(flow_spec_obj.get("id"), flow_spec_obj.get("name"))
 
     for node_def in flow_spec_obj.get("nodes"):
+        print node_def.get("spec_id")
+        print node_def.get("id")
+        print node_def.get("name")
+
         anode = create_node(node_def.get("spec_id"),
                             node_def.get("id"), node_def.get("name"))
         aflow.add_node(anode)

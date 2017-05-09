@@ -98,8 +98,7 @@ define(["util"], function(Util) {
             .on("click", function(d) {
                 
                 flow.setEndNode(d.id);
-                var flowSpecString = JSON.stringify(flow.flow());
-                console.log("Run Flow : " + flowSpecString);
+                flow.run();
                 
                 /*
                 var progressBar = action_content.append('img').attr("src", "/dj/static/TAFlowBuilder/img/animated-progress.gif")

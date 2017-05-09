@@ -85,18 +85,29 @@ def nodes():
     return jsonify(node_specs)
 
 
+@app.route("/flows", methods=['GET'])
+def flows():
+    return ""
+
+
+@app.route("/runflow", methods=['POST'])
+def runflow():
+    data = request.form['data']
+    return jsonify(fbp.run_flow(data))
+
+
 def init():
     records = []
     for file in os.listdir('node_specs'):
         if file.endswith('.py') and file != '__init__.py':
             with open('node_specs' + os.path.sep + file)as f:
                 spec = nodemaker.create_node_spec(f.read())
-            records.append(json.dumps(spec))
+                records.append(json.dumps(spec))
 
     repository = fbp.repository()
     for r in records:
         node = json.loads(r)
-        repository.register("nodespec", node["id"], node)
+        repository.register("nodespec", node["id"], r)
 
 
 if __name__ == "__main__":

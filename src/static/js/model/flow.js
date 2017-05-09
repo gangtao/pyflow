@@ -191,9 +191,15 @@ define([], function() {
             if (nodes[i].id === nodeId) {
                 nodes[i].is_end = 1;
             } else {
-            	delete nodes[i]["is_end"];
+                delete nodes[i]["is_end"];
             }
         }
+    };
+
+    Flow.prototype.run = function(cb) {
+        $.post("/runflow", { "data": JSON.stringify(this._flow) }, function(data) {
+        	console.log(data)
+        });
     };
 
     return Flow;
