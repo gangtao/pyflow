@@ -11,6 +11,7 @@ define(["util"], function(Util) {
 
     Inspector.prototype.showNodeDetails = function(node, flow) {
         $("#InspectorBody").empty();
+        var inspector = this;
 
         var table = this._body.append("table").classed("table table-bordered", true);
         var tbody = table.append("tbody");
@@ -95,23 +96,16 @@ define(["util"], function(Util) {
         row_action.append("td").text("Action");
         var action_content = row_action.append("td");
         action_content.append("button").datum({ id: node.nodeId }).text("Run").classed("btn btn-xs btn-primary", true)
-            .on("click", function(d) {
-                
-                flow.setEndNode(d.id);
-                flow.run();
-                
-                /*
-                var progressBar = action_content.append('img').attr("src", "/dj/static/TAFlowBuilder/img/animated-progress.gif")
+            .on("click", function(d) { 
+                var progressBar = action_content.append('img').attr("src", "img/animated-progress.gif")
                     .attr("height", "30").attr("width", "30");
-                
-                //Add Progress Bar here
-                $.post("../flow/", { "data": flowSpecString }, function(d) {
-                    console.log("Post flow success! " + d);
-                    lastResult = JSON.parse(d);
-                    showNodeDetails(node);
-                });
-                */
+                function handleFlowRunResult(data) {
+                    console.log("Post flow success! " + data);
+                    inspector.showNodeDetails(node, flow);
+                }
 
+                flow.setEndNode(d.id);
+                flow.run(handleFlowRunResult);
             });
     };
 

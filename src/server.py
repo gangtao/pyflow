@@ -107,7 +107,7 @@ def init():
     repository = fbp.repository()
     for r in records:
         node = json.loads(r)
-        repository.register("nodespec", node["id"], r)
+        repository.register("nodespec", node["id"], node)
 
 
 if __name__ == "__main__":

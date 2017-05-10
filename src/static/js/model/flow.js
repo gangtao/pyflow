@@ -6,7 +6,7 @@ define([], function() {
         this._flow.nodes = [];
         this._flow.links = [];
         this._connections = [];
-        this._lastResult = undefined;
+        this._result = undefined;
     };
 
     Flow.prototype.findSourcePort = function(nodeId, port) {
@@ -51,7 +51,7 @@ define([], function() {
         this._flow.nodes = [];
         this._flow.links = [];
         this._connections = [];
-        this._lastResult = undefined;
+        this._result = undefined;
     };
 
     Flow.prototype.findSourcePort = function(nodeId, port) {
@@ -161,28 +161,6 @@ define([], function() {
         }
     };
 
-    Flow.prototype.getRunResult = function(nodeId, port) {
-        if (this._lastResul === undefined) {
-            return undefined;
-        }
-
-        var i = 0,
-            j = 0,
-            length = this._lastResul.length;
-        for (; i < length; i++) {
-            if (this._lastResul[i].id === nodeId) {;
-                for (; j < this._lastResul[i].ports.length; j++) {
-                    var aport = this._lastResul[i].ports[j];
-                    if (aport.name === port) {
-                        return aport.value;
-                    }
-                }
-            }
-        }
-
-        return undefined;
-    };
-
     Flow.prototype.setEndNode = function(nodeId) {
         var nodes = this._flow.nodes;
         var i = 0,
@@ -197,10 +175,34 @@ define([], function() {
     };
 
     Flow.prototype.run = function(cb) {
+        var me = this;
         $.post("/runflow", { "data": JSON.stringify(this._flow) }, function(data) {
-        	console.log(data)
+            me._result = data;
+            cb(data);
         });
     };
+
+    Flow.prototype.getRunResult = function(nodeId, port) {
+        if (this._result === undefined) {
+            return undefined;
+        }
+
+        var i = 0,
+            j = 0,
+            length = this._result.length;
+        for (; i < length; i++) {
+            if (this._result[i].id === nodeId) {;
+                for (; j < this._result[i].ports.length; j++) {
+                    var aport = this._result[i].ports[j];
+                    if (aport.name === port) {
+                        return aport.value;
+                    }
+                }
+            }
+        }
+
+        return undefined;
+    }
 
     return Flow;
 });
