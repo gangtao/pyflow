@@ -16,10 +16,12 @@ class node(object):
         exec(spec.get("func"))
         self._func = func
 
-        self._inputports = {}
-        self._outputports = {}
+        self._inputports = dict()
+        self._outputports = dict()
         self._initports()
         self._is_cache_valid = False
+        self._status = "init"
+        self._error = None
 
     @property
     def name(self):
@@ -90,6 +92,9 @@ class node(object):
         for k, v in self._outputports.items():
             out_str = out_str + "\n" + str(v)
 
+        out_str = out_str + "\n" + "status : {}".format(self._status)
+        out_str = out_str + "\n" + "error : {}".format(self._error)
+
         return out_str
 
     def set_inport_value(self, port_name, value):
@@ -135,28 +140,49 @@ class node(object):
 
         return outport.value
 
+    def get_node_value(self):
+        node = dict()
+        node["id"] = self._id
+        node["name"] = self._name
+        node["inputs"] = [v.get_value() for k, v in self._inputports.items()]
+        node["outputs"] = [v.get_value() for k, v in self._outputports.items()]
+        node["status"] = self._status
+
+        node["error"] = str(self._error)
+        return node
+
     def run(self):
         def _function_wrapper(func, args):
             return func(*args)
 
+        self._status = "running"
+
         if self._is_cache_valid:
             # Cache Hit
+            self._status = "sucess"
+            self._error = None
             return
 
         parameter_values = [(v.value, v.order)
                             for k, v in self._inputports.items()]
         parameter_values = [v[0] for v in sorted(
             parameter_values, key=lambda x: x[1])]  # sort by order
+        try:
+            return_value = _function_wrapper(self._func, parameter_values)
 
-        return_value = _function_wrapper(self._func, parameter_values)
-        self._is_cache_valid = True
+            self._is_cache_valid = True
+            self._status = "sucess"
+            self._error = None
 
-        # Single output case
-        if OUTPORT_DEFAULT_NAME in self._outputports.keys() and len(self._outputports) == 1:
-            out_port = self._outputports.get(OUTPORT_DEFAULT_NAME)
-            out_port.value = return_value
-            return
+            # Single output case
+            if OUTPORT_DEFAULT_NAME in self._outputports.keys() and len(self._outputports) == 1:
+                out_port = self._outputports.get(OUTPORT_DEFAULT_NAME)
+                out_port.value = return_value
+                return
 
-        # Mutiple output case
-        for k, v in self._outputports.items():
-            v.value = return_value.get(k)
+            # Mutiple output case
+            for k, v in self._outputports.items():
+                v.value = return_value.get(k)
+        except Exception as e:
+            self._status = "fail"
+            self._error = e

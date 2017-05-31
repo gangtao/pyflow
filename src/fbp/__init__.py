@@ -78,7 +78,6 @@ def create_node(spec_id, id, name):
 
 
 def run_flow(flow_spec):
-    print flow_spec
     try:
         flow_spec_obj = json.loads(flow_spec, strict=False)
     except Exception as e:
@@ -102,25 +101,5 @@ def run_flow(flow_spec):
 
         aflow.link(source[0], source[1], target[0], target[1])
 
-    aflow.run(end_node)
-
-    # Build flow running result which contains all the output port values
-    result = []
-    for node in aflow.get_nodes():
-        node_result = {}
-        node_result["id"] = node.id
-        out_values = []
-        out_ports = node.get_ports("out")
-        for out_port in out_ports:
-            out_value = {}
-            out_value["name"] = out_port.name
-            try:
-                value = node.get_outport_value(out_port.name)
-            except Exception as e:
-                value = ''
-            out_value["value"] = node.get_outport_value(out_port.name)
-            out_values.append(out_value)
-        node_result["ports"] = out_values
-        result.append(node_result)
-
-    return result
+    result = aflow.run(end_node)
+    return [i.get_node_value() for i in result]

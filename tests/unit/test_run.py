@@ -1,5 +1,6 @@
 import unittest
 import sys
+import json
 
 sys.path.append('../../src')
 
@@ -58,14 +59,24 @@ class TestFBPRunner(unittest.TestCase):
       }
       '''
 
-        print run_flow(flow_spec)
+        print json.dumps(run_flow(flow_spec))
+        print "\n"
 
     def test_run2(self):
         # A sample flow definition
         flow_spec = '''{"id":"flowbuilder.gen","name":"BuilderSample","nodes":[{"id":"node1419317316499","spec_id":"flow.cli","name":"cli","ports":[{"name":"command","value":"iostat"}],"is_end":1}],"links":[]}
       '''
 
-        print run_flow(flow_spec)
+        print json.dumps(run_flow(flow_spec))
+        print "\n"
+
+    def test_run3(self):
+        # A sample flow definition with failure command
+        flow_spec = '''{"id":"flowbuilder.gen","name":"BuilderSample","nodes":[{"id":"node1419317316499","spec_id":"flow.cli","name":"cli","ports":[{"name":"command","value":"dir"}],"is_end":1}],"links":[]}
+      '''
+
+        print json.dumps(run_flow(flow_spec))
+        print "\n"
 
 if __name__ == '__main__':
     unittest.main()

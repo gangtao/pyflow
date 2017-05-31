@@ -40,8 +40,8 @@ class flow(object):
     def __init__(self, id, name):
         self._name = name
         self._id = id
-        self._nodes = {}
-        self._links = {}
+        self._nodes = dict()
+        self._links = dict()
 
     def add_node(self, node):
         self._nodes[node.id] = node
@@ -119,9 +119,16 @@ class flow(object):
     def run(self, end_node):
         nodemap = [end_node]
         self._find_source_nodes(end_node, nodemap)
+        result = list()
 
         while True:
             if len(nodemap) == 0:
                 break
             anode = nodemap.pop()
             anode.run()  # TODO Exception handling here
+            result.append(anode)
+
+        return result
+
+    def run_async(self, end_node, result):
+        pass

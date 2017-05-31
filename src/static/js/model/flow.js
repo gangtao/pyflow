@@ -182,6 +182,38 @@ define([], function() {
         });
     };
 
+    Flow.prototype.status = function(nodeId) {
+        if (this._result === undefined) {
+            return "";
+        }
+
+        var i = 0,
+            length = this._result.length;
+        for (; i < length; i++) {
+            if (this._result[i].id === nodeId) {
+                return this._result[i].status
+            }
+        }
+
+        return "";
+    };
+
+    Flow.prototype.error = function(nodeId) {
+        if (this._result === undefined) {
+            return "";
+        }
+
+        var i = 0,
+            length = this._result.length;
+        for (; i < length; i++) {
+            if (this._result[i].id === nodeId) {
+                return this._result[i].error
+            }
+        }
+
+        return "";
+    };
+
     Flow.prototype.getRunResult = function(nodeId, port) {
         if (this._result === undefined) {
             return undefined;
@@ -191,9 +223,9 @@ define([], function() {
             j = 0,
             length = this._result.length;
         for (; i < length; i++) {
-            if (this._result[i].id === nodeId) {;
-                for (; j < this._result[i].ports.length; j++) {
-                    var aport = this._result[i].ports[j];
+            if (this._result[i].id === nodeId) {
+                for (; j < this._result[i].outputs.length; j++) {
+                    var aport = this._result[i].outputs[j];
                     if (aport.name === port) {
                         return aport.value;
                     }
@@ -202,7 +234,7 @@ define([], function() {
         }
 
         return undefined;
-    }
+    };
 
     return Flow;
 });

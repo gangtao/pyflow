@@ -27,6 +27,13 @@ class port(object):
         format_str = "Port\nname : {}\nvalue : {}\ntype : {}\n"
         return format_str.format(self.name, str(self.value), self.type)
 
+    def get_value(self):
+        port = dict()
+        port["name"] = self._name
+        port["value"] = self._value
+        port["type"] = self._type
+        return port
+
     def valid(self, value):
         # TODO Type check
         pass

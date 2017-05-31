@@ -49,19 +49,17 @@ define(["util"], function(Util) {
 
                 if (source_port_value !== undefined) {
                     soruce_port_result_cell.append("br").style("margin", "0px");
-                    var value = js_beautify(source_port_value);
+                    var value = source_port_value;
                     soruce_port_result_cell.append("pre").style("margin", "0px").text("Value : \n" + value);
                 }
 
-                //row_input_port.append("td").text("From:"+ sourcePort.id + ":" + sourcePort.port); 
             } else {
                 var port_input = row_input_port.append("td").append("input").datum(data)
                     .on("change", function(d) {
-                        //console.log("Port edited! " + d.id + ":" + d.port);
                         flow.setPortValue(d.id, d.port, d3.select(this).property("value"));
                     });
 
-                //TODO: get node Spec
+                 //TODO: get node Spec
                 var port_value = flow.getPortValue(data.id, data.port, undefined);
                 if (port_value) {
                     port_input.property("value", port_value);
@@ -87,10 +85,20 @@ define(["util"], function(Util) {
 
             if (result !== undefined) {
                 out_result_cell.append("br").style("margin", "0px");
-                var value = js_beautify(result);
+
+                var value = result;
                 out_result_cell.append("pre").style("margin", "0px").text("Value : \n" + value);
             }
         }
+
+        var row_flow_status = tbody.append("tr");
+        row_flow_status.append("td").text("Status");
+        row_flow_status.append("td").text(flow.status(node.nodeId));
+
+        var row_flow_error = tbody.append("tr");
+        row_flow_error.append("td").text("Error");
+        row_flow_error.append("td").text(flow.error(node.nodeId));
+
 
         var row_action = tbody.append("tr");
         row_action.append("td").text("Action");
@@ -100,7 +108,6 @@ define(["util"], function(Util) {
                 var progressBar = action_content.append('img').attr("src", "img/animated-progress.gif")
                     .attr("height", "30").attr("width", "30");
                 function handleFlowRunResult(data) {
-                    console.log("Post flow success! " + data);
                     inspector.showNodeDetails(node, flow);
                 }
 
