@@ -5,22 +5,7 @@ define([], function() {
         this._flow.name = name;
         this._flow.nodes = [];
         this._flow.links = [];
-        this._connections = [];
-        this._result = undefined;
-    };
-
-    Flow.prototype.findSourcePort = function(nodeId, port) {
-        var i = 0,
-            length = this._connections.length;
-
-        for (; i < length; i++) {
-            if (this._connections[i].targetId === nodeId && this._connections[i].targetPort === port) {
-                return {
-                    "id": this._connections[i].sourceId,
-                    "port": this._connections[i].sourcePort
-                }
-            }
-        }
+        this._result = undefined; // store flow running results
     };
 
     Flow.prototype.flow = function() {
@@ -28,55 +13,88 @@ define([], function() {
     };
 
     Flow.prototype.connections = function() {
-        return this._connections;
+        var connections = [];
+        this._flow.links.map(function(link) {
+            source = link.source.split(":");
+            target = link.target.split(":");
+            connections.push({
+                "sourceId": source[0],
+                "targetId": target[0],
+                "sourcePort": source[1],
+                "targetPort": target[1]
+            });
+        })
+
+        return connections;
+    };
+
+    Flow.prototype._findConnection = function(sourceId, targetId, sourcePort, targetPort) {
+        var i = 0,
+            index = -1,
+            length = this._flow.links.length;
+
+        for (; i < length; i++) {
+            var link = this._flow.links[i];
+            if (link.source == sourceId + ":" + sourcePort &&
+                link.target == targetId + ":" + targetPort) {
+                index = i;
+            }
+        }
+
+        return index;
     };
 
     Flow.prototype.connect = function(sourceId, targetId, sourcePort, targetPort) {
-        //Update Flow Specification
-        this._flow.links.push({
-            "source": sourceId + ":" + sourcePort,
-            "target": targetId + ":" + targetPort
-        });
+        var index = this._findConnection(sourceId, targetId, sourcePort, targetPort);
+        if ( index == -1 ) {
+           this._flow.links.push({
+                "source": sourceId + ":" + sourcePort,
+                "target": targetId + ":" + targetPort
+            }); 
+        }
 
-        //Update Connection List
-        this._connections.push({
-            "sourceId": sourceId,
-            "targetId": targetId,
-            "sourcePort": sourcePort,
-            "targetPort": targetPort
-        });
+        // TODO: in case it is move from one target to another, need remove the previous link 
+    };
+
+    Flow.prototype.disconnect = function(sourceId, targetId, sourcePort, targetPort) {
+        var index = this._findConnection(sourceId, targetId, sourcePort, targetPort);
+
+        if (index > -1) {
+            this._flow.links = this._flow.links.splice(index, 1);
+        }
     };
 
     Flow.prototype.clear = function() {
         this._flow.nodes = [];
         this._flow.links = [];
-        this._connections = [];
         this._result = undefined;
     };
 
     Flow.prototype.findSourcePort = function(nodeId, port) {
+        var connections = this.connections();
         var i = 0,
-            length = this._connections.length;
+            length = connections.length;
 
         for (; i < length; i++) {
-            if (this._connections[i].targetId === nodeId && this._connections[i].targetPort === port) {
+            if (connections[i].targetId === nodeId && connections[i].targetPort === port) {
                 return {
-                    "id": this._connections[i].sourceId,
-                    "port": this._connections[i].sourcePort
+                    "id": connections[i].sourceId,
+                    "port": connections[i].sourcePort
                 }
             }
         }
     };
 
     Flow.prototype.findTargetPort = function(nodeId, port) {
+        var connections = this.connections();
         var i = 0,
-            length = this._connections.length;
+            length = connections.length;
 
         for (; i < length; i++) {
-            if (this._connections[i].sourceId === nodeId && this._connections[i].sourcePort === port) {
+            if (connections[i].sourceId === nodeId && connections[i].sourcePort === port) {
                 return {
-                    "id": this._connections[i].targetId,
-                    "port": this._connections[i].targetPort
+                    "id": connections[i].targetId,
+                    "port": connections[i].targetPort
                 }
             }
         }

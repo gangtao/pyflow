@@ -27,6 +27,7 @@ define(["model/flow", "util"], function(Flow, Util) {
                 strokeWidth: 1
             },
             isSource: true,
+            maxConnections: -1,
             connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
             connectorStyle: connectorPaintStyle,
             hoverPaintStyle: endpointHoverStyle,
@@ -89,6 +90,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         });
 
         panel.select(".panel-body").style("height", "300px").append("div").attr("id", FLOW_PANEL_ID).style("position", "absolute").style("height", "300px").style("width", "100%");
+
         //Initialize JsPlumb
         instance = jsPlumb.getInstance({
             Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
@@ -164,7 +166,27 @@ define(["model/flow", "util"], function(Flow, Util) {
             currentFlow.connect(sourceId,targetId,sourcePort,targetPort);
         });
 
-        //drawSampleFlow(instance);
+        instance.bind("connection", function(info, originalEvent) {
+            console.log("connection attached!");
+            var sourceId = info.sourceId;
+            var targetId = info.targetId;
+            var sourcePort = info.sourceEndpoint.getLabel();
+            var targetPort = info.targetEndpoint.getLabel();
+
+            currentFlow.connect(sourceId,targetId,sourcePort,targetPort);
+        });
+
+        instance.bind("connectionDetached", function(info, originalEvent) {
+            console.log("connection detached!");
+            var sourceId = info.sourceId;
+            var targetId = info.targetId;
+            var sourcePort = info.sourceEndpoint.getLabel();
+            var targetPort = info.targetEndpoint.getLabel();
+
+            currentFlow.disconnect(sourceId,targetId,sourcePort,targetPort);
+        });
+
+        drawSampleFlow(instance);
         jsPlumb.fire("jsFlowLoaded", instance);
     }
 
@@ -177,6 +199,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         addPorts(instance, node2, ['in', 'in1', 'in2'], 'input');
 
         connectPorts(instance, node1, 'out2', node2, 'in');
+        connectPorts(instance, node1, 'out2', node2, 'in1');
 
         instance.draggable($(node1));
         instance.draggable($(node2));
@@ -201,7 +224,6 @@ define(["model/flow", "util"], function(Flow, Util) {
                 return d.title;
             })
             .on('click', function(d) {
-                //console.log(d3.select(this).text() + ' selected');
                 inspector.showNodeDetails(d, currentFlow);
             })
             .on('mouseover', function(d) {
