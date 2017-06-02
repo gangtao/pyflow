@@ -85,9 +85,18 @@ def nodes():
     return jsonify(node_specs)
 
 
-@app.route("/flows", methods=['GET'])
+@app.route("/flows", methods=['GET', 'POST'])
 def flows():
-    return ""
+    repository = fbp.repository()
+    if request.method == 'POST':
+        data = request.form['data']
+        flow = json.loads(data)
+        repository.register("flow", flow["id"], flow)
+        return jsonify(data)
+    else:
+        flows = repository.get("flow")
+        result = [v for k, v in flows.items()]
+        return jsonify(result)
 
 
 @app.route("/runflow", methods=['POST'])

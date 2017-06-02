@@ -12,6 +12,14 @@ define([], function() {
         return this._flow;
     };
 
+    Flow.prototype.nodes = function() {
+        return this._flow.nodes;
+    };
+
+    Flow.prototype.addnode = function(node) {
+        this._flow.nodes.push(node);
+    };
+
     Flow.prototype.connections = function() {
         var connections = [];
         this._flow.links.map(function(link) {
@@ -42,6 +50,12 @@ define([], function() {
         }
 
         return index;
+    };
+
+    Flow.prototype.link = function(link) {
+        source = link.source.split(":");
+        target = link.target.split(":");
+        this.connect(source[0],target[0],source[1],target[1]);
     };
 
     Flow.prototype.connect = function(sourceId, targetId, sourcePort, targetPort) {
@@ -197,6 +211,17 @@ define([], function() {
         $.post("/runflow", { "data": JSON.stringify(this._flow) }, function(data) {
             me._result = data;
             cb(data);
+        });
+    };
+
+    Flow.prototype.set = function(id, name) {
+        this._flow.id = id;
+        this._flow.name = name;
+    };
+
+    Flow.prototype.save = function() {
+        $.post("/flows", { "data": JSON.stringify(this._flow) }, function(data) {
+            console.log(data);
         });
     };
 

@@ -13,7 +13,7 @@ define(["util"], function(Util) {
         $("#InspectorBody").empty();
         var inspector = this;
 
-        var table = this._body.append("table").classed("table table-bordered", true);
+        var table = this._body.append("table").classed("table table-bordered table-condensed", true);
         var tbody = table.append("tbody");
 
         var row_id = tbody.append("tr");
