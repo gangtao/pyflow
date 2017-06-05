@@ -322,12 +322,13 @@ define(["model/flow", "util"], function(Flow, Util) {
     };
 
     function clear() {
+        instance.reset();
         $("#" + FLOW_PANEL_ID).empty();
         currentFlow.clear();
     };
 
     function newflow() {
-        $("#" + FLOW_PANEL_ID).empty();
+        clear();
         $("#flowid").text("xxx.xxx.xxx").editable();
         $("#flowname").text("untitled").editable();
         $("#new_flow_btn").click(function() {
@@ -358,18 +359,18 @@ define(["model/flow", "util"], function(Flow, Util) {
     };
 
     function loadflow(flow) {
-        $("#" + FLOW_PANEL_ID).empty();
+        clear();
         currentFlow = new Flow(flow.id, flow.name);
         flow.nodes.map(function(node) {
             currentFlow.addnode(node);
             var anode = drawNode(node);
         });
 
-        flow.links.map(function(link){
+        flow.links.map(function(link) {
             source = link.source.split(":");
             target = link.target.split(":");
-            currentFlow.connect(source[0],target[0],source[1],target[1]);
-            connectPorts(instance, $("#"+[source[0]])[0], source[1], $("#"+[target[0]])[0], target[1]);
+            currentFlow.connect(source[0], target[0], source[1], target[1]);
+            connectPorts(instance, $("#" + [source[0]])[0], source[1], $("#" + [target[0]])[0], target[1]);
         });
     }
 

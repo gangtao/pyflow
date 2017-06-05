@@ -219,7 +219,17 @@ define([], function() {
         this._flow.name = name;
     };
 
+    Flow.prototype._update = function() {
+        this._flow.nodes.map(function(node) {
+            var el = $("#"+ node.id);
+            var position = el.position();
+            node.ui.x = position.left + "px";
+            node.ui.y = position.top + "px";
+        });
+    };
+
     Flow.prototype.save = function() {
+        this._update();
         $.post("/flows", { "data": JSON.stringify(this._flow) }, function(data) {
             console.log(data);
         });
