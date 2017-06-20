@@ -144,16 +144,13 @@ define(["model/flow", "util"], function(Flow, Util) {
             ev.preventDefault();
         });
 
+        _initInstance(instance);
 
-        instance.bind("connection", function(info, originalEvent) {
-            var sourceId = info.sourceId;
-            var targetId = info.targetId;
-            var sourcePort = info.sourceEndpoint.getLabel();
-            var targetPort = info.targetEndpoint.getLabel();
+        //drawSampleFlow(instance);
+        jsPlumb.fire("jsFlowLoaded", instance);
+    };
 
-            currentFlow.connect(sourceId, targetId, sourcePort, targetPort);
-        });
-
+    function _initInstance(instance) {
         instance.bind("connection", function(info, originalEvent) {
             var sourceId = info.sourceId;
             var targetId = info.targetId;
@@ -172,9 +169,21 @@ define(["model/flow", "util"], function(Flow, Util) {
             currentFlow.disconnect(sourceId, targetId, sourcePort, targetPort);
         });
 
-        drawSampleFlow(instance);
-        jsPlumb.fire("jsFlowLoaded", instance);
-    };
+        instance.bind("connectionMoved", function(info, originalEvent) {
+            var osourceId = info.originalSourceId;
+            var otargetId = info.originalTargetId;
+            var osourcePort = info.originalSourceEndpoint.getLabel();
+            var otargetPort = info.originalTargetEndpoint.getLabel();
+
+            var nsourceId = info.newSourceId;
+            var ntargetId = info.newTargetId;
+            var nsourcePort = info.newSourceEndpoint.getLabel();
+            var ntargetPort = info.newTargetEndpoint.getLabel();
+
+            currentFlow.disconnect(osourceId, otargetId, osourcePort, otargetPort);
+            currentFlow.connect(nsourceId, ntargetId, nsourcePort, ntargetPort);
+        });
+    }
 
     function drawSampleFlow(instance) {
         //two sample nodes with one default connection
@@ -325,6 +334,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         instance.reset();
         $("#" + FLOW_PANEL_ID).empty();
         currentFlow.clear();
+        _initInstance(instance);
     };
 
     function newflow() {

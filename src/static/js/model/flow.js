@@ -74,7 +74,7 @@ define([], function() {
         var index = this._findConnection(sourceId, targetId, sourcePort, targetPort);
 
         if (index > -1) {
-            this._flow.links = this._flow.links.splice(index, 1);
+            this._flow.links.splice(index, 1);
         }
     };
 
