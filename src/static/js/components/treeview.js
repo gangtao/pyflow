@@ -9,7 +9,6 @@ define(["util"], function(Util) {
         var panel = Util.addPanel(root, "Nodes");
 
         panel.select(".panel-body").append("div").attr("id", "tree");
-
         var tree = _list2tree(this._nodeSpec);
         _rendor("tree", tree);
     }

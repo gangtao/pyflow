@@ -17,15 +17,15 @@ define(["util"], function(Util) {
         var tbody = table.append("tbody");
 
         var row_id = tbody.append("tr");
-        row_id.append("td").text("ID");
+        row_id.append("th").text("ID");
         row_id.append("td").text(node.nodeId);
 
         var row_spec_id = tbody.append("tr");
-        row_spec_id.append("td").text("Specification ID");
+        row_spec_id.append("th").text("Specification ID");
         row_spec_id.append("td").text(node.id);
 
         var row_spec_title = tbody.append("tr");
-        row_spec_title.append("td").text("Title");
+        row_spec_title.append("th").text("Title");
         row_spec_title.append("td").text(node.title);
 
         //Input Ports
@@ -34,7 +34,7 @@ define(["util"], function(Util) {
         for (; i < length; i++) {
             var portName = node.port.input[i].name;
             var row_input_port = tbody.append("tr");
-            row_input_port.append("td").text("In Port : " + portName);
+            row_input_port.append("th").text("In Port : " + portName);
             var data = {};
             data.id = node.nodeId;
             data.port = portName;
@@ -74,7 +74,7 @@ define(["util"], function(Util) {
             var result = flow.getRunResult(node.nodeId, portName);
             var row_output_port = tbody.append("tr");
 
-            row_output_port.append("td").text("Out Port : " + portName);
+            row_output_port.append("th").text("Out Port : " + portName);
 
             var targetPort = flow.findTargetPort(node.nodeId, portName);
 
@@ -92,16 +92,16 @@ define(["util"], function(Util) {
         }
 
         var row_flow_status = tbody.append("tr");
-        row_flow_status.append("td").text("Status");
+        row_flow_status.append("th").text("Status");
         row_flow_status.append("td").text(flow.status(node.nodeId));
 
         var row_flow_error = tbody.append("tr");
-        row_flow_error.append("td").text("Error");
+        row_flow_error.append("th").text("Error");
         row_flow_error.append("td").text(flow.error(node.nodeId));
 
 
         var row_action = tbody.append("tr");
-        row_action.append("td").text("Action");
+        row_action.append("th").text("Action");
         var action_content = row_action.append("td");
         action_content.append("button").datum({ id: node.nodeId }).text("Run").classed("btn btn-xs btn-primary", true)
             .on("click", function(d) { 
