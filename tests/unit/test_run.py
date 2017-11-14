@@ -4,7 +4,8 @@ import json
 
 sys.path.append('../../src')
 
-from fbp import repository, create_node, run_flow
+from fbp import create_node, run_flow
+from fbp.repository import repository
 from main import init
 
 

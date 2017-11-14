@@ -71,18 +71,31 @@ def _inset_node(parent, node, path):
     return
 
 
-@app.route("/nodes", methods=['GET'])
+@app.route("/nodes", methods=['GET', 'POST'])
 def nodes():
     repository = fbp.repository()
-    node_specs = repository.get("nodespec")
+    if request.method == 'POST':
+        data = request.form['data']
+        node = json.loads(data)
+        repository.register("nodespec", node["id"], node)
+        return jsonify(data)
+    else:
+        node_specs = repository.get("nodespec")
 
-    # Adding default output when it is not there
-    for k, v in node_specs.iteritems():
-        if not v["port"].has_key("output"):
-            v["port"]["output"] = list()
-            v["port"]["output"].append({"name": "out"})
+        # Adding default output when it is not there
+        for k, v in node_specs.iteritems():
+            if not v["port"].has_key("output"):
+                v["port"]["output"] = list()
+                v["port"]["output"].append({"name": "out"})
 
-    return jsonify(node_specs)
+        return jsonify(node_specs)
+
+
+@app.route("/nodes/<id>", methods=['GET'])
+def get_node(id):
+    repository = fbp.repository()
+    node = repository.get("nodespec", id)
+    return jsonify(node)
 
 
 @app.route("/flows", methods=['GET', 'POST'])
@@ -95,8 +108,18 @@ def flows():
         return jsonify(data)
     else:
         flows = repository.get("flow")
+        if flows is None:
+            return jsonify({})
+
         result = [v for k, v in flows.items()]
         return jsonify(result)
+
+
+@app.route("/flows/<id>", methods=['GET'])
+def get_flow(id):
+    repository = fbp.repository()
+    node = repository.get("flow", id)
+    return jsonify(node)
 
 
 @app.route("/runflow", methods=['POST'])

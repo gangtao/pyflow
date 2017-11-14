@@ -3,56 +3,10 @@ import json
 
 from node import node
 from flow import flow
+from repository import repository
 
 __version_info__ = (0, 0, 1)
 __version__ = ".".join(map(str, __version_info__))
-
-# TODO : consider to use meta class
-
-
-def singleton(class_):
-    instances = {}
-
-    def getinstance(*args, **kwargs):
-        if class_ not in instances:
-            instances[class_] = class_(*args, **kwargs)
-        return instances[class_]
-    return getinstance
-
-
-@singleton
-class repository(object):
-    _repo = {}
-
-    def register(self, domain, key, value):
-        if self._repo.get(domain) is None:
-            self._repo[domain] = {}
-
-        self._repo[domain][key] = value
-
-    def unregister(self, domain, key):
-        if self._repo.get(domain) is None:
-            return
-
-        if self._repo.get(domain).get(key) is None:
-            return
-
-        del self._repo.get(domain)[key]
-
-    def get(self, domain, key=None):
-        if domain is None:
-            return None
-
-        if self._repo.get(domain) is None:
-            return None
-
-        if key is None:
-            return self._repo.get(domain)
-
-        if self._repo.get(domain).get(key) is None:
-            return None
-
-        return self._repo.get(domain)[key]
 
 
 def create_node(spec_id, id, name):

@@ -4,7 +4,8 @@ import sys
 
 sys.path.append('../../src')
 
-from fbp import repository, create_node
+from fbp import create_node
+from fbp.repository import repository
 from fbp.node import node
 from fbp.flow import flow
 

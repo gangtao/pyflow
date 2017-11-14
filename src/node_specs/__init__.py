@@ -1,0 +1,1 @@
+# this code is used to create initial node contents
