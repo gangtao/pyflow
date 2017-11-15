@@ -15,6 +15,7 @@ def create_node(spec_id, id, name):
     if spec is None:
         raise Exception("No such node specification {}".format(spec_id))
 
+    print type(spec)
     if type(spec) is not dict:
         try:
             spec_obj = json.loads(spec, strict=False)
