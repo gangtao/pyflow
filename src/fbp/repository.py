@@ -95,20 +95,21 @@ class SqliteRepo(BaseRepo):
             "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?", t)
         count = c.fetchone()
 
-        if count == 0:
+        if int(count[0]) == 0:
             return None
 
         if key == None:
             result = dict()
             for row in c.execute('SELECT * FROM {}'.format(domain)):
-                print row[1]
                 result[row[0]] = json.loads(row[1], strict=False)
             return result
 
         t = (key,)
         c.execute('SELECT value FROM {} WHERE key=?'.format(domain), t)
         result = c.fetchone()
-        return json.loads(result[0],strict=False)
+        print 'SELECT value FROM {} WHERE key=?'.format(domain), key
+        print "fetch on result : ", result
+        return json.loads(result[0], strict=False)
 
 
 @singleton

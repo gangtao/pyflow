@@ -128,6 +128,7 @@ def runflow():
     return jsonify(fbp.run_flow(data))
 
 
+# initialize the repository
 def init():
     records = []
     for file in os.listdir('node_specs'):
