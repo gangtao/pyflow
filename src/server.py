@@ -75,10 +75,10 @@ def _inset_node(parent, node, path):
 def nodes():
     repository = fbp.repository()
     if request.method == 'POST':
-        data = request.form['data']
-        node = json.loads(data)
+        node = request.get_json()
+        print node
         repository.register("nodespec", node["id"], node)
-        return jsonify(data)
+        return jsonify(node), 200, {'ContentType': 'application/json'}
     else:
         node_specs = repository.get("nodespec")
 
@@ -88,14 +88,25 @@ def nodes():
                 v["port"]["output"] = list()
                 v["port"]["output"].append({"name": "out"})
 
-        return jsonify(node_specs)
+        return jsonify(node_specs), 200, {'ContentType': 'application/json'}
 
 
-@app.route("/nodes/<id>", methods=['GET'])
+@app.route("/nodes/<id>", methods=['GET', 'DELETE', 'PUT'])
 def get_node(id):
     repository = fbp.repository()
-    node = repository.get("nodespec", id)
-    return jsonify(node)
+    if request.method == 'GET':
+        node = repository.get("nodespec", id)
+        return jsonify(node), 200, {'ContentType': 'application/json'}
+    elif request.method == 'DELETE':
+        repository.unregister("nodespec", id)
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    elif request.method == 'PUT':
+        node = request.get_json()
+        # TODO Valude the node here
+        repository.register("nodespec", id, node)
+        return jsonify(node), 200, {'ContentType': 'application/json'}
+
+    return json.dumps({'success': False}), 400, {'ContentType': 'application/json'}
 
 
 @app.route("/flows", methods=['GET', 'POST'])

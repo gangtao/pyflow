@@ -15,6 +15,18 @@
     - url: "/nodes/pyflow.source.cli"
 
 - test:
+    - name: "Add node"
+    - url: "/nodes"
+    - method: "POST"
+    - body: '{"title":"node_plus","id":"my.test.node.plus","port":{"input":[{"name":"port1","order":0},{"name":"port2","order":1}]},"func":"def func(x,y): return x + y "}'
+    - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}
+
+- test:
+    - name: "Delete node by id"
+    - url: "/nodes/my.test.node.plus"
+    - method: "DELETE"
+
+- test:
     - name: "List flows"
     - url: "/flows"
 

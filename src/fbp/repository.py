@@ -12,14 +12,13 @@ def singleton(class_):
     return getinstance
 
 
+# Object repository, the repo should store
+# key as string and value as json object
 class BaseRepo(object):
     def register(self, domain, key, value):
         pass
 
     def unregister(self, domain, key):
-        pass
-
-    def get(self, domain, key=None):
         pass
 
     def get(self, domain, key=None):
@@ -107,8 +106,6 @@ class SqliteRepo(BaseRepo):
         t = (key,)
         c.execute('SELECT value FROM {} WHERE key=?'.format(domain), t)
         result = c.fetchone()
-        print 'SELECT value FROM {} WHERE key=?'.format(domain), key
-        print "fetch on result : ", result
         return json.loads(result[0], strict=False)
 
 
