@@ -10,11 +10,12 @@ define(["comp/nodeListPanel","comp/nodeCodePanel","comp/nodePropertyPanel"], fun
         var nodeCodePanel = nodeEditorPanel.append("div").classed("row", true).attr("id", "nodeCodePanel");
         var nodePropertyPanel = nodeEditorPanel.append("div").classed("row", true).attr("id", "nodePropertyPanel");
 
-        var nodeCode = new NodeCodePanel("nodeCodePanel");
-        nodeCode.render();
 
         var nodeProperty = new NodePropertyPanel("nodePropertyPanel");
         nodeProperty.render();
+
+        var nodeCode = new NodeCodePanel("nodeCodePanel", nodeProperty);
+        nodeCode.render();
 
         $.get("/nodes", function(data) {
         	var nodeList = new NodeListPanel("nodeListPanel",data,nodeCode,nodeProperty);

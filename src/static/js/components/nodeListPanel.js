@@ -37,7 +37,7 @@ define(["util"], function(Util) {
     };
 
     Panel.prototype._loadNode = function(node) {
-        this._codePanel.text(node.func);
+        this._codePanel.update(node);
         this._propertyPanel.update(node);
     };
 

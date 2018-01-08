@@ -152,6 +152,9 @@ def init():
         node = json.loads(r)
         repository.register("nodespec", node["id"], node)
 
+    # TODO
+    # initialize flows
+
 
 if __name__ == "__main__":
     init()

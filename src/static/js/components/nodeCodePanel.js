@@ -1,7 +1,9 @@
 define(["util"], function(Util) {
-    var Panel = function(rootId) {
+    var Panel = function(rootId, propertyPanel) {
         this._rootId = rootId;
         this._editor = undefined;
+        this._propertyPanel = propertyPanel;
+        this._currentNode = undefined;
     };
 
     Panel.prototype.render = function() {
@@ -32,7 +34,16 @@ define(["util"], function(Util) {
         this._editor.setValue(data);
     };
 
-    Panel.prototype._save = function() {};
+    Panel.prototype.update = function(node) {
+        this._currentNode = node;
+        this.text(node.func);
+    };
+
+    Panel.prototype._save = function() {
+        this._currentNode.func = this._editor.getValue();
+        // TODO : update node
+        console.log("Save clicked!");
+    };
 
     return Panel;
 });
