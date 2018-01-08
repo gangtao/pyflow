@@ -208,7 +208,14 @@ define([], function() {
 
     Flow.prototype.run = function(cb) {
         var me = this;
-        $.post("/runflow", { "data": JSON.stringify(this._flow) }, function(data) {
+
+        $.ajax({
+            url: '/runflow',
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(this._flow),
+            dataType: 'json'
+        }).done(function( data ) {
             me._result = data;
             cb(data);
         });

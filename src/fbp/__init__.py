@@ -32,11 +32,16 @@ def create_node(spec_id, id, name):
 
 
 def run_flow(flow_spec):
-    try:
-        flow_spec_obj = json.loads(flow_spec, strict=False)
-    except Exception as e:
-        # print "invalid flow specification format"
-        raise e
+    flow_spec_obj = None
+    
+    if type(flow_spec) is not dict:
+        try:
+            flow_spec_obj = json.loads(flow_spec, strict=False)
+        except Exception as e:
+            # print "invalid flow specification format"
+            raise e
+    else:
+        flow_spec_obj = flow_spec
 
     aflow = flow(flow_spec_obj.get("id"), flow_spec_obj.get("name"))
 

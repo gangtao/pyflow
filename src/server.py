@@ -135,7 +135,7 @@ def get_flow(id):
 
 @app.route("/runflow", methods=['POST'])
 def runflow():
-    data = request.form['data']
+    data = request.get_json()
     return jsonify(fbp.run_flow(data))
 
 
