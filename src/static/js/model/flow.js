@@ -237,7 +237,19 @@ define([], function() {
 
     Flow.prototype.save = function() {
         this._update();
+        /*
         $.post("/flows", { "data": JSON.stringify(this._flow) }, function(data) {
+            console.log(data);
+        });
+        */
+
+        $.ajax({
+            url: '/flows',
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(this._flow),
+            dataType: 'json'
+        }).done(function( data ) {
             console.log(data);
         });
     };

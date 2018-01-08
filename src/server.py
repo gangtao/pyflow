@@ -113,10 +113,9 @@ def get_node(id):
 def flows():
     repository = fbp.repository()
     if request.method == 'POST':
-        data = request.form['data']
-        flow = json.loads(data)
+        flow = request.get_json()
         repository.register("flow", flow["id"], flow)
-        return jsonify(data)
+        return jsonify(flow)
     else:
         flows = repository.get("flow")
         if flows is None:
