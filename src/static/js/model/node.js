@@ -1,5 +1,5 @@
 define([], function() {
-    var Node = function(node) {
+    var Node = function(id) {
         this._node = {};
         this._node.func = "";
         this._node.id = id;
