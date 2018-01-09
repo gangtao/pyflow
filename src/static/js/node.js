@@ -1,4 +1,4 @@
-define(["comp/nodeListPanel","comp/nodeCodePanel","comp/nodePropertyPanel"], function(NodeListPanel,NodeCodePanel,NodePropertyPanel) {
+define(["comp/nodeListPanel","comp/nodeCodePanel","comp/nodePropertyPanel", "util"], function(NodeListPanel,NodeCodePanel,NodePropertyPanel, Util) {
     var Node = {};
 	Node.render = function() {
 		$("#mainUI").empty();

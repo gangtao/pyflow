@@ -4,10 +4,13 @@ define(["model/node","util"], function(Node, Util) {
         this._nodes = data;
         this._codePanel = codePanel;
         this._propertyPanel = propertyPanel;
+        this._addModalId = "add-node-modal";
+        this._addModalTitel = "Add New Node";
     };
 
     Panel.prototype.render = function() {
         $("#" + this._rootId).empty();
+
         var root = d3.select("#" + this._rootId);
         var panel = Util.addPanel(root, "NodeList");
         this._body = panel.select(".panel-body").attr("id", "NodeListBody");
@@ -45,6 +48,15 @@ define(["model/node","util"], function(Node, Util) {
 
     };
 
-    Panel.prototype._addNode = function(node) {};
+    Panel.prototype._addNode = function(node) {
+        this._addModal = Util.getModal(this._addModalId, this._addModalTitel, function(modal) {
+            var body = modal.select(".modal-body");
+            var footer = modal.select(".modal-footer");
+        });
+
+        // convert d3 selection to jquery one
+        // refer to http://collaboradev.com/2014/03/18/d3-and-jquery-interoperability/
+        $("#"+ this._addModalId ).modal('show');
+    };
     return Panel;
 });
