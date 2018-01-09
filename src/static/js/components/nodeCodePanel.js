@@ -4,6 +4,7 @@ define(["util"], function(Util) {
         this._editor = undefined;
         this._propertyPanel = propertyPanel;
         this._currentNode = undefined;
+        this._titleSpan = undefined;
     };
 
     Panel.prototype.render = function() {
@@ -14,7 +15,10 @@ define(["util"], function(Util) {
         this._body = panel.select(".panel-body").attr("id", "NodeCodeBody");
         this._body.append("textarea").classed("form-control", true).attr("id", "NodeCodeEditor");
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
+        var heading = root.select(".panel-heading");
+        this._titleSpan = heading.append("span").classed("label label-primary", true).style("margin-left","5px");
+        heading.append("br");
+        heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
             me._save();
         });
 
@@ -36,6 +40,7 @@ define(["util"], function(Util) {
 
     Panel.prototype.update = function(node) {
         this._currentNode = node;
+        this._titleSpan.text( node.id() + " : " + node.title());
         this.text(node.func());
     };
 

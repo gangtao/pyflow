@@ -81,23 +81,26 @@ define(["model/flow", "util"], function(Flow, Util) {
         var root = d3.select("#" + this._rootId);
         var panel = Util.addPanel(root, "Flow");
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-pencil flowbutton", true).on("click", function() {
+        var heading = root.select(".panel-heading");
+        heading.append("br");
+
+        heading.append("button").classed("glyphicon glyphicon-pencil flowbutton", true).on("click", function() {
             newflow();
         });
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-plus flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-plus flowbutton", true).on("click", function() {
             load();
         });
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
             showFlowSource();
         });
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
             save();
         });
 
-        root.select(".panel-heading").append("button").classed("glyphicon glyphicon-remove  flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-remove  flowbutton", true).on("click", function() {
             clear();
         });
 
