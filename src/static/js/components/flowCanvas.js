@@ -326,11 +326,18 @@ define(["model/flow", "util"], function(Flow, Util) {
     };
 
     function showFlowSource() {
-        $("#flow_source_container").empty();
-        d3.select("#flow_source_container").append("pre").attr("id", "flow_source_text");
+        var modal_id = "flow_source_modal";
+        var container_id = "flow_source_container";
+        var showSourceModal = Util.getModal(modal_id, "Flow Description", function(modal) {
+            var body = modal.select(".modal-body");
+            body.attr("id", container_id).style("overflow", "auto");
+        });
+
+        $("#" + container_id).empty();
+        d3.select("#" + container_id).append("pre").attr("id", "flow_source_text");
         var value = js_beautify(JSON.stringify(currentFlow.flow()));
         $("#flow_source_text").text(value);
-        $("#flow_source_modal").modal("show");
+        $("#" + modal_id).modal("show");
     };
 
     function clear() {
@@ -342,6 +349,24 @@ define(["model/flow", "util"], function(Flow, Util) {
 
     function newflow() {
         clear();
+
+        var modal_id = "flow_new_modal";
+        var flowNewModal = Util.getModal(modal_id, "Load Flow", function(modal) {
+            var body = modal.select(".modal-body");
+            body.style("overflow", "auto");
+            var form = body.append("form");
+            var group1 = form.append("div").classed("form-group",true);
+            group1.append("label").attr("for","flowid").text("Flow ID");
+            group1.append("a").attr("href","#").attr("id","flowid").text("sampleId");
+
+            var group2 = form.append("div").classed("form-group",true);
+            group2.append("label").attr("for","flowname").text("Flow Name");
+            group2.append("a").attr("href","#").attr("id","flowname").text("sampleName");
+
+            var footer = modal.select(".modal-footer");
+            footer.append("button").attr("type","button").classed("btn btn-default",true).attr("id","new_flow_btn").text("New");
+        });
+
         $("#flowid").text("xxx.xxx.xxx").editable();
         $("#flowname").text("untitled").editable();
         $("#new_flow_btn").click(function() {
@@ -358,16 +383,24 @@ define(["model/flow", "util"], function(Flow, Util) {
     function load() {
         //load existing flows
         $.get("/flows", function(data) {
-            console.log(data);
-            $("#flow_load_container").empty();
-            var flowItems = d3.select("#flow_load_container").append("ul").selectAll("li").data(data).enter().append("li").append("a").text(function(d) {
+            //console.log(data);
+
+            var modal_id = "flow_load_modal";
+            var container_id = "flow_load_container";
+            var flowLoadModal = Util.getModal(modal_id, "Load Flow", function(modal) {
+                var body = modal.select(".modal-body");
+                body.attr("id", container_id).style("overflow", "auto");
+            });
+
+            $("#"+container_id).empty();
+            var flowItems = d3.select("#"+container_id).append("ul").selectAll("li").data(data).enter().append("li").append("a").text(function(d) {
                 return d.id + ":" + d.name;
             }).on("click", function(d) {
-                $("#flow_load_modal").modal("hide");
+                $("#"+modal_id).modal("hide");
                 loadflow(d);
             });
 
-            $("#flow_load_modal").modal("show");
+            $("#"+modal_id).modal("show");
         });
     };
 
