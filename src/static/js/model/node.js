@@ -1,10 +1,17 @@
 define([], function() {
+	var default_func = "def func()\n\t return None";
+
     var Node = function(node) {
         if (node === undefined) {
             this._node = {};
             this._node.id = undefined;
-            this._node.func = "";
+            this._node.func = default_func;
+            // Default port is empty input  
+            // and default out for output
             this._node.port = {};
+            this._node.port.input = [];
+            this._node.port.output = [];
+            this._node.port.output.push({"name":"out"});
             this._node.title = "";
         } else {
             this._node = node
@@ -52,6 +59,17 @@ define([], function() {
             contentType: 'application/json',
             type: 'POST',
             data: JSON.stringify(this._node),
+            dataType: 'json'
+        }).done(function(data) {
+            console.log(data);
+        });
+    };
+
+    Node.prototype.delete = function() {
+        $.ajax({
+            url: '/nodes/' + this.id(),
+            contentType: 'application/json',
+            type: 'DELETE',
             dataType: 'json'
         }).done(function(data) {
             console.log(data);

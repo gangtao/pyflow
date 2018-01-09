@@ -365,10 +365,11 @@ define(["model/flow", "util"], function(Flow, Util) {
 
             var footer = modal.select(".modal-footer");
             footer.append("button").attr("type","button").classed("btn btn-default",true).attr("id","new_flow_btn").text("New");
+
+            $("#flowid").text("xxx.xxx.xxx").editable();
+            $("#flowname").text("untitled").editable();
         });
 
-        $("#flowid").text("xxx.xxx.xxx").editable();
-        $("#flowname").text("untitled").editable();
         $("#new_flow_btn").click(function() {
             $("#flow_new_modal").modal("hide");
             currentFlow = new Flow($("#flowid").text(), $("#flowname").text());
