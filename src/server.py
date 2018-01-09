@@ -134,8 +134,11 @@ def get_flow(id):
 
 @app.route("/runflow", methods=['POST'])
 def runflow():
-    data = request.get_json()
-    return jsonify(fbp.run_flow(data))
+    try:
+        data = request.get_json()
+        return jsonify(fbp.run_flow(data))
+    except Exception as e:
+        return json.dumps({ "error": str(e) }), 500 
 
 
 # initialize the repository

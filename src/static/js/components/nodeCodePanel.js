@@ -40,9 +40,9 @@ define(["util"], function(Util) {
     };
 
     Panel.prototype._save = function() {
-        this._currentNode.func = this._editor.getValue();
-        // TODO : update node
-        console.log("Save clicked!");
+        this._currentNode.func(this._editor.getValue());
+        this._currentNode.save();
+        console.log("node saved!");
     };
 
     return Panel;

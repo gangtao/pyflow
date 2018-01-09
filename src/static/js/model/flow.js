@@ -218,6 +218,8 @@ define([], function() {
         }).done(function( data ) {
             me._result = data;
             cb(data);
+        }).fail(function( data ) {
+            // TODO : error handling here
         });
     };
 
