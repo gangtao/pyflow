@@ -19,16 +19,16 @@ define(["util"], function(Util) {
 
         var row_id = tbody.append("tr");
         row_id.append("td").text("ID");
-        row_id.append("td").text(node.id);
+        row_id.append("td").text(node.id());
 
         var row_title = tbody.append("tr");
         row_title.append("td").text("Title");
-        row_title.append("td").text(node.title);
+        row_title.append("td").text(node.title());
 
         var row_port = tbody.append("tr");
         row_port.append("td").text("Ports");
         var portDiv = row_port.append("td").append("div");
-        this._updatePorts(node.port, portDiv);
+        this._updatePorts(node.port(), portDiv);
     };
 
     Panel.prototype._updatePorts = function(ports, div) {

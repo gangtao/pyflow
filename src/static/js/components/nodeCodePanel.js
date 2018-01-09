@@ -36,7 +36,7 @@ define(["util"], function(Util) {
 
     Panel.prototype.update = function(node) {
         this._currentNode = node;
-        this.text(node.func);
+        this.text(node.func());
     };
 
     Panel.prototype._save = function() {

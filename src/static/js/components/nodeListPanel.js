@@ -1,7 +1,7 @@
-define(["util"], function(Util) {
+define(["model/node","util"], function(Node, Util) {
     var Panel = function(rootId, data, codePanel, propertyPanel) {
         this._rootId = rootId;
-        this._data = data;
+        this._nodes = data;
         this._codePanel = codePanel;
         this._propertyPanel = propertyPanel;
     };
@@ -14,15 +14,15 @@ define(["util"], function(Util) {
         var me = this;
 
         var nodes = [];
-        for (d in this._data) {
-            nodes.push(this._data[d])
+        for (d in this._nodes) {
+            nodes.push(new Node(this._nodes[d]))
         };
 
         var nodeList = this._body.append("ul");
         var nodeItems = nodeList.selectAll("li").data(nodes).enter().append("li").append("div");
 
         nodeItems.append("a").text(function(d) {
-            return d.id;
+            return d.id();
         }).on("click", function(d) {
             me._loadNode(d);
         });
