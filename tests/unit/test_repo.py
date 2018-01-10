@@ -45,10 +45,31 @@ class TestFBPRepository(unittest.TestCase):
         aflow.run(bnode)
 
         print bnode.get_outport_value()
+        print repo.domains()
 
     #@unittest.skip("")
     def test_respository2(self):
         repo = repository()
+
+        anode = create_node("flow.rest", "myflow.rest", "rest")
+
+        aflow = flow("my.test.aflow", "A flow test")
+        aflow.add_node(anode)
+
+        anode.set_inport_value("url", "https://api.github.com/events")
+
+        aflow.run(anode)
+
+        print anode.get_outport_value('json')
+        print repo.domains()
+
+    def test_respository3(self):
+        repo = repository()
+        print repo.dumps("./repo.json")
+
+    def test_respository4(self):
+        repo = repository()
+        repo.loads("./repo.json")
 
         anode = create_node("flow.rest", "myflow.rest", "rest")
 

@@ -43,3 +43,17 @@
     - method: "POST"
     - body: '{"id":"flowbuilder.gen.dir","name":"BuilderSample","nodes":[{"id":"node1419317316499","spec_id":"pyflow.source.cli","name":"cli","ports":[{"name":"command","value":"dir"}],"is_end":1}],"links":[]}'
     - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}
+
+- test:
+    - name: "Dumps repository"
+    - url: "/dumprepo"
+    - method: "POST"
+    - body: '{"path":"./repo.json"}'
+    - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}
+
+- test:
+    - name: "Load repository"
+    - url: "/loadrepo"
+    - method: "POST"
+    - body: '{"path":"./repo.json"}'
+    - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}
