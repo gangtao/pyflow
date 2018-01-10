@@ -94,7 +94,6 @@ define(["util", "model/flow"], function(Util, Flow) {
     };
 
     Panel.prototype._test = function() {
-        //TODO : generate uuid for each test modal
         var uuid = new Date().getTime();
         var node_test_modal_id = "node-test-modal";
         var node_test_modal_title = "Test Node";

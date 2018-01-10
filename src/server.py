@@ -137,7 +137,29 @@ def runflow():
         data = request.get_json()
         return jsonify(fbp.run_flow(data))
     except Exception as e:
-        return json.dumps({ "error": str(e) }), 500 
+        return json.dumps({"error": str(e)}), 500
+
+
+@app.route("/dumprepo", methods=['POST'])
+def dumprepo():
+    try:
+        data = request.get_json()
+        repository = fbp.repository()
+        repository.dumps(data["path"])
+        return jsonify(data)
+    except Exception as e:
+        return json.dumps({"error": str(e)}), 500
+
+
+@app.route("/loadrepo", methods=['POST'])
+def loadrepo():
+    try:
+        data = request.get_json()
+        repository = fbp.repository()
+        repository.loads(data["path"])
+        return jsonify(data)
+    except Exception as e:
+        return json.dumps({"error": str(e)}), 500
 
 
 # initialize the repository

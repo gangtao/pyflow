@@ -24,6 +24,12 @@ class BaseRepo(object):
     def get(self, domain, key=None):
         pass
 
+    def domains(self):
+        pass
+
+    def clean(self):
+        pass
+
 
 class IMRepo(BaseRepo):
 
@@ -61,14 +67,24 @@ class IMRepo(BaseRepo):
 
         return self._repo.get(domain)[key]
 
+    def domains(self):
+        return self._repo.keys()
+
+    def clean(self):
+        self._repo = dict()
+        return
+
 
 class SqliteRepo(BaseRepo):
 
     def __init__(self):
         BaseRepo.__init__(self)
+        # TODO : config the db name here
         self._conn = sqlite3.connect('repo.db', check_same_thread=False)
+        self._domains = set()
 
     def register(self, domain, key, value):
+        self._domains.add(domain)
         c = self._conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS {}
                      (key text PRIMARY KEY, value text)'''.format(domain))
@@ -108,11 +124,22 @@ class SqliteRepo(BaseRepo):
         result = c.fetchone()
         return json.loads(result[0], strict=False)
 
+    def domains(self):
+        return list(self._domains)
+
+    def clean(self):
+        c = self._conn.cursor()
+        for domain in self._domains:
+            c.execute('''DELETE FROM {} '''.format(domain))
+        self._conn.commit()
+        self._domains = set()
+        return
+
 
 @singleton
 class repository(object):
-    # by default, a in memory repository is loaded
-    # to be replace by sqllite
+    # a default Sqlite repo is use, need read configuration
+    # to use different DB for repo
     _repo = SqliteRepo()
 
     def register(self, domain, key, value):
@@ -126,3 +153,25 @@ class repository(object):
 
     def load(self, repo):
         self._repo = repo
+
+    def domains(self):
+        return self._repo.domains()
+
+    def clean(self):
+        return self._repo.clean()
+
+    def dumps(self, path):
+        repo = dict()
+        for domain in self.domains():
+            repo[domain] = self.get(domain)
+
+        with open(path, "w") as f:
+            f.write(json.dumps(repo, indent=2))
+
+    def loads(self, path):
+        self.clean()
+        with open(path, "r") as f:
+            repo = json.loads(f.read())
+            for domain, domain_value in repo.iteritems():
+                for key, value in domain_value.iteritems():
+                    self.register(domain, key, value)
