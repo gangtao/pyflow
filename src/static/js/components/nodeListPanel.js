@@ -93,7 +93,7 @@ define(["model/node","util"], function(Node, Util) {
         var delete_node_button = "delete-node-button"
         var me = this;
 
-        deletModal = Util.getModal(delete_modal_id, delete_modal_titel, function(modal) {
+        var deletModal = Util.getModal(delete_modal_id, delete_modal_titel, function(modal) {
             var body = modal.select(".modal-body");
             var footer = modal.select(".modal-footer");
 

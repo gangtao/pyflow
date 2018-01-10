@@ -55,16 +55,16 @@ define([], function() {
     Flow.prototype.link = function(link) {
         source = link.source.split(":");
         target = link.target.split(":");
-        this.connect(source[0],target[0],source[1],target[1]);
+        this.connect(source[0], target[0], source[1], target[1]);
     };
 
     Flow.prototype.connect = function(sourceId, targetId, sourcePort, targetPort) {
         var index = this._findConnection(sourceId, targetId, sourcePort, targetPort);
-        if ( index == -1 ) {
-           this._flow.links.push({
+        if (index == -1) {
+            this._flow.links.push({
                 "source": sourceId + ":" + sourcePort,
                 "target": targetId + ":" + targetPort
-            }); 
+            });
         }
 
         // TODO: in case it is move from one target to another, need remove the previous link 
@@ -206,7 +206,7 @@ define([], function() {
         }
     };
 
-    Flow.prototype.run = function(cb) {
+    Flow.prototype.run = function(cb, fail) {
         var me = this;
 
         $.ajax({
@@ -215,11 +215,13 @@ define([], function() {
             type: 'POST',
             data: JSON.stringify(this._flow),
             dataType: 'json'
-        }).done(function( data ) {
+        }).done(function(data) {
             me._result = data;
             cb(data);
-        }).fail(function( data ) {
+        }).fail(function(data) {
             // TODO : error handling here
+            console.log(data);
+            fail(data);
         });
     };
 
@@ -230,7 +232,7 @@ define([], function() {
 
     Flow.prototype._update = function() {
         this._flow.nodes.map(function(node) {
-            var el = $("#"+ node.id);
+            var el = $("#" + node.id);
             var position = el.position();
             node.ui.x = position.left + "px";
             node.ui.y = position.top + "px";
@@ -246,7 +248,7 @@ define([], function() {
             type: 'POST',
             data: JSON.stringify(this._flow),
             dataType: 'json'
-        }).done(function( data ) {
+        }).done(function(data) {
             console.log(data);
         });
     };
