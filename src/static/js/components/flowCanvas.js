@@ -84,24 +84,24 @@ define(["model/flow", "util"], function(Flow, Util) {
         var heading = root.select(".panel-heading");
         heading.append("br");
 
-        heading.append("button").classed("glyphicon glyphicon-pencil flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-plus-sign flowbutton", true).on("click", function() {
             newflow();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-plus flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-floppy-open flowbutton", true).on("click", function() {
             load();
-        });
-
-        heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
-            showFlowSource();
         });
 
         heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
             save();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-remove  flowbutton", true).on("click", function() {
+        heading.append("button").classed("glyphicon glyphicon-trash  flowbutton", true).on("click", function() {
             clear();
+        });
+
+        heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
+            showFlowSource();
         });
 
         panel.select(".panel-body").classed("flowbody", true).append("div").attr("id", FLOW_PANEL_ID);
@@ -351,7 +351,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         clear();
 
         var modal_id = "flow_new_modal";
-        var flowNewModal = Util.getModal(modal_id, "Load Flow", function(modal) {
+        var flowNewModal = Util.getModal(modal_id, "New Flow", function(modal) {
             var body = modal.select(".modal-body");
             body.style("overflow", "auto");
             var form = body.append("form");

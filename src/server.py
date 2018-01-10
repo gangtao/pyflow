@@ -76,7 +76,6 @@ def nodes():
     repository = fbp.repository()
     if request.method == 'POST':
         node = request.get_json()
-        print node
         repository.register("nodespec", node["id"], node)
         return jsonify(node), 200, {'ContentType': 'application/json'}
     else:

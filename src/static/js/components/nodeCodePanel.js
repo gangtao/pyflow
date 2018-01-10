@@ -7,6 +7,10 @@ define(["util"], function(Util) {
         this._titleSpan = undefined;
     };
 
+    Panel.prototype.connectListPanel = function(listPanel) {
+        this._listPanel = listPanel;
+    };
+
     Panel.prototype.render = function() {
         $("#" + this._rootId).empty();
         var root = d3.select("#" + this._rootId);
@@ -18,8 +22,21 @@ define(["util"], function(Util) {
         var heading = root.select(".panel-heading");
         this._titleSpan = heading.append("span").classed("label label-primary", true).style("margin-left", "5px");
         heading.append("br");
+
+        heading.append("button").classed("glyphicon glyphicon-plus-sign flowbutton", true).on("click", function() {
+            me._listPanel.addNode();
+        });
+
         heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
             me._save();
+        });
+
+        heading.append("button").classed("glyphicon glyphicon-trash  flowbutton", true).on("click", function() {
+            me._listPanel.deleteNode(me._currentNode);
+        });
+
+        heading.append("button").classed("glyphicon glyphicon-glass  flowbutton", true).on("click", function() {
+            // do test
         });
 
         this._editor = CodeMirror.fromTextArea(document.getElementById("NodeCodeEditor"), {

@@ -14,7 +14,7 @@ define(["model/node","util"], function(Node, Util) {
         $("#" + this._rootId).empty();
 
         var root = d3.select("#" + this._rootId);
-        var panel = Util.addPanel(root, "NodeList");
+        var panel = Util.addPanel(root, "Nodes");
         this._body = panel.select(".panel-body").attr("id", "NodeListBody");
         var me = this;
 
@@ -29,13 +29,17 @@ define(["model/node","util"], function(Node, Util) {
             me._loadNode(d);
         });
 
+        // remove the delete icon and add new icon on the list
+        /*
         nodeItems.append("a").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function(d) {
-            me._deleteNode(d);
+            me.deleteNode(d);
         });
+        
 
         var addItems = nodeList.append("li").append("div").append("a").classed("glyphicon glyphicon-plus", true).on("click", function(d) {
-            me._addNode();
+            me.addNode();
         });
+        */
     };
 
     Panel.prototype._loadNode = function(node) {
@@ -43,7 +47,7 @@ define(["model/node","util"], function(Node, Util) {
         this._propertyPanel.update(node);
     };
 
-    Panel.prototype._addNode = function(node) {
+    Panel.prototype.addNode = function() {
         var add_modal_id = "add-node-modal";
         var add_modal_titel = "Add New Node";
         var add_node_id = "add_node_id";
@@ -83,7 +87,7 @@ define(["model/node","util"], function(Node, Util) {
         $("#"+ add_modal_id ).modal('show');
     };
 
-    Panel.prototype._deleteNode = function(node) {
+    Panel.prototype.deleteNode = function(node) {
         var delete_modal_id = "delete-node-modal";
         var delete_modal_titel = "Delete Node";
         var delete_node_button = "delete-node-button"
