@@ -57,14 +57,20 @@ define(["model/flow", "util"], function(Flow, Util) {
     var FLOW_PANEL_ID = "flow-panel";
 
     var currentFlow = undefined;
+    var selectedNode = undefined;
     var inspector = undefined;
     var canvas = undefined;
-    var instance = undefined;
+    var instance = jsPlumb.getInstance({
+        Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
+        DragOptions: { cursor: "pointer", zIndex: 2000 },
+        Container: FLOW_PANEL_ID
+    });
 
 
     var Canvas = function Canvas(rootId, nodeSpec, nodeInspector) {
         this._rootId = rootId;
         this._nodeSpec = nodeSpec;
+        this._instance = instance;
         inspector = nodeInspector;
         currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
         canvas = this;
@@ -80,12 +86,13 @@ define(["model/flow", "util"], function(Flow, Util) {
     Canvas.prototype.render = function() {
         var root = d3.select("#" + this._rootId);
         var panel = Util.addPanel(root, "Flow");
+        var me = this;
 
         var heading = root.select(".panel-heading");
         heading.append("br");
 
         heading.append("button").classed("glyphicon glyphicon-plus-sign flowbutton", true).on("click", function() {
-            newflow();
+            me._newflow();
         });
 
         heading.append("button").classed("glyphicon glyphicon-floppy-open flowbutton", true).on("click", function() {
@@ -104,14 +111,21 @@ define(["model/flow", "util"], function(Flow, Util) {
             showFlowSource();
         });
 
+        heading.append("button").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function() {
+            me._removeNode();
+        }).style("visibility", "hidden");
+
         panel.select(".panel-body").classed("flowbody", true).append("div").attr("id", FLOW_PANEL_ID);
 
         //Initialize JsPlumb
+        /*
         instance = jsPlumb.getInstance({
             Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
             DragOptions: { cursor: "pointer", zIndex: 2000 },
             Container: FLOW_PANEL_ID
         });
+        */
+
         //Add node on drag & drop
         $("#" + FLOW_PANEL_ID).on("drop", function(ev) {
             //avoid event conlict for jsPlumb
@@ -124,7 +138,7 @@ define(["model/flow", "util"], function(Flow, Util) {
             var my = "" + ev.originalEvent.offsetY + "px";
 
             var nodeSpecId = ev.originalEvent.dataTransfer.getData("text");
-            var nodeSpec = canvas.getNodeSpecById(nodeSpecId);
+            var nodeSpec = me.getNodeSpecById(nodeSpecId);
             if (nodeSpec === undefined) {
                 return;
             }
@@ -254,8 +268,11 @@ define(["model/flow", "util"], function(Flow, Util) {
             })
             .on("click", function(d) {
                 inspector.showNodeDetails(d, currentFlow);
+                selectedNode = d;
+                d3.select(".glyphicon-remove-circle").style("visibility", "visible");
             })
             .on("mouseover", function(d) {
+                //TODO : handling hover style here
                 //d3.select(this).style("border", "3px #000 solid");
             })
             .on("mouseout", function(d) {
@@ -347,7 +364,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         _initInstance(instance);
     };
 
-    function newflow() {
+    Canvas.prototype._newflow = function () {
         clear();
 
         var modal_id = "flow_new_modal";
@@ -355,16 +372,16 @@ define(["model/flow", "util"], function(Flow, Util) {
             var body = modal.select(".modal-body");
             body.style("overflow", "auto");
             var form = body.append("form");
-            var group1 = form.append("div").classed("form-group",true);
-            group1.append("label").attr("for","flowid").text("Flow ID");
-            group1.append("a").attr("href","#").attr("id","flowid").text("sampleId");
+            var group1 = form.append("div").classed("form-group", true);
+            group1.append("label").attr("for", "flowid").text("Flow ID");
+            group1.append("a").attr("href", "#").attr("id", "flowid").text("sampleId");
 
-            var group2 = form.append("div").classed("form-group",true);
-            group2.append("label").attr("for","flowname").text("Flow Name");
-            group2.append("a").attr("href","#").attr("id","flowname").text("sampleName");
+            var group2 = form.append("div").classed("form-group", true);
+            group2.append("label").attr("for", "flowname").text("Flow Name");
+            group2.append("a").attr("href", "#").attr("id", "flowname").text("sampleName");
 
             var footer = modal.select(".modal-footer");
-            footer.append("button").attr("type","button").classed("btn btn-default",true).attr("id","new_flow_btn").text("New");
+            footer.append("button").attr("type", "button").classed("btn btn-default", true).attr("id", "new_flow_btn").text("New");
 
             $("#flowid").text("xxx.xxx.xxx").editable();
             $("#flowname").text("untitled").editable();
@@ -393,15 +410,15 @@ define(["model/flow", "util"], function(Flow, Util) {
                 body.attr("id", container_id).style("overflow", "auto");
             });
 
-            $("#"+container_id).empty();
-            var flowItems = d3.select("#"+container_id).append("ul").selectAll("li").data(data).enter().append("li").append("a").text(function(d) {
+            $("#" + container_id).empty();
+            var flowItems = d3.select("#" + container_id).append("ul").selectAll("li").data(data).enter().append("li").append("a").text(function(d) {
                 return d.id + ":" + d.name;
             }).on("click", function(d) {
-                $("#"+modal_id).modal("hide");
+                $("#" + modal_id).modal("hide");
                 loadflow(d);
             });
 
-            $("#"+modal_id).modal("show");
+            $("#" + modal_id).modal("show");
         });
     };
 
@@ -419,7 +436,14 @@ define(["model/flow", "util"], function(Flow, Util) {
             currentFlow.connect(source[0], target[0], source[1], target[1]);
             connectPorts(instance, $("#" + [source[0]])[0], source[1], $("#" + [target[0]])[0], target[1]);
         });
-    }
+    };
+
+    Canvas.prototype._removeNode = function(){
+        this._instance.remove(selectedNode.nodeId);
+        d3.select(".glyphicon-remove-circle").style("visibility", "hidden");
+        //TODO : remove the node and links from current flow
+        //TODO : clear the inspector as well
+    };
 
     return Canvas;
 });

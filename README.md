@@ -113,9 +113,9 @@ This model is a very simple one and has some limitations.
 PyFlow server is a flask based REST server, refer to `tests/rest/test.yaml` for all the support Rest API
 
 # UI and Work Flow
-PyFlow Web UI leveraging [jsplumb](https://jsplumbtoolkit.com/) to provide a flow building and visulaizing functions.  Through this Web UI, the user can:
-- create, edit, test, delete node
-- create, view, run flow
+PyFlow Web UI leverages [jsplumb](https://jsplumbtoolkit.com/) to provide flow building and visulaizing functions.  Through this Web UI, the user can:
+- create, edit, test, delete nodes
+- create, view, run flows
 - import/export the repository that contains all the definition of the flows and nodes
 
 # Build and Test
