@@ -96,6 +96,7 @@ Here is a sample definition of a flow:
 	}]
 }
 ```
+![sample](https://github.com/gangtao/pyflow/raw/master/docs/sample_add.png)
 
 note, each input port can have input values in case there is no output port connected to it. and if the is_end is true which means this node is the last node to run for a flow.
 
