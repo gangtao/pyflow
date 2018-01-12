@@ -101,11 +101,22 @@ Here is a sample definition of a flow:
 note, each input port can have input values in case there is no output port connected to it. and if the is_end is true which means this node is the last node to run for a flow.
 
 
-### Repository
-
 
 # Flow Engine 
+A simple flow engine is implemented that will scan the the flow, create a stack orderred by the link of the node to make sure running node sequetially according to the dependency of the node.  So the node will no depenency will run first and then the linked nodes to those node that run complete.
+This model is a very simple one and has some limitations.
+- call `exec(spec.get("func"))` to execute the python function is not secure, considering to support run the function in container
+- does not support parallel processing
 
+
+# Flow Rest API
+PyFlow server is a flask based REST server, refer to `tests/rest/test.yaml` for all the support Rest API
+
+# UI and Work Flow
+PyFlow Web UI leveraging [jsplumb](https://jsplumbtoolkit.com/) to provide a flow building and visulaizing functions.  Through this Web UI, the user can:
+- create, edit, test, delete node
+- create, view, run flow
+- import/export the repository that contains all the definition of the flows and nodes
 
 # Build and Test
 ## Run locally
