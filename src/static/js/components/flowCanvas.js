@@ -55,10 +55,6 @@ define(["model/flow", "util"], function(Flow, Util) {
         };
 
     var FLOW_PANEL_ID = "flow-panel";
-
-    var selectedNode = undefined;
-    var inspector = undefined;
-
     var instance = jsPlumb.getInstance({
         Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
         DragOptions: { cursor: "pointer", zIndex: 2000 },
@@ -70,7 +66,8 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._rootId = rootId;
         this._nodeSpec = nodeSpec;
         this._instance = instance;
-        inspector = nodeInspector;
+        this._inspector = nodeInspector;
+        this._selectedNode = undefined;
         this._currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
     };
 
@@ -270,8 +267,8 @@ define(["model/flow", "util"], function(Flow, Util) {
                 return d.title;
             })
             .on("click", function(d) {
-                inspector.showNodeDetails(d, me._currentFlow);
-                selectedNode = d;
+                me._inspector.showNodeDetails(d, me._currentFlow);
+                me._selectedNode = d;
                 d3.select(".glyphicon-remove-circle").style("visibility", "visible");
             })
             .on("mouseover", function(d) {
@@ -445,7 +442,7 @@ define(["model/flow", "util"], function(Flow, Util) {
     };
 
     Canvas.prototype._removeNode = function(){
-        this._instance.remove(selectedNode.nodeId);
+        this._instance.remove(this._selectedNode.nodeId);
         d3.select(".glyphicon-remove-circle").style("visibility", "hidden");
         //TODO : remove the node and links from current flow
         //TODO : clear the inspector as well
