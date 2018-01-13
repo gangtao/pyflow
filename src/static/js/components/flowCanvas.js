@@ -56,10 +56,9 @@ define(["model/flow", "util"], function(Flow, Util) {
 
     var FLOW_PANEL_ID = "flow-panel";
 
-    var currentFlow = undefined;
     var selectedNode = undefined;
     var inspector = undefined;
-    var canvas = undefined;
+
     var instance = jsPlumb.getInstance({
         Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
         DragOptions: { cursor: "pointer", zIndex: 2000 },
@@ -72,8 +71,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._nodeSpec = nodeSpec;
         this._instance = instance;
         inspector = nodeInspector;
-        currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
-        canvas = this;
+        this._currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
     };
 
     Canvas.prototype.getNodeSpecById = function(id) {
@@ -96,19 +94,19 @@ define(["model/flow", "util"], function(Flow, Util) {
         });
 
         heading.append("button").classed("glyphicon glyphicon-floppy-open flowbutton", true).on("click", function() {
-            load();
+            me._load();
         });
 
         heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
-            save();
+            me._save();
         });
 
         heading.append("button").classed("glyphicon glyphicon-trash  flowbutton", true).on("click", function() {
-            clear();
+            me._clear();
         });
 
         heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
-            showFlowSource();
+            me._showFlowSource();
         });
 
         heading.append("button").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function() {
@@ -154,39 +152,40 @@ define(["model/flow", "util"], function(Flow, Util) {
             node_def.ui.x = mx;
             node_def.ui.y = my;
 
-            currentFlow.addnode(node_def);
-            drawNode(node_def);
+            me._currentFlow.addnode(node_def);
+            me._drawNode(node_def);
 
         }).on("dragover", function(ev) {
             ev.preventDefault();
         });
 
-        _initInstance(instance);
+        this._initInstance();
 
         //drawSampleFlow(instance);
-        jsPlumb.fire("jsFlowLoaded", instance);
+        jsPlumb.fire("jsFlowLoaded", this._instance);
     };
 
-    function _initInstance(instance) {
-        instance.bind("connection", function(info, originalEvent) {
+    Canvas.prototype._initInstance = function() {
+        var me = this;
+        this._instance.bind("connection", function(info, originalEvent) {
             var sourceId = info.sourceId;
             var targetId = info.targetId;
             var sourcePort = info.sourceEndpoint.getLabel();
             var targetPort = info.targetEndpoint.getLabel();
 
-            currentFlow.connect(sourceId, targetId, sourcePort, targetPort);
+            me._currentFlow.connect(sourceId, targetId, sourcePort, targetPort);
         });
 
-        instance.bind("connectionDetached", function(info, originalEvent) {
+        this._instance.bind("connectionDetached", function(info, originalEvent) {
             var sourceId = info.sourceId;
             var targetId = info.targetId;
             var sourcePort = info.sourceEndpoint.getLabel();
             var targetPort = info.targetEndpoint.getLabel();
 
-            currentFlow.disconnect(sourceId, targetId, sourcePort, targetPort);
+            me._currentFlow.disconnect(sourceId, targetId, sourcePort, targetPort);
         });
 
-        instance.bind("connectionMoved", function(info, originalEvent) {
+        this._instance.bind("connectionMoved", function(info, originalEvent) {
             var osourceId = info.originalSourceId;
             var otargetId = info.originalTargetId;
             var osourcePort = info.originalSourceEndpoint.getLabel();
@@ -197,33 +196,36 @@ define(["model/flow", "util"], function(Flow, Util) {
             var nsourcePort = info.newSourceEndpoint.getLabel();
             var ntargetPort = info.newTargetEndpoint.getLabel();
 
-            currentFlow.disconnect(osourceId, otargetId, osourcePort, otargetPort);
-            currentFlow.connect(nsourceId, ntargetId, nsourcePort, ntargetPort);
+            me._currentFlow.disconnect(osourceId, otargetId, osourcePort, otargetPort);
+            me._currentFlow.connect(nsourceId, ntargetId, nsourcePort, ntargetPort);
         });
     }
 
-    function drawSampleFlow(instance) {
+    Canvas.prototype._drawSampleFlow = function() {
         //two sample nodes with one default connection
-        var node1 = addNode(FLOW_PANEL_ID, "node1", { "title": "node1" }, { x: "80px", y: "120px" });
-        var node2 = addNode(FLOW_PANEL_ID, "node2", { "title": "node2" }, { x: "380px", y: "120px" });
+        var node1 = this._addNode(FLOW_PANEL_ID, "node1", { "title": "node1" }, { x: "80px", y: "120px" });
+        var node2 = this._addNode(FLOW_PANEL_ID, "node2", { "title": "node2" }, { x: "380px", y: "120px" });
 
-        addPorts(instance, node1, ["out1", "out2"], "output");
-        addPorts(instance, node2, ["in", "in1", "in2"], "input");
+        this._addPorts(node1, ["out1", "out2"], "output");
+        this._addPorts(node2, ["in", "in1", "in2"], "input");
 
-        connectPorts(instance, node1, "out2", node2, "in");
-        connectPorts(instance, node1, "out2", node2, "in1");
+        this._connectPorts(node1, "out2", node2, "in");
+        this._connectPorts(node1, "out2", node2, "in1");
 
-        instance.draggable($(node1));
-        instance.draggable($(node2));
+        this._instance.draggable($(node1));
+        this._instance.draggable($(node2));
     };
 
-    function drawNode(nodedef) {
-        var nodeSpec = canvas.getNodeSpecById(nodedef.spec_id);
+    Canvas.prototype._drawNode = function(nodedef) {
+        var nodeSpec = this.getNodeSpecById(nodedef.spec_id);
         if (nodeSpec === undefined) {
             console.log("Now such spec : " + nodedef.spec_id);
             return;
         }
-        var node = addNode(FLOW_PANEL_ID, nodedef.id, nodeSpec, { x: nodedef.ui.x, y: nodedef.ui.y });
+
+        //TODO: handle the case where nodedef has no ui information.
+        // DO auto layout, or put everything at 0.0
+        var node = this._addNode(FLOW_PANEL_ID, nodedef.id, nodeSpec, { x: nodedef.ui.x, y: nodedef.ui.y });
         var i = 0,
             length = nodeSpec.port.input.length;
         var input_port_name = [];
@@ -231,26 +233,27 @@ define(["model/flow", "util"], function(Flow, Util) {
             input_port_name.push(nodeSpec.port.input[i].name);
             //TODO : sort by order
         }
-        addPorts(instance, node, input_port_name, "input");
+        this._addPorts(node, input_port_name, "input");
 
         if (nodeSpec.port.output === undefined) {
-            addPorts(instance, node, ["out"], "output");
+            this._addPorts(node, ["out"], "output");
         } else {
             i = 0, length = nodeSpec.port.output.length;
             var output_port_name = [];
             for (; i < length; i++) {
                 output_port_name.push(nodeSpec.port.output[i].name);
             }
-            addPorts(instance, node, output_port_name, "output");
+            this._addPorts(node, output_port_name, "output");
         }
 
-        instance.draggable($(node));
+        this._instance.draggable($(node));
         return node;
     }
 
     //Flow UI control logic
     //UI Code to create node and port
-    function addNode(parentId, nodeId, nodeSpec, position) {
+    Canvas.prototype._addNode = function(parentId, nodeId, nodeSpec, position) {
+        var me = this;
         var panel = d3.select("#" + parentId);
         //construct the node data copied from the nodeSpec
         var data = {};
@@ -267,7 +270,7 @@ define(["model/flow", "util"], function(Flow, Util) {
                 return d.title;
             })
             .on("click", function(d) {
-                inspector.showNodeDetails(d, currentFlow);
+                inspector.showNodeDetails(d, me._currentFlow);
                 selectedNode = d;
                 d3.select(".glyphicon-remove-circle").style("visibility", "visible");
             })
@@ -282,7 +285,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         return jsPlumb.getSelector("#" + nodeId)[0];
     };
 
-    function addPorts(instance, node, ports, type) {
+    Canvas.prototype._addPorts = function(node, ports, type) {
         //Assume horizental layout
         var number_of_ports = ports.length;
         var i = 0;
@@ -307,12 +310,12 @@ define(["model/flow", "util"], function(Flow, Util) {
             var endpoint = undefined;
 
             if (isSource) {
-                endpoint = instance.addEndpoint(node, sourceEndpoint, {
+                endpoint = this._instance.addEndpoint(node, sourceEndpoint, {
                     anchor: anchor,
                     uuid: node.getAttribute("id") + "-" + ports[i]
                 });
             } else {
-                endpoint = instance.addEndpoint(node, targetEndpoint, {
+                endpoint = this._instance.addEndpoint(node, targetEndpoint, {
                     anchor: anchor,
                     uuid: node.getAttribute("id") + "-" + ports[i]
                 });
@@ -335,14 +338,14 @@ define(["model/flow", "util"], function(Flow, Util) {
         }
     };
 
-    function connectPorts(instance, node1, port1, node2, port2) {
+    Canvas.prototype._connectPorts = function(node1, port1, node2, port2) {
         var uuid_source = node1.getAttribute("id") + "-" + port1;
         var uuid_target = node2.getAttribute("id") + "-" + port2;
 
-        instance.connect({ uuids: [uuid_source, uuid_target] });
+        this._instance.connect({ uuids: [uuid_source, uuid_target] });
     };
 
-    function showFlowSource() {
+    Canvas.prototype._showFlowSource = function() {
         var modal_id = "flow_source_modal";
         var container_id = "flow_source_container";
         var showSourceModal = Util.getModal(modal_id, "Flow Description", function(modal) {
@@ -352,20 +355,21 @@ define(["model/flow", "util"], function(Flow, Util) {
 
         $("#" + container_id).empty();
         d3.select("#" + container_id).append("pre").attr("id", "flow_source_text");
-        var value = js_beautify(JSON.stringify(currentFlow.flow()));
+        var value = js_beautify(JSON.stringify(this._currentFlow.flow()));
         $("#flow_source_text").text(value);
         $("#" + modal_id).modal("show");
     };
 
-    function clear() {
-        instance.reset();
+    Canvas.prototype._clear = function() {
+        this._instance.reset();
         $("#" + FLOW_PANEL_ID).empty();
-        currentFlow.clear();
-        _initInstance(instance);
+        this._currentFlow.clear();
+        this._initInstance();
     };
 
     Canvas.prototype._newflow = function () {
-        clear();
+        var me = this;
+        this._clear();
 
         var modal_id = "flow_new_modal";
         var flowNewModal = Util.getModal(modal_id, "New Flow", function(modal) {
@@ -389,16 +393,17 @@ define(["model/flow", "util"], function(Flow, Util) {
 
         $("#new_flow_btn").click(function() {
             $("#flow_new_modal").modal("hide");
-            currentFlow = new Flow($("#flowid").text(), $("#flowname").text());
+            me._currentFlow = new Flow($("#flowid").text(), $("#flowname").text());
         });
         $("#flow_new_modal").modal("show");
     };
 
-    function save() {
-        currentFlow.save();
+    Canvas.prototype._save = function() {
+        this._currentFlow.save();
     };
 
-    function load() {
+    Canvas.prototype._load = function() {
+        var me = this;
         //load existing flows
         $.get("/flows", function(data) {
             //console.log(data);
@@ -415,26 +420,27 @@ define(["model/flow", "util"], function(Flow, Util) {
                 return d.id + ":" + d.name;
             }).on("click", function(d) {
                 $("#" + modal_id).modal("hide");
-                loadflow(d);
+                me._loadflow(d);
             });
 
             $("#" + modal_id).modal("show");
         });
     };
 
-    function loadflow(flow) {
-        clear();
-        currentFlow = new Flow(flow.id, flow.name);
+    Canvas.prototype._loadflow = function(flow) {
+        var me = this;
+        this._clear();
+        this._currentFlow = new Flow(flow.id, flow.name);
         flow.nodes.map(function(node) {
-            currentFlow.addnode(node);
-            var anode = drawNode(node);
+            me._currentFlow.addnode(node);
+            var anode = me._drawNode(node);
         });
 
         flow.links.map(function(link) {
             source = link.source.split(":");
             target = link.target.split(":");
-            currentFlow.connect(source[0], target[0], source[1], target[1]);
-            connectPorts(instance, $("#" + [source[0]])[0], source[1], $("#" + [target[0]])[0], target[1]);
+            me._currentFlow.connect(source[0], target[0], source[1], target[1]);
+            me._connectPorts($("#" + [source[0]])[0], source[1], $("#" + [target[0]])[0], target[1]);
         });
     };
 
