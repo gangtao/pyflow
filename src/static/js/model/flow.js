@@ -20,6 +20,18 @@ define([], function() {
         this._flow.nodes.push(node);
     };
 
+    Flow.prototype.removenode= function(node) {
+        this._flow.nodes = this._flow.nodes.filter(function(e){
+            return e.id !== node.nodeId;
+        });
+        this._flow.links = this._flow.links.filter(function(e){
+            if ( e.source.includes(node.id) || e.target.includes(node.id) ) {
+                return false;
+            }
+            return true;
+        });
+    };
+
     Flow.prototype.connections = function() {
         var connections = [];
         this._flow.links.map(function(link) {
@@ -35,6 +47,8 @@ define([], function() {
 
         return connections;
     };
+
+
 
     Flow.prototype._findConnection = function(sourceId, targetId, sourcePort, targetPort) {
         var i = 0,

@@ -41,6 +41,7 @@ define(["model/flow", "util"], function(Flow, Util) {
                 }]
             ]
         },
+
         // the definition of target endpoints (will appear when the user drags a connection)
         targetEndpoint = {
             endpoint: "Dot",
@@ -445,6 +446,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._instance.remove(this._selectedNode.nodeId);
         d3.select(".glyphicon-remove-circle").style("visibility", "hidden");
         //TODO : remove the node and links from current flow
+        this._currentFlow.removenode(this._selectedNode);
         //TODO : clear the inspector as well
     };
 
