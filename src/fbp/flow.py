@@ -1,4 +1,9 @@
 """Core Class for Flow."""
+from multiprocessing import Process, Manager
+from multiprocessing.managers import BaseManager
+import json
+from node import Node
+
 
 EXEC_MODE_STATIC = "static"
 EXEC_MODE_STREAMING = "streaming"
@@ -36,6 +41,25 @@ class Path(object):
 
 def _gen_lable(node, port):
     return node.id + ":" + port.name
+
+
+class FlowStates(object):
+    def __init__(self):
+        self._result = list()
+        self._complete = False
+
+    def check_stat(self):
+        return self._complete
+
+    def result(self):
+        return self._result
+
+    def append_stat(self, node):
+        self._result.append(node)
+
+    def set_stat(self, is_complete):
+        self._complete = is_complete
+
 
 class Flow(object):
 
@@ -119,26 +143,33 @@ class Flow(object):
                 source_nodes.append(link_to_p.source_node)
                 self._find_source_nodes(link_to_p.source_node, source_nodes)
 
-    def _run_static(self, end_node):
+    def _run_static(self, end_node, stat):
         nodemap = [end_node]
         self._find_source_nodes(end_node, nodemap)
-        result = list()
         while True:
             if len(nodemap) == 0:
                 break
             anode = nodemap.pop()
             # TODO Exception handling here
             anode.run()  
-            result.append(anode)
-
-        # result is a node list that contains all nodes states
-        return result
+            stat.append_stat(anode.get_node_value())
+        stat.set_stat(True)
 
     def _run_streaming(self, end_node):
         pass
 
     def run(self, end_node):
         if self._mode == EXEC_MODE_STATIC:
-            return self._run_static(end_node)
+            BaseManager.register('FlowStates', FlowStates)
+            BaseManager.register('Node', Node)
+            manager = BaseManager()
+            manager.start()
+            stat = manager.FlowStates()
+
+            p = Process(target=self._run_static, args=(end_node,stat))
+            p.start()
+            return stat
         elif self._mode == EXEC_MODE_STATIC:
-            return self._run_streaming(end_node)
+            self._run_streaming(end_node)
+
+        

@@ -1,9 +1,11 @@
 """Flow library"""
 import json
+import time
 
 from node import Node
 from flow import Flow
 from repository import repository
+
 
 __version_info__ = (0, 0, 1)
 __version__ = ".".join(map(str, __version_info__))
@@ -31,9 +33,9 @@ def create_node(spec_id, id, name):
 # Todo consider unify the flow definition spec and running spec
 
 
-def run_flow(flow_spec):
+def _run_flow(flow_spec):
     flow_spec_obj = None
-    
+
     if type(flow_spec) is not dict:
         try:
             flow_spec_obj = json.loads(flow_spec, strict=False)
@@ -60,5 +62,14 @@ def run_flow(flow_spec):
 
         aflow.link(source[0], source[1], target[0], target[1])
 
-    result = aflow.run(end_node)
-    return [i.get_node_value() for i in result]
+    stats = aflow.run(end_node)
+
+    return stats
+
+
+def run_flow(flow_spec):
+    stats = _run_flow(flow_spec)
+    # TODO : support run in async mode
+    while not stats.check_stat():
+        time.sleep(0.1)
+    return [i for i in stats.result()]

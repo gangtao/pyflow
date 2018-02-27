@@ -80,7 +80,7 @@ class Inport(Port):
 
     def __str__(self):
         format_str = "In" + \
-            port.__str__(self) + "default : {}\required : {}\norder : {}\n"
+            Port.__str__(self) + "default : {}\required : {}\norder : {}\n"
         return format_str.format(self.default, self.is_required, self.order)
 
 
@@ -106,5 +106,5 @@ class Outport(Port):
         self._point_to.remove(port)
 
     def __str__(self):
-        format_str = "Out" + port.__str__(self)
+        format_str = "Out" + Port.__str__(self)
         return format_str
