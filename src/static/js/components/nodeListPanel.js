@@ -28,23 +28,12 @@ define(["model/node","util"], function(Node, Util) {
         }).on("click", function(d) {
             me._loadNode(d);
         });
-
-        // remove the delete icon and add new icon on the list
-        /*
-        nodeItems.append("a").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function(d) {
-            me.deleteNode(d);
-        });
-        
-
-        var addItems = nodeList.append("li").append("div").append("a").classed("glyphicon glyphicon-plus", true).on("click", function(d) {
-            me.addNode();
-        });
-        */
     };
 
     Panel.prototype._loadNode = function(node) {
         this._codePanel.update(node);
-        this._propertyPanel.update(node);
+        // remove this as the property panel render will be triggerd by code panel
+        //this._propertyPanel.update(node);
     };
 
     Panel.prototype.addNode = function() {

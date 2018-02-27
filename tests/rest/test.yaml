@@ -57,3 +57,8 @@
     - method: "POST"
     - body: '{"path":"./repo.json"}'
     - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}
+
+- test:
+    - name: "Get supported types"
+    - url: "/ports/types"
+    - headers: {"Content-Type": "application/json", "charset" : "UTF-8"}

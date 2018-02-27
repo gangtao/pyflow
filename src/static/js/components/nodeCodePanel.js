@@ -68,7 +68,6 @@ define(["util", "model/flow"], function(Util, Flow) {
     Panel.prototype._save = function() {
         this._currentNode.func(this._editor.getValue());
         this._currentNode.save();
-        console.log("node saved!");
     };
 
     Panel.prototype._validate = function(code) {
@@ -83,12 +82,21 @@ define(["util", "model/flow"], function(Util, Flow) {
             var start_pos = func_declare_line.indexOf("(");
             var end_pos = func_declare_line.indexOf(")");
             var parameter = func_declare_line.substr(start_pos + 1, end_pos - start_pos - 1);
-            console.log(parameter);
             parameters = parameter.split(",");
             this._currentNode.port().input = [];
-            parameters.map(function(d) {
-                node.port().input.push({ "name": d.trim() });
-            });
+
+            if (node.port().input.length == 0) {
+                for (i = 0; i < parameters.length; i++) {
+                    port = { "name": parameters[i], "type": "String", "order": i };
+                    node.port().input.push(port);
+                }
+            } else {
+                for (i = 0; i < node.port().input.length; i++) {
+                    if (parameters[i]) {
+                        node.port().input[i].name = parameters[i];
+                    }
+                }
+            }
             this._propertyPanel.update(node);
         }
     };
@@ -119,7 +127,7 @@ define(["util", "model/flow"], function(Util, Flow) {
         }).style("margin-right", "5px");
         inputs = group.append("input").classed("node_inputs", true);
         var outputs = body.append("div");
-        output_result = outputs.append("div").attr("visibility","hidden").attr("id","node_output_result").style("overflow","auto");
+        output_result = outputs.append("div").attr("visibility", "hidden").attr("id", "node_output_result").style("overflow", "auto");
 
         $("#" + node_test_button).click(function() {
             var inputs = d3.selectAll(".node_inputs");
@@ -133,25 +141,24 @@ define(["util", "model/flow"], function(Util, Flow) {
                 o.value = d3.select(this).property("value");
                 ports.push(o);
             })
-            var test_flow = new Flow("nodetestflow"+uuid, "nodetestflow");
+            var test_flow = new Flow("nodetestflow" + uuid, "nodetestflow");
             var test_node = {};
-            test_node.id = "testnodeid"+ uuid;
+            test_node.id = "testnodeid" + uuid;
             test_node.spec_id = node.id();
             test_node.name = node.title();
             test_node.ports = ports;
             test_node.is_end = 1;
             test_flow.addnode(test_node);
-            console.log(test_flow);
             test_flow.run(function(data) {
-                if ( data[0].status == "fail" ) {
-                    output_result.text(data[0].error).attr("visibility","visible").classed("alert alert-warning",true).classed("alert-success", false);
+                if (data[0].status == "fail") {
+                    output_result.text(data[0].error).attr("visibility", "visible").classed("alert alert-warning", true).classed("alert-success", false);
                 } else {
                     //Handling result here
-                    output_result.text(js_beautify(JSON.stringify(data[0].outputs))).attr("visibility","visible").classed("alert alert-success",true).classed("alert-warning", false);
+                    output_result.text(js_beautify(JSON.stringify(data[0].outputs))).attr("visibility", "visible").classed("alert alert-success", true).classed("alert-warning", false);
                 }
-            }, function(data){
+            }, function(data) {
                 //handling error here
-                output_result.text(js_beautify(JSON.stringify(data))).attr("visibility","visible").classed("alert alert-warning",true).classed("alert-success", false);
+                output_result.text(js_beautify(JSON.stringify(data))).attr("visibility", "visible").classed("alert alert-warning", true).classed("alert-success", false);
             });
         });
 

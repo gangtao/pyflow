@@ -2,7 +2,7 @@ spec = {
     "title": "JSON Path",
     "id": "pyflow.transform.jsonpath",
 }
-output_keys = []
+output_keys = ["out"]
 
 
 def func(source, path):

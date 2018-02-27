@@ -167,6 +167,7 @@ class Node(object):
                             for k, v in self._inputports.items()]
         parameter_values = [v[0] for v in sorted(
             parameter_values, key=lambda x: x[1])]  # sort by order
+        
         try:
             return_value = _function_wrapper(self._func, parameter_values)
 

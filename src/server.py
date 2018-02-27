@@ -8,6 +8,8 @@ import json
 import nodemaker
 import fbp
 
+from fbp.port import Port
+
 app = Flask(__name__, static_url_path="")
 
 
@@ -160,6 +162,11 @@ def loadrepo():
         return jsonify(data)
     except Exception as e:
         return json.dumps({"error": str(e)}), 500
+
+
+@app.route("/ports/types", methods=['GET'])
+def get_supported_port_types():
+    return jsonify(types=Port.support_types())
 
 
 def load_node_spec():

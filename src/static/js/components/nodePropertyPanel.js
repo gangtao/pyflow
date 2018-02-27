@@ -33,7 +33,7 @@ define(["util"], function(Util) {
 
     Panel.prototype._updatePorts = function(ports, div) {
         var table = div.append("table").classed("table table-bordered table-condensed", true);
-        var header = ["type","name","default"];
+        var header = ["in/out","type","name","default"];
         table.append("thead").selectAll("tr").data(header).enter().append("th").text(function(d){
             return d;
         });
@@ -44,21 +44,23 @@ define(["util"], function(Util) {
 
         ports.input.map(function(p) {
             var item = {};
-            item.type = "input";
+            item.direction = "input";
             $.extend(item,p);
             content.push(item);
         });
 
         ports.output.map(function(p) {
             var item = {};
-            item.type = "output";
+            item.direction = "output";
             $.extend(item,p);
             content.push(item);
         });
 
-        
-
         var port_row = tbody.selectAll("tr").data(content).enter().append("tr");
+
+        port_row.append("td").text(function(d){
+            return d.direction;
+        });
 
         port_row.append("td").text(function(d){
             return d.type;

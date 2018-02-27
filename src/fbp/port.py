@@ -1,11 +1,29 @@
 """Port Class for Flow."""
 
+import types 
+
+# All Supported Types
+TYPES = dict()
+TYPES["Boolean"] = types.BooleanType
+TYPES["Int"] = types.IntType
+TYPES["Long"] = types.LongType
+TYPES["Float"] = types.FloatType
+TYPES["String"] = types.StringType
+TYPES["Unicode"] = types.UnicodeType
+TYPES["List"] = types.ListType
+TYPES["Json"] = types.DictType
+
 
 class Port(object):
     def __init__(self, name, type='String'):
         self._name = name
         self._type = type
+        self._type_object = TYPES[type]
         self._value = None
+
+    @classmethod
+    def support_types(cls):
+        return TYPES.keys()
 
     @property
     def name(self):
@@ -14,6 +32,10 @@ class Port(object):
     @property
     def type(self):
         return self._type
+
+    @property
+    def type_object(self):
+        return self._type_object
 
     @property
     def value(self):
