@@ -1,8 +1,8 @@
 """Flow library"""
 import json
 
-from node import node
-from flow import flow
+from node import Node
+from flow import Flow
 from repository import repository
 
 __version_info__ = (0, 0, 1)
@@ -21,10 +21,10 @@ def create_node(spec_id, id, name):
         except Exception as e:
             raise Exception("Invalid node specification {}".format(spec))
 
-        anode = node(id, name, spec_obj)
+        anode = Node(id, name, spec_obj)
         return anode
 
-    anode = node(id, name, spec)
+    anode = Node(id, name, spec)
     return anode
 
 # Run a flow based on a defined specification of flow
@@ -43,7 +43,7 @@ def run_flow(flow_spec):
     else:
         flow_spec_obj = flow_spec
 
-    aflow = flow(flow_spec_obj.get("id"), flow_spec_obj.get("name"))
+    aflow = Flow(flow_spec_obj.get("id"), flow_spec_obj.get("name"))
 
     for node_def in flow_spec_obj.get("nodes"):
         anode = create_node(node_def.get("spec_id"),

@@ -162,8 +162,7 @@ def loadrepo():
         return json.dumps({"error": str(e)}), 500
 
 
-# initialize the repository
-def init():
+def load_node_spec():
     records = []
     for file in os.listdir('node_specs'):
         if file.endswith('.py') and file != '__init__.py':
@@ -175,6 +174,13 @@ def init():
     for r in records:
         node = json.loads(r)
         repository.register("nodespec", node["id"], node)
+
+# initialize the repository
+
+
+def init():
+    # load node spec from spec folders
+    load_node_spec()
 
     # TODO
     # initialize flows

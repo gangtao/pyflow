@@ -1,11 +1,11 @@
 """Node Class for Flow."""
 
-from port import inport, outport
+from port import Inport, Outport
 
 OUTPORT_DEFAULT_NAME = "out"
 
 
-class node(object):
+class Node(object):
 
     def __init__(self, id, name, spec):
         self._id = id
@@ -68,19 +68,19 @@ class node(object):
         if input_ports:
             for p in input_ports:
                 port_info = _parse_in_port_port_spec(p)
-                in_port = inport(port_info[0], port_info[1], port_info[
+                in_port = Inport(port_info[0], port_info[1], port_info[
                                  2], port_info[3], port_info[4])
                 self._inputports[in_port.name] = in_port
 
         output_ports = self._port_spec.get("output")
 
         if output_ports is None:
-            out_port = outport(OUTPORT_DEFAULT_NAME)
+            out_port = Outport(OUTPORT_DEFAULT_NAME)
             self._outputports[out_port.name] = out_port
         else:
             for p in output_ports:
                 port_info = _parse_out_port_port_spec(p)
-                out_port = outport(port_info[0], port_info[1])
+                out_port = Outport(port_info[0], port_info[1])
                 self._outputports[out_port.name] = out_port
 
     def __str__(self):

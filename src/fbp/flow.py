@@ -1,7 +1,10 @@
-"""Port Class for Flow."""
+"""Core Class for Flow."""
+
+EXEC_MODE_STATIC = "static"
+EXEC_MODE_STREAMING = "streaming"
 
 
-class path(object):
+class Path(object):
     def __init__(self, source_node, source_port, target_node, target_port):
         self._name = source_node.id + ":" + source_port.name + \
             "~" + target_node.id + ":" + target_port.name
@@ -34,14 +37,14 @@ class path(object):
 def _gen_lable(node, port):
     return node.id + ":" + port.name
 
-
-class flow(object):
+class Flow(object):
 
     def __init__(self, id, name):
         self._name = name
         self._id = id
         self._nodes = dict()
         self._links = dict()
+        self._mode = EXEC_MODE_STATIC
 
     def add_node(self, node):
         self._nodes[node.id] = node
@@ -93,7 +96,7 @@ class flow(object):
         target_port.point_from(source_port)
         source_port.point_to(target_port)
 
-        self._links[target_label] = path(
+        self._links[target_label] = Path(
             source_node, source_port, target_node, target_port)
 
     def unlink(self, target_node_id, target_port_name):
@@ -116,19 +119,26 @@ class flow(object):
                 source_nodes.append(link_to_p.source_node)
                 self._find_source_nodes(link_to_p.source_node, source_nodes)
 
-    def run(self, end_node):
+    def _run_static(self, end_node):
         nodemap = [end_node]
         self._find_source_nodes(end_node, nodemap)
         result = list()
-
         while True:
             if len(nodemap) == 0:
                 break
             anode = nodemap.pop()
-            anode.run()  # TODO Exception handling here
+            # TODO Exception handling here
+            anode.run()  
             result.append(anode)
 
+        # result is a node list that contains all nodes states
         return result
 
-    def run_async(self, end_node, result):
+    def _run_streaming(self, end_node):
         pass
+
+    def run(self, end_node):
+        if self._mode == EXEC_MODE_STATIC:
+            return self._run_static(end_node)
+        elif self._mode == EXEC_MODE_STATIC:
+            return self._run_streaming(end_node)

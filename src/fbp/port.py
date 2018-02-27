@@ -1,7 +1,7 @@
 """Port Class for Flow."""
 
 
-class port(object):
+class Port(object):
     def __init__(self, name, type='String'):
         self._name = name
         self._type = type
@@ -43,10 +43,10 @@ class port(object):
         pass
 
 
-class inport(port):
+class Inport(Port):
 
     def __init__(self, name, type='String', default=None, required=False, order=0):
-        port.__init__(self, name, type)
+        Port.__init__(self, name, type)
         self._default = default
         self._required = required
         self._order = order
@@ -84,9 +84,9 @@ class inport(port):
         return format_str.format(self.default, self.is_required, self.order)
 
 
-class outport(port):
+class Outport(Port):
     def __init__(self, name, type='String'):
-        port.__init__(self, name, type)
+        Port.__init__(self, name, type)
         self._point_to = []
 
     @property
