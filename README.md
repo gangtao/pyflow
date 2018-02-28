@@ -142,7 +142,7 @@ then run `docker run -P pyflow:latest` to run the pyflow in docker
 ## Unit Test
 ```
 cd /tests/unit
-python xxx.py
+python -m unittest discover
 ```
 
 ## Rest Test
