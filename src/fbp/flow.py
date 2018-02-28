@@ -60,6 +60,12 @@ class FlowStates(object):
     def set_stat(self, is_complete):
         self._complete = is_complete
 
+    def get_result_by_id(self, id):
+        for r in self._result:
+            if r["id"] == id:
+                return r
+        return None
+
 
 class Flow(object):
 
@@ -151,7 +157,7 @@ class Flow(object):
                 break
             anode = nodemap.pop()
             # TODO Exception handling here
-            anode.run()  
+            anode.run()
             stat.append_stat(anode.get_node_value())
         stat.set_stat(True)
 
@@ -166,10 +172,8 @@ class Flow(object):
             manager.start()
             stat = manager.FlowStates()
 
-            p = Process(target=self._run_static, args=(end_node,stat))
+            p = Process(target=self._run_static, args=(end_node, stat))
             p.start()
             return stat
         elif self._mode == EXEC_MODE_STATIC:
             self._run_streaming(end_node)
-
-        

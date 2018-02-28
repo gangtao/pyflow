@@ -4,7 +4,7 @@ import sys
 
 sys.path.append('../../src')
 
-from fbp.port import port, inport, outport
+from fbp.port import Port, Inport, Outport
 
 
 class TestFBPPort(unittest.TestCase):
@@ -25,7 +25,7 @@ class TestFBPPort(unittest.TestCase):
 
     def test_port(self):
         print "test port"
-        aport = port("aport")
+        aport = Port("aport")
         self.assertEqual(aport.name, "aport")
         self.assertEqual(aport.type, "String")
 
@@ -36,7 +36,7 @@ class TestFBPPort(unittest.TestCase):
 
     def test_in_port(self):
         print "test in port"
-        aport = inport("aport")
+        aport = Inport("aport")
         self.assertEqual(aport.name, "aport")
         self.assertEqual(aport.type, "String")
         self.assertEqual(aport.value, None)
@@ -50,8 +50,8 @@ class TestFBPPort(unittest.TestCase):
 
     def test_port_link(self):
         print "test port link"
-        aport = inport("in_port")
-        bport = outport("out_port")
+        aport = Inport("in_port")
+        bport = Outport("out_port")
 
         bport.point_to(aport)
         bport.value = "new value"

@@ -2,12 +2,14 @@ import unittest
 
 import sys
 import json
+import time
 
 sys.path.append('../../src')
 
-from fbp.port import inport, outport
-from fbp.node import node
-from fbp.flow import flow
+import fbp
+from fbp.port import Inport, Outport
+from fbp.node import Node
+from fbp.flow import Flow
 
 
 class TestFBPPort(unittest.TestCase):
@@ -27,7 +29,7 @@ class TestFBPPort(unittest.TestCase):
         pass
 
     def test_flow_2nodes(self):
-        aflow = flow("my.test.aflow", "A flow test")
+        aflow = Flow("my.test.aflow", "A flow test")
 
         spec = '''
         {
@@ -46,8 +48,8 @@ class TestFBPPort(unittest.TestCase):
 
         spec_obj = json.loads(spec, strict=False)
 
-        node1 = node("my.test.node1", "node1", spec_obj)
-        node2 = node("my.test.node2", "node2", spec_obj)
+        node1 = Node("my.test.node1", "node1", spec_obj)
+        node2 = Node("my.test.node2", "node2", spec_obj)
 
         aflow.add_node(node1)
         aflow.add_node(node2)
@@ -58,12 +60,16 @@ class TestFBPPort(unittest.TestCase):
         node1.set_inport_value("port2", "B")
         node2.set_inport_value("port1", "C")
 
-        aflow.run(node2)
+        stats = aflow.run(node2)
 
-        self.assertEqual(node2.get_outport_value(), "CAB")
+        while not stats.check_stat():
+            time.sleep(0.1)
+
+        result = stats.get_result_by_id("my.test.node2")
+        self.assertEqual(result["outputs"][0]["value"], "CAB")
 
     def test_flow_3nodes(self):
-        aflow = flow("my.test.aflow", "A flow test")
+        aflow = Flow("my.test.aflow", "A flow test")
 
         spec = '''
         {
@@ -82,9 +88,9 @@ class TestFBPPort(unittest.TestCase):
 
         spec_obj = json.loads(spec, strict=False)
 
-        node1 = node("my.test.node1", "node1", spec_obj)
-        node2 = node("my.test.node2", "node1", spec_obj)
-        node3 = node("my.test.node3", "node3", spec_obj)
+        node1 = Node("my.test.node1", "node1", spec_obj)
+        node2 = Node("my.test.node2", "node1", spec_obj)
+        node3 = Node("my.test.node3", "node3", spec_obj)
 
         aflow.add_node(node1)
         aflow.add_node(node2)
@@ -98,12 +104,16 @@ class TestFBPPort(unittest.TestCase):
         node2.set_inport_value("port1", "C")
         node2.set_inport_value("port2", "D")
 
-        aflow.run(node3)
+        stats = aflow.run(node3)
 
-        self.assertEqual(node3.get_outport_value(), "ABCD")
+        while not stats.check_stat():
+            time.sleep(0.1)
+
+        result = stats.get_result_by_id("my.test.node3")
+        self.assertEqual(result["outputs"][0]["value"], "ABCD")
 
     def test_flow_4nodes(self):
-        aflow = flow("my.test.aflow", "A flow test")
+        aflow = Flow("my.test.aflow", "A flow test")
 
         spec = '''
         {
@@ -122,10 +132,10 @@ class TestFBPPort(unittest.TestCase):
 
         spec_obj = json.loads(spec, strict=False)
 
-        node1 = node("my.test.node1", "node1", spec_obj)
-        node2 = node("my.test.node2", "node1", spec_obj)
-        node3 = node("my.test.node3", "node3", spec_obj)
-        node4 = node("my.test.node4", "node4", spec_obj)
+        node1 = Node("my.test.node1", "node1", spec_obj)
+        node2 = Node("my.test.node2", "node1", spec_obj)
+        node3 = Node("my.test.node3", "node3", spec_obj)
+        node4 = Node("my.test.node4", "node4", spec_obj)
 
         aflow.add_node(node1)
         aflow.add_node(node2)
@@ -142,11 +152,17 @@ class TestFBPPort(unittest.TestCase):
         node2.set_inport_value("port2", "D")
         node4.set_inport_value("port2", "E")
 
-        aflow.run(node3)
-        aflow.run(node4)
+        stats3 = aflow.run(node3)
+        stats4 = aflow.run(node4)
 
-        self.assertEqual(node3.get_outport_value(), "ABCD")
-        self.assertEqual(node4.get_outport_value(), "CDE")
+        while not stats3.check_stat() or not stats4.check_stat():
+            time.sleep(0.1)
+
+        result3 = stats3.get_result_by_id("my.test.node3")
+        self.assertEqual(result3["outputs"][0]["value"], "ABCD")
+        result4 = stats4.get_result_by_id("my.test.node4")
+        self.assertEqual(result4["outputs"][0]["value"], "CDE")
+
 
 if __name__ == '__main__':
     unittest.main()
