@@ -6,6 +6,12 @@ output_keys = ["out"]
 
 
 def func(source, path):
+    """
+    :params: source, path
+    :ptypes: String, String
+    :returns: out
+    :rtype: String
+    """
     from jsonpath_rw import jsonpath, parse
     import json
 

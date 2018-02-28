@@ -87,7 +87,7 @@ define(["util", "model/flow"], function(Util, Flow) {
 
             if (node.port().input.length == 0) {
                 for (i = 0; i < parameters.length; i++) {
-                    port = { "name": parameters[i], "type": "String", "order": i };
+                    port = { "name": parameters[i].trim(), "type": "String", "order": i };
                     node.port().input.push(port);
                 }
             } else {
@@ -129,6 +129,8 @@ define(["util", "model/flow"], function(Util, Flow) {
         var outputs = body.append("div");
         output_result = outputs.append("div").attr("visibility", "hidden").attr("id", "node_output_result").style("overflow", "auto");
 
+        // deregister existing handlers
+        $("#" + node_test_button).unbind("click");
         $("#" + node_test_button).click(function() {
             var inputs = d3.selectAll(".node_inputs");
             var output_result = d3.select("#node_output_result");

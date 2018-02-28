@@ -5,6 +5,13 @@ spec = {
 output_keys = ["out"]
 
 def func(command):
+    """
+    :params: command
+    :ptypes: String
+    :returns: out
+    :rtype: String
+    """
+
     import shlex
     import subprocess
     # This cli cannot hand code that refresh the screen like top

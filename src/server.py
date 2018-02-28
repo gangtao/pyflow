@@ -182,8 +182,6 @@ def load_node_spec():
         node = json.loads(r)
         repository.register("nodespec", node["id"], node)
 
-# initialize the repository
-
 
 def init():
     # load node spec from spec folders

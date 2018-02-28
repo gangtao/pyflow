@@ -151,3 +151,10 @@ start the pyflow server and then run following command to test the rest API
 cd /tests/rest
 resttest.py http://localhost:5000 test.yaml --verbose
 ```
+
+## Open Issues and Todo list
+
+- Now a static execution engine (run once per a node stack) is supported, need to consider how to support streaming engine
+- Port type support and validations
+- Support running each function as a docker instance instead of python eval which is much more secure and flexible
+- UI improvements, lots of things to do

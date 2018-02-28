@@ -182,6 +182,7 @@ class Node(object):
                 return
 
             # Mutiple output case
+            # the multiple output should return a dict where key/value is output name/value
             for k, v in self._outputports.items():
                 v.value = return_value.get(k)
         except Exception as e:
