@@ -71,11 +71,14 @@ define(["util", "model/flow"], function(Util, Flow) {
     };
 
     Panel.prototype._validate = function(code) {
-        var lines = code.split("\n");
+        var lines = code.trim().split("\n");
         var func_declare_line = lines[0];
         var func_pattern = /def(\s)+func\(([\w|\W]*,?)*\):/g;
         var is_valid_function = func_pattern.test(func_declare_line);
         var node = this._currentNode;
+
+        // TODO: show error in case the function is not a valid python function
+        // Consider http://esprima.org/index.html 
 
         if (is_valid_function) {
             //TODO : validate singature
@@ -87,7 +90,7 @@ define(["util", "model/flow"], function(Util, Flow) {
 
             if (node.port().input.length == 0) {
                 for (i = 0; i < parameters.length; i++) {
-                    port = { "name": parameters[i].trim(), "type": "String", "order": i };
+                    var port = { "name": parameters[i].trim(), "type": "String", "order": i };
                     node.port().input.push(port);
                 }
             } else {
@@ -97,8 +100,68 @@ define(["util", "model/flow"], function(Util, Flow) {
                     }
                 }
             }
+
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
+                if (line.startsWith(":params:")) {
+                    // do nothing now, use parameter in func def
+                } else if (line.startsWith(":ptypes:")) {
+                    var types = line.substring(8).split(",");
+                    for (var j = 0; j < node.port().input.length; j++) {
+                        if (types.length > j) {
+                            node.port().input[j].type = types[j].trim();
+                        }
+                    }
+
+                } else if (line.startsWith(":returns:")) {
+                    var rets = line.substring(9).split(",");
+                    //Update existing output name
+                    for (var j = 0; j < node.port().output.length; j++) {
+                        if (rets.length > j) {
+                            node.port().output[j].name = rets[j].trim();
+                        }
+                    }
+
+                    // handling newly added outputs
+                    if (node.port().output.length < rets.length) {
+                        for (var j = rets.length - node.port().output.length; j < rets.length; j++) {
+                            var port = { "name": rets[j].trim(), "type": "String" };
+                            node.port().output.push(port);
+                        }
+                    }
+                } else if (line.startsWith(":rtype:")) {
+                    var rtypes = line.substring(7).split(",");
+                    for (var j = 0; j < node.port().output.length; j++) {
+                        if (rtypes.length > j) {
+                            node.port().output[j].type = rtypes[j].trim();
+                        }
+                    }
+                }
+            }
+
             this._propertyPanel.update(node);
         }
+
+        /*
+        for (var i =0;i< lines.length;i++) {
+            var line = lines[i].trim();
+            if ( line.startsWith(":params:") ) {
+                // do nothing now, use parameter in func def
+            } else if ( line.startsWith(":ptypes:") ) {
+                var types = line.substring(7).split(",");
+                for (j = 0; j < node.port().input.length; i++) {
+                    if ( types.length > j ) {
+                        node.port().input[j].type = types[j].trim();
+                    }
+                }
+
+            } else if ( line.startsWith(":returns:") ) {
+
+            } else if ( line.startsWith(":rtype:") ) {
+
+            }  
+        }
+        */
     };
 
     Panel.prototype._test = function() {

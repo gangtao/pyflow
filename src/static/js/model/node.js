@@ -1,5 +1,5 @@
 define([], function() {
-	var default_func = "def func()\n\t return None";
+	var default_func = "def func():\n\t return None";
 
     var Node = function(node) {
         if (node === undefined) {
@@ -11,7 +11,7 @@ define([], function() {
             this._node.port = {};
             this._node.port.input = [];
             this._node.port.output = [];
-            this._node.port.output.push({"name":"out"});
+            this._node.port.output.push({"name":"out","type":"String"});
             this._node.title = "";
         } else {
             this._node = node

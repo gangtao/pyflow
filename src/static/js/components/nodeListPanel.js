@@ -63,6 +63,7 @@ define(["model/node","util"], function(Node, Util) {
             footer.append("button").attr("type","button").classed("btn btn-default",true).attr("id",add_node_button).text("New");
         });
 
+        $("#" + add_node_button).unbind("click");
         $("#" + add_node_button).click(function() {
             $("#" + add_modal_id).modal("hide");
             var node = new Node(); 

@@ -2,7 +2,7 @@ spec = {
     "title": "cli",
     "id": "pyflow.source.cli",
 }
-output_keys = ["out"]
+
 
 def func(command):
     """
