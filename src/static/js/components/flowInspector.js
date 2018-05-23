@@ -109,6 +109,7 @@ define(["util"], function(Util) {
                     .attr("height", "30").attr("width", "30");
                 function handleFlowRunResult(data) {
                     inspector.showNodeDetails(node, flow);
+                    // TODO : update the flow to show the running result on the flow
                 }
 
                 flow.setEndNode(d.id);

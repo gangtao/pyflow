@@ -1,6 +1,7 @@
 """Port Class for Flow."""
 
-import types 
+import types
+import json
 
 # All Supported Types
 TYPES = dict()
@@ -9,16 +10,79 @@ TYPES["Int"] = types.IntType
 TYPES["Long"] = types.LongType
 TYPES["Float"] = types.FloatType
 TYPES["String"] = types.StringType
-TYPES["Unicode"] = types.UnicodeType
 TYPES["List"] = types.ListType
 TYPES["Json"] = types.DictType
+
+
+def c_int(val):
+    return int(val)
+
+
+def c_bool(val):
+    if type(val) is 'bool':
+        return val
+    elif type(val) is str or unicode:
+        return str(val).lower() in ["y", "true", "yes"]
+    else:
+        return False
+
+
+def c_long(val):
+    return long(val)
+
+
+def c_float(val):
+    return float(val)
+
+
+def c_str(val):
+    return str(val)
+
+
+def c_list(val):
+    if type(val) is list:
+        return val
+    elif type(val) is str or unicode:
+        return str(val).split(",")
+    return []
+
+
+def c_json(val):
+    if type(val) is dict:
+        return val
+    elif type(val) is str or unicode:
+        return json.loads(str(val))
+    return {}
+
+
+def type_conversion(value, type):
+    if type == "Boolean":
+        return c_bool(value)
+    elif type == "Int":
+        return c_int(value)
+    elif type == "Long":
+        return c_long(value)
+    elif type == "Float":
+        return c_float(value)
+    elif type == "String":
+        return c_str(value)
+    elif type == "List":
+        return c_list(value)
+    elif type == "Json":
+        return c_json(value)
+    else:
+        return None
 
 
 class Port(object):
     def __init__(self, name, type='String'):
         self._name = name
         self._type = type
-        self._type_object = TYPES[type]
+        if type in TYPES.keys():
+            self._type_object = TYPES[type]
+        else:
+            print("Port type {} is not supported! default to string".format(type))
+            self._type_object = 'String'
         self._value = None
 
     @classmethod
@@ -39,7 +103,8 @@ class Port(object):
 
     @property
     def value(self):
-        return self._value
+        # convert the value to type
+        return type_conversion(self._value, self._type)
 
     @value.setter
     def value(self, value):
@@ -89,7 +154,8 @@ class Inport(Port):
     @property
     def value(self):
         if self._value is not None:
-            return self._value
+            # return converted value according to the type def
+            return type_conversion(self._value, self._type)
         else:
             return self._default
 
@@ -113,7 +179,8 @@ class Outport(Port):
 
     @property
     def value(self):
-        return self._value
+        # return converted value according to the type def
+        return type_conversion(self._value, self._type)
 
     @value.setter
     def value(self, value):

@@ -137,6 +137,7 @@ def get_flow(id):
 def runflow():
     try:
         data = request.get_json()
+        print(json.dumps(data))
         return jsonify(fbp.run_flow(data))
     except Exception as e:
         return json.dumps({"error": str(e)}), 500
@@ -185,10 +186,11 @@ def load_node_spec():
 
 def init():
     # load node spec from spec folders
-    load_node_spec()
+    # load_node_spec()
 
     # TODO
     # initialize flows
+    pass
 
 
 if __name__ == "__main__":

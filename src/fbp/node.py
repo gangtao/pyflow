@@ -1,5 +1,7 @@
 """Node Class for Flow."""
 
+import traceback, pdb
+
 from port import Inport, Outport
 
 OUTPORT_DEFAULT_NAME = "out"
@@ -165,6 +167,7 @@ class Node(object):
 
         parameter_values = [(v.value, v.order)
                             for k, v in self._inputports.items()]
+
         parameter_values = [v[0] for v in sorted(
             parameter_values, key=lambda x: x[1])]  # sort by order
         
@@ -188,3 +191,4 @@ class Node(object):
         except Exception as e:
             self._status = "fail"
             self._error = e
+            print(traceback.format_exc())

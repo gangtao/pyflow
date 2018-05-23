@@ -157,8 +157,14 @@ class Flow(object):
                 break
             anode = nodemap.pop()
             # TODO Exception handling here
-            anode.run()
-            stat.append_stat(anode.get_node_value())
+            try:
+                anode.run()
+                stat.append_stat(anode.get_node_value())
+            except Exception as e:
+                node_value = anode.get_node_value()
+                node_value["status"] = "fail"
+                node_value["error"] = str(e)
+                stat.append_stat(node_value)
         stat.set_stat(True)
 
     def _run_streaming(self, end_node):

@@ -125,7 +125,11 @@ class SqliteRepo(BaseRepo):
         return json.loads(result[0], strict=False)
 
     def domains(self):
-        return list(self._domains)
+        # todo run this at initialize and update on register/unregister
+        c = self._conn.cursor()
+        cursor = c.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'")
+        return [ row[0] for row in cursor]
 
     def clean(self):
         c = self._conn.cursor()
@@ -163,6 +167,7 @@ class repository(object):
     def dumps(self, path):
         repo = dict()
         for domain in self.domains():
+            print("dump domain {}".format(domain))
             repo[domain] = self.get(domain)
 
         with open(path, "w") as f:
