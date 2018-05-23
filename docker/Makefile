@@ -1,6 +1,6 @@
 BIN_NAME ?= pyflow
 IMAGE_NAME ?= $(BIN_NAME):latest
-VERSION ?= 0.1
+VERSION ?= 0.2
 DOCKER_ID_USER ?= naughtytao
 
 docker: Dockerfile

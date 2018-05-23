@@ -5,7 +5,7 @@ import json
 from node import Node
 
 
-EXEC_MODE_STATIC = "static"
+EXEC_MODE_BATCH = "batch"
 EXEC_MODE_STREAMING = "streaming"
 
 
@@ -74,7 +74,7 @@ class Flow(object):
         self._id = id
         self._nodes = dict()
         self._links = dict()
-        self._mode = EXEC_MODE_STATIC
+        self._mode = EXEC_MODE_BATCH
 
     def add_node(self, node):
         self._nodes[node.id] = node
@@ -149,7 +149,7 @@ class Flow(object):
                 source_nodes.append(link_to_p.source_node)
                 self._find_source_nodes(link_to_p.source_node, source_nodes)
 
-    def _run_static(self, end_node, stat):
+    def _run_batch(self, end_node, stat):
         nodemap = [end_node]
         self._find_source_nodes(end_node, nodemap)
         while True:
@@ -165,15 +165,15 @@ class Flow(object):
         pass
 
     def run(self, end_node):
-        if self._mode == EXEC_MODE_STATIC:
+        if self._mode == EXEC_MODE_BATCH:
             BaseManager.register('FlowStates', FlowStates)
             BaseManager.register('Node', Node)
             manager = BaseManager()
             manager.start()
             stat = manager.FlowStates()
 
-            p = Process(target=self._run_static, args=(end_node, stat))
+            p = Process(target=self._run_batch, args=(end_node, stat))
             p.start()
             return stat
-        elif self._mode == EXEC_MODE_STATIC:
+        elif self._mode == EXEC_MODE_BATCH:
             self._run_streaming(end_node)
