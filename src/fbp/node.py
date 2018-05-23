@@ -172,7 +172,9 @@ class Node(object):
             parameter_values, key=lambda x: x[1])]  # sort by order
         
         try:
+            #print("Run node {} with inputs {}".format(self._name, parameter_values))
             return_value = _function_wrapper(self._func, parameter_values)
+            #print("Run node {} with output {}".format(self._name, return_value))
 
             self._is_cache_valid = True
             self._status = "sucess"

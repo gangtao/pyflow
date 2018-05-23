@@ -140,14 +140,30 @@ class Flow(object):
     def get_links(self):
         return self._links
 
-    def _find_source_nodes(self, target_node, source_nodes):
-        # TODO : Add loop check
+    def _find_children_nodes(self, target_node, source_nodes):
         in_ports = target_node.get_ports("in")
+        children = []
         for p in in_ports:
             link_to_p = self._links.get(_gen_lable(target_node, p))
-            if link_to_p is not None and link_to_p.source_node not in source_nodes:
+            if link_to_p is not None :
+                children.append(link_to_p.source_node)
+                if link_to_p.source_node in source_nodes:
+                    source_nodes.remove(link_to_p.source_node)
                 source_nodes.append(link_to_p.source_node)
-                self._find_source_nodes(link_to_p.source_node, source_nodes)
+        return children
+
+    def _find_source_nodes(self, target_node, source_nodes):
+        # TODO : Add loop check
+        children = [target_node]
+        new_children = []
+        while True:
+            for child in children:
+                new_children += self._find_children_nodes(child, source_nodes)
+
+            if len(new_children) == 0:
+                break
+            children = new_children
+            new_children = []
 
     def _run_batch(self, end_node, stat):
         nodemap = [end_node]

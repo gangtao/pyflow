@@ -167,7 +167,6 @@ class repository(object):
     def dumps(self, path):
         repo = dict()
         for domain in self.domains():
-            print("dump domain {}".format(domain))
             repo[domain] = self.get(domain)
 
         with open(path, "w") as f:
