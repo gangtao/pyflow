@@ -1,12 +1,19 @@
 define(["util"], function(Util) {
     var Inspector = function(rootId) {
         this._rootId = rootId;
+        this._update = undefined;
+        this._updateOb = undefined;
     };
 
     Inspector.prototype.render = function() {
         var root = d3.select("#" + this._rootId);
         var panel = Util.addPanel(root, "Inspector");
         this._body = panel.select(".panel-body").attr("id", "InspectorBody");
+    }
+
+    Inspector.prototype.onNotify = function(callback, observer) {
+        this._update = callback;
+        this._updateOb = observer;
     }
 
     Inspector.prototype.showNodeDetails = function(node, flow) {
@@ -109,6 +116,7 @@ define(["util"], function(Util) {
                     .attr("height", "30").attr("width", "30");
                 function handleFlowRunResult(data) {
                     inspector.showNodeDetails(node, flow);
+                    inspector.notify();
                     // TODO : update the flow to show the running result on the flow
                 }
 
@@ -116,6 +124,10 @@ define(["util"], function(Util) {
                 flow.run(handleFlowRunResult);
             });
     };
+
+    Inspector.prototype.notify = function() {
+        this._update.apply(this._updateOb);
+    }
 
     return Inspector;
 });

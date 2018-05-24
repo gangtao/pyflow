@@ -70,6 +70,8 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._inspector = nodeInspector;
         this._selectedNode = undefined;
         this._currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
+        this._inspector.onNotify(this._update, this);
+        this._panel = undefined;
     };
 
     Canvas.prototype.getNodeSpecById = function(id) {
@@ -81,7 +83,7 @@ define(["model/flow", "util"], function(Flow, Util) {
 
     Canvas.prototype.render = function() {
         var root = d3.select("#" + this._rootId);
-        var panel = Util.addPanel(root, "Flow");
+        this._panel = Util.addPanel(root, "Flow");
         var me = this;
 
         var heading = root.select(".panel-heading");
@@ -111,16 +113,7 @@ define(["model/flow", "util"], function(Flow, Util) {
             me._removeNode();
         }).style("visibility", "hidden");
 
-        panel.select(".panel-body").classed("flowbody", true).append("div").attr("id", FLOW_PANEL_ID);
-
-        //Initialize JsPlumb
-        /*
-        instance = jsPlumb.getInstance({
-            Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-            DragOptions: { cursor: "pointer", zIndex: 2000 },
-            Container: FLOW_PANEL_ID
-        });
-        */
+        this._panel.select(".panel-body").classed("flowbody", true).append("div").attr("id", FLOW_PANEL_ID);
 
         //Add node on drag & drop
         $("#" + FLOW_PANEL_ID).on("drop", function(ev) {
@@ -319,28 +312,57 @@ define(["model/flow", "util"], function(Flow, Util) {
                 });
             }
 
-            var labelAnchor = [-1.5, -0.3];
+            var labelAnchor = [-1.5, -0.1];
+            if (isSource) {
+                labelAnchor = [1.5, -0.1];
+            }
             endpoint.setLabel({ location: labelAnchor, label: ports[i], cssClass: "endpointLabel" });
 
             // Only show port lable on mouse over
+            /*
             d3.selectAll(".endpointLabel").style("visibility", "hidden");
-
             endpoint.bind("mouseover", function(source) {
                 var label = source.getLabel();
                 $(source.canvas).next().css("visibility", "visible");
             });
-
             endpoint.bind("mouseout", function(source) {
                 d3.selectAll(".endpointLabel").style("visibility", "hidden");
             });
+            */
         }
     };
 
     Canvas.prototype._connectPorts = function(node1, port1, node2, port2) {
         var uuid_source = node1.getAttribute("id") + "-" + port1;
         var uuid_target = node2.getAttribute("id") + "-" + port2;
-
         this._instance.connect({ uuids: [uuid_source, uuid_target] });
+    };
+
+    // update the port values according to the run flow results
+    Canvas.prototype._update = function() {
+        var instance = this._instance;
+        this._currentFlow._result.map(function(r){
+            var node = $("#"+ r.id);   
+            node.removeClass("node-fail"); 
+            node.removeClass("node-skip"); 
+                  
+            if ( r.status == "fail" ) {
+                node.addClass("node-fail");
+            } 
+
+            if ( r.status == "skip" ) {
+                node.addClass("node-skip");
+            } 
+
+            r.inputs.map(function(input){
+                var endpoint = instance.getEndpoint(r.id + "-" + input.name);
+                endpoint.setLabel("" + input.value)
+            })
+            r.outputs.map(function(output){
+                var endpoint = instance.getEndpoint(r.id + "-" + output.name);
+                endpoint.setLabel("" + output.value)
+            })
+        })
     };
 
     Canvas.prototype._showFlowSource = function() {
@@ -405,7 +427,6 @@ define(["model/flow", "util"], function(Flow, Util) {
         //load existing flows
         $.get("/flows", function(data) {
             //console.log(data);
-
             var modal_id = "flow_load_modal";
             var container_id = "flow_load_container";
             var flowLoadModal = Util.getModal(modal_id, "Load Flow", function(modal) {
@@ -429,6 +450,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         var me = this;
         this._clear();
         this._currentFlow = new Flow(flow.id, flow.name);
+
         flow.nodes.map(function(node) {
             me._currentFlow.addnode(node);
             var anode = me._drawNode(node);

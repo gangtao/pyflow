@@ -6,6 +6,11 @@ from port import Inport, Outport
 
 OUTPORT_DEFAULT_NAME = "out"
 
+STATUS_SUCCESS = "success"
+STATUS_FAIL = "fail"
+STATUS_INIT = "init"
+STATUS_RUNNING = "running"
+
 
 class Node(object):
 
@@ -22,7 +27,7 @@ class Node(object):
         self._outputports = dict()
         self._initports()
         self._is_cache_valid = False
-        self._status = "init"
+        self._status = STATUS_INIT
         self._error = None
 
     @property
@@ -157,11 +162,11 @@ class Node(object):
         def _function_wrapper(func, args):
             return func(*args)
 
-        self._status = "running"
+        self._status = STATUS_RUNNING
 
         if self._is_cache_valid:
             # Cache Hit
-            self._status = "sucess"
+            self._status = STATUS_SUCCESS
             self._error = None
             return
 
@@ -177,7 +182,7 @@ class Node(object):
             #print("Run node {} with output {}".format(self._name, return_value))
 
             self._is_cache_valid = True
-            self._status = "sucess"
+            self._status = STATUS_SUCCESS
             self._error = None
 
             # Single output case
@@ -191,6 +196,6 @@ class Node(object):
             for k, v in self._outputports.items():
                 v.value = return_value.get(k)
         except Exception as e:
-            self._status = "fail"
+            self._status = STATUS_FAIL
             self._error = e
             print(traceback.format_exc())

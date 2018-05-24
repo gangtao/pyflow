@@ -1,0 +1,507 @@
+{
+  "flow": {
+    "pyflow.sample.error": {
+      "nodes": [
+        {
+          "spec_id": "pyflow.transform.append", 
+          "ui": {
+            "y": "48px", 
+            "x": "77px"
+          }, 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "ab"
+            }, 
+            {
+              "name": "b", 
+              "value": "cd"
+            }
+          ], 
+          "name": "Append", 
+          "id": "node1527137681280"
+        }, 
+        {
+          "name": "Append", 
+          "id": "node1527137684469", 
+          "ui": {
+            "y": "206px", 
+            "x": "553px"
+          }, 
+          "is_end": 1, 
+          "spec_id": "pyflow.transform.append", 
+          "ports": [
+            {
+              "name": "b", 
+              "value": "ef"
+            }
+          ]
+        }, 
+        {
+          "spec_id": "pyflow.transform.error", 
+          "ui": {
+            "y": "118px", 
+            "x": "312px"
+          }, 
+          "ports": [], 
+          "name": "Error", 
+          "id": "node1527137688270"
+        }
+      ], 
+      "id": "pyflow.sample.error", 
+      "links": [
+        {
+          "source": "node1527137681280:out", 
+          "target": "node1527137688270:a"
+        }, 
+        {
+          "source": "node1527137688270:out", 
+          "target": "node1527137684469:a"
+        }
+      ], 
+      "name": "Error"
+    }, 
+    "pyflow.sample.xor": {
+      "nodes": [
+        {
+          "spec_id": "pyflow.logic.self", 
+          "ui": {
+            "y": "70px", 
+            "x": "37px"
+          }, 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "true"
+            }
+          ], 
+          "name": "Self", 
+          "id": "node1527108601395"
+        }, 
+        {
+          "spec_id": "pyflow.logic.self", 
+          "ui": {
+            "y": "184px", 
+            "x": "40px"
+          }, 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "true"
+            }
+          ], 
+          "name": "Self", 
+          "id": "node1527108602911"
+        }, 
+        {
+          "spec_id": "pyflow.logic.not", 
+          "ui": {
+            "y": "9px", 
+            "x": "270px"
+          }, 
+          "ports": [], 
+          "name": "Not", 
+          "id": "node1527108607514"
+        }, 
+        {
+          "spec_id": "pyflow.logic.not", 
+          "ui": {
+            "y": "280px", 
+            "x": "274px"
+          }, 
+          "ports": [], 
+          "name": "Not", 
+          "id": "node1527108611102"
+        }, 
+        {
+          "spec_id": "pyflow.logic.and", 
+          "ui": {
+            "y": "119px", 
+            "x": "511px"
+          }, 
+          "ports": [], 
+          "name": "And", 
+          "id": "node1527108634951"
+        }, 
+        {
+          "spec_id": "pyflow.logic.and", 
+          "ui": {
+            "y": "218px", 
+            "x": "537px"
+          }, 
+          "ports": [], 
+          "name": "And", 
+          "id": "node1527108637547"
+        }, 
+        {
+          "name": "Or", 
+          "id": "node1527108752672", 
+          "ui": {
+            "y": "176px", 
+            "x": "771px"
+          }, 
+          "is_end": 1, 
+          "spec_id": "pyflow.logic.or", 
+          "ports": []
+        }
+      ], 
+      "id": "pyflow.sample.xor", 
+      "links": [
+        {
+          "source": "node1527108601395:out", 
+          "target": "node1527108607514:a"
+        }, 
+        {
+          "source": "node1527108602911:out", 
+          "target": "node1527108611102:a"
+        }, 
+        {
+          "source": "node1527108607514:out", 
+          "target": "node1527108634951:b"
+        }, 
+        {
+          "source": "node1527108611102:out", 
+          "target": "node1527108637547:b"
+        }, 
+        {
+          "source": "node1527108601395:out", 
+          "target": "node1527108637547:a"
+        }, 
+        {
+          "source": "node1527108602911:out", 
+          "target": "node1527108634951:a"
+        }, 
+        {
+          "source": "node1527108634951:out", 
+          "target": "node1527108752672:a"
+        }, 
+        {
+          "source": "node1527108637547:out", 
+          "target": "node1527108752672:b"
+        }
+      ], 
+      "name": "Xor"
+    }, 
+    "pyflow.sample.math": {
+      "nodes": [
+        {
+          "spec_id": "pyflow.math.add", 
+          "ui": {
+            "y": "69px", 
+            "x": "160px"
+          }, 
+          "id": "node1527101193950", 
+          "name": "Add", 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "2"
+            }, 
+            {
+              "name": "b", 
+              "value": "3"
+            }
+          ]
+        }, 
+        {
+          "spec_id": "pyflow.math.add", 
+          "ui": {
+            "y": "213px", 
+            "x": "163px"
+          }, 
+          "id": "node1527101195573", 
+          "name": "Add", 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "4"
+            }, 
+            {
+              "name": "b", 
+              "value": "5"
+            }
+          ]
+        }, 
+        {
+          "spec_id": "pyflow.math.multiply", 
+          "ui": {
+            "y": "160px", 
+            "x": "450px"
+          }, 
+          "id": "node1527101199970", 
+          "name": "Multiply", 
+          "ports": []
+        }, 
+        {
+          "name": "Division", 
+          "id": "node1527101204754", 
+          "ui": {
+            "y": "169px", 
+            "x": "721px"
+          }, 
+          "is_end": 1, 
+          "spec_id": "pyflow.math.division", 
+          "ports": [
+            {
+              "name": "b", 
+              "value": "5"
+            }
+          ]
+        }
+      ], 
+      "id": "pyflow.sample.math", 
+      "links": [
+        {
+          "source": "node1527101193950:out", 
+          "target": "node1527101199970:a"
+        }, 
+        {
+          "source": "node1527101195573:out", 
+          "target": "node1527101199970:b"
+        }, 
+        {
+          "source": "node1527101199970:out", 
+          "target": "node1527101204754:a"
+        }
+      ], 
+      "name": "math"
+    }
+  }, 
+  "nodespec": {
+    "pyflow.transform.append": {
+      "port": {
+        "input": [
+          {
+            "type": "String", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "String", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "String", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "id": "pyflow.transform.append", 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: String,String\n    :returns: out\n    :rtype: String\n    \"\"\"\n\treturn a + b", 
+      "title": "Append"
+    }, 
+    "pyflow.transform.error": {
+      "port": {
+        "input": [
+          {
+            "type": "String", 
+            "name": "a", 
+            "order": 0
+          }
+        ], 
+        "output": [
+          {
+            "type": "String", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "id": "pyflow.transform.error", 
+      "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: String\n    :returns: out\n    :rtype: String\n    \"\"\"\n\traise Exception(\"Always Failed!\")", 
+      "title": "Error"
+    }, 
+    "pyflow.math.division": {
+      "id": "pyflow.math.division", 
+      "port": {
+        "input": [
+          {
+            "type": "Int", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Int", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Int", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a / b", 
+      "title": "Division"
+    }, 
+    "pyflow.logic.and": {
+      "id": "pyflow.logic.and", 
+      "port": {
+        "input": [
+          {
+            "type": "Boolean", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Boolean", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Boolean", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Boolean,Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn a and b", 
+      "title": "And"
+    }, 
+    "pyflow.logic.self": {
+      "id": "pyflow.logic.self", 
+      "port": {
+        "input": [
+          {
+            "type": "Boolean", 
+            "name": "a", 
+            "order": 0
+          }
+        ], 
+        "output": [
+          {
+            "type": "Boolean", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn bool(a)", 
+      "title": "Self"
+    }, 
+    "pyflow.math.multiply": {
+      "id": "pyflow.math.multiply", 
+      "port": {
+        "input": [
+          {
+            "type": "Int", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Int", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Int", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a * b", 
+      "title": "Multiply"
+    }, 
+    "pyflow.math.minus": {
+      "id": "pyflow.math.minus", 
+      "port": {
+        "input": [
+          {
+            "type": "Int", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Int", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Int", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a - b", 
+      "title": "Minus"
+    }, 
+    "pyflow.logic.or": {
+      "id": "pyflow.logic.or", 
+      "port": {
+        "input": [
+          {
+            "type": "Boolean", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Boolean", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Boolean", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Boolean,Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn a or b", 
+      "title": "Or"
+    }, 
+    "pyflow.math.add": {
+      "id": "pyflow.math.add", 
+      "port": {
+        "input": [
+          {
+            "type": "Int", 
+            "name": "a", 
+            "order": 0
+          }, 
+          {
+            "type": "Int", 
+            "name": "b", 
+            "order": 1
+          }
+        ], 
+        "output": [
+          {
+            "type": "Int", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a + b", 
+      "title": "Add"
+    }, 
+    "pyflow.logic.not": {
+      "id": "pyflow.logic.not", 
+      "port": {
+        "input": [
+          {
+            "type": "Boolean", 
+            "name": "a", 
+            "order": 0
+          }
+        ], 
+        "output": [
+          {
+            "type": "Boolean", 
+            "name": "out"
+          }
+        ]
+      }, 
+      "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn not a", 
+      "title": "Not"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 """Core Class for Flow."""
 from multiprocessing import Process, Manager
 from multiprocessing.managers import BaseManager
+import sys
 import json
 from node import Node
 
@@ -140,7 +141,7 @@ class Flow(object):
     def get_links(self):
         return self._links
 
-    def _find_children_nodes(self, target_node, source_nodes):
+    def _find_dependant_nodes(self, target_node, source_nodes):
         in_ports = target_node.get_ports("in")
         children = []
         for p in in_ports:
@@ -158,7 +159,7 @@ class Flow(object):
         new_children = []
         while True:
             for child in children:
-                new_children += self._find_children_nodes(child, source_nodes)
+                new_children += self._find_dependant_nodes(child, source_nodes)
 
             if len(new_children) == 0:
                 break
@@ -172,15 +173,32 @@ class Flow(object):
             if len(nodemap) == 0:
                 break
             anode = nodemap.pop()
-            # TODO Exception handling here
+            node_value = anode.get_node_value()
+            
+            dep_nodes = list()
+            find_failure = False
+            for n in self._find_dependant_nodes(anode, dep_nodes):
+                if n._status == "fail" or n._status == "skip":
+                    node_value["status"] = "skip"
+                    node_value["error"] = "skip due to denpendency node failure"
+                    stat.append_stat(node_value)
+                    find_failure = True
+                    break
+
+            if find_failure:
+                # break incase there is depedency failure
+                break
+
             try:
                 anode.run()
-                stat.append_stat(anode.get_node_value())
+                node_value = anode.get_node_value()
             except Exception as e:
                 node_value = anode.get_node_value()
                 node_value["status"] = "fail"
                 node_value["error"] = str(e)
+            finally :
                 stat.append_stat(node_value)
+
         stat.set_stat(True)
 
     def _run_streaming(self, end_node):
@@ -197,5 +215,5 @@ class Flow(object):
             p = Process(target=self._run_batch, args=(end_node, stat))
             p.start()
             return stat
-        elif self._mode == EXEC_MODE_BATCH:
+        elif self._mode == EXEC_MODE_STREAMING:
             self._run_streaming(end_node)

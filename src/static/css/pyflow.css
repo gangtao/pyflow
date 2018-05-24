@@ -159,3 +159,11 @@
     width: 100%;
     position: absolute;
 }
+
+.node-fail {
+    background-color: OrangeRed    
+}
+
+.node-skip {
+    background-color: Silver     
+}
