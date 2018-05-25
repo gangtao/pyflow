@@ -1,0 +1,19 @@
+{
+  "name": "pyflow",
+  "version": "1.0.0",
+  "description": "a python application of flow base programing concept implementation",
+  "main": "app.js",
+  "repository": "https://github.com/gangtao/pyflow",
+  "author": "Gang Tao <gang.tao@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "codemirror": "^5.22.2",
+    "bootstrap": "^3.3.7",
+    "x-editable": "^1.5.1",
+    "d3": "^4.12.2",
+    "js-beautify": "*",
+    "jsplumb": "^2.3.2",
+    "requirejs": "~2.1.22"
+  }
+}
