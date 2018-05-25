@@ -90,3 +90,4 @@ ENV/
 
 .DS_*
 src/static/bower_components
+src/static/node_modules
