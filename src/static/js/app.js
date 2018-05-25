@@ -56,7 +56,9 @@ require(["flow", "node", "model/repo", "util"], function(Flow, Node, Repo, Util)
             var file = d3.select("#" + file_path_id).text();
             console.log(file);
             var repo = new Repo();
-            repo.load(file);
+            repo.load(file, function(){
+                Flow.render();
+            });
             $("#" + modal_id).modal('hide');
         });
 

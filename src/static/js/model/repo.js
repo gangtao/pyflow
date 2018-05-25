@@ -2,7 +2,7 @@ define([], function() {
     var Repo = function() {
     };
 
-    Repo.prototype.load = function(path) {
+    Repo.prototype.load = function(path, onComplete) {
     	var data = {};
     	data.path = path;
     	$.ajax({
@@ -13,6 +13,7 @@ define([], function() {
             dataType: 'json'
         }).done(function(data) {
             console.log(data);
+            onComplete.apply();
         });
     }
 

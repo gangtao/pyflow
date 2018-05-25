@@ -83,6 +83,9 @@ def nodes():
     else:
         node_specs = repository.get("nodespec")
 
+        if not node_specs:
+            return jsonify({}), 200, {'ContentType': 'application/json'}
+
         # Adding default output when it is not there
         for k, v in node_specs.iteritems():
             if not v["port"].has_key("output"):
