@@ -1,5 +1,5 @@
 BIN_NAME ?= pyflow
-VERSION ?= 0.2.0
+VERSION ?= 0.2.1
 IMAGE_NAME ?= $(BIN_NAME):$(VERSION)
 DOCKER_ID_USER ?= naughtytao
 

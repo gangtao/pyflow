@@ -4,53 +4,42 @@
 
 abbrev@1:
   version "1.1.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/abbrev/-/abbrev-1.1.1.tgz?dl=https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
-
-acorn-node@^1.3.0:
-  version "1.3.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/acorn-node/-/acorn-node-1.3.0.tgz?dl=https://registry.yarnpkg.com/acorn-node/-/acorn-node-1.3.0.tgz#5f86d73346743810ef1269b901dbcbded020861b"
-  dependencies:
-    acorn "^5.4.1"
-    xtend "^4.0.1"
-
-acorn@^5.4.1:
-  version "5.5.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/acorn/-/acorn-5.5.3.tgz?dl=https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
+  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
 
 bluebird@^3.0.5:
   version "3.5.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/bluebird/-/bluebird-3.5.1.tgz?dl=https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
 bootstrap@^3.3.7:
   version "3.3.7"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/bootstrap/-/bootstrap-3.3.7.tgz?dl=https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
 codemirror@^5.22.2:
   version "5.38.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/codemirror/-/codemirror-5.38.0.tgz?dl=https://registry.yarnpkg.com/codemirror/-/codemirror-5.38.0.tgz#26a9551446e51dbdde36aabe60f72469724fd332"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.38.0.tgz#26a9551446e51dbdde36aabe60f72469724fd332"
 
 commander@2, commander@^2.9.0:
   version "2.15.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/commander/-/commander-2.15.1.tgz?dl=https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
 config-chain@~1.1.5:
   version "1.1.11"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/config-chain/-/config-chain-1.1.11.tgz?dl=https://registry.yarnpkg.com/config-chain/-/config-chain-1.1.11.tgz#aba09747dfbe4c3e70e766a6e41586e1859fc6f2"
+  resolved "https://registry.yarnpkg.com/config-chain/-/config-chain-1.1.11.tgz#aba09747dfbe4c3e70e766a6e41586e1859fc6f2"
   dependencies:
     ini "^1.3.4"
     proto-list "~1.2.1"
 
 d3-array@1, d3-array@1.2.1, d3-array@^1.2.0:
   version "1.2.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-array/-/d3-array-1.2.1.tgz?dl=https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.1.tgz#d1ca33de2f6ac31efadb8e050a021d7e2396d5dc"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.1.tgz#d1ca33de2f6ac31efadb8e050a021d7e2396d5dc"
 
 d3-axis@1.0.8:
   version "1.0.8"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-axis/-/d3-axis-1.0.8.tgz?dl=https://registry.yarnpkg.com/d3-axis/-/d3-axis-1.0.8.tgz#31a705a0b535e65759de14173a31933137f18efa"
+  resolved "https://registry.yarnpkg.com/d3-axis/-/d3-axis-1.0.8.tgz#31a705a0b535e65759de14173a31933137f18efa"
 
 d3-brush@1.0.4:
   version "1.0.4"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-brush/-/d3-brush-1.0.4.tgz?dl=https://registry.yarnpkg.com/d3-brush/-/d3-brush-1.0.4.tgz#00c2f238019f24f6c0a194a26d41a1530ffe7bc4"
+  resolved "https://registry.yarnpkg.com/d3-brush/-/d3-brush-1.0.4.tgz#00c2f238019f24f6c0a194a26d41a1530ffe7bc4"
   dependencies:
     d3-dispatch "1"
     d3-drag "1"
@@ -60,37 +49,37 @@ d3-brush@1.0.4:
 
 d3-chord@1.0.4:
   version "1.0.4"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-chord/-/d3-chord-1.0.4.tgz?dl=https://registry.yarnpkg.com/d3-chord/-/d3-chord-1.0.4.tgz#7dec4f0ba886f713fe111c45f763414f6f74ca2c"
+  resolved "https://registry.yarnpkg.com/d3-chord/-/d3-chord-1.0.4.tgz#7dec4f0ba886f713fe111c45f763414f6f74ca2c"
   dependencies:
     d3-array "1"
     d3-path "1"
 
 d3-collection@1, d3-collection@1.0.4:
   version "1.0.4"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-collection/-/d3-collection-1.0.4.tgz?dl=https://registry.yarnpkg.com/d3-collection/-/d3-collection-1.0.4.tgz#342dfd12837c90974f33f1cc0a785aea570dcdc2"
+  resolved "https://registry.yarnpkg.com/d3-collection/-/d3-collection-1.0.4.tgz#342dfd12837c90974f33f1cc0a785aea570dcdc2"
 
 d3-color@1:
   version "1.2.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-color/-/d3-color-1.2.0.tgz?dl=https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.0.tgz#d1ea19db5859c86854586276ec892cf93148459a"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.0.tgz#d1ea19db5859c86854586276ec892cf93148459a"
 
 d3-color@1.0.3:
   version "1.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-color/-/d3-color-1.0.3.tgz?dl=https://registry.yarnpkg.com/d3-color/-/d3-color-1.0.3.tgz#bc7643fca8e53a8347e2fbdaffa236796b58509b"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.0.3.tgz#bc7643fca8e53a8347e2fbdaffa236796b58509b"
 
 d3-dispatch@1, d3-dispatch@1.0.3:
   version "1.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-dispatch/-/d3-dispatch-1.0.3.tgz?dl=https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-1.0.3.tgz#46e1491eaa9b58c358fce5be4e8bed626e7871f8"
+  resolved "https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-1.0.3.tgz#46e1491eaa9b58c358fce5be4e8bed626e7871f8"
 
 d3-drag@1, d3-drag@1.2.1:
   version "1.2.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-drag/-/d3-drag-1.2.1.tgz?dl=https://registry.yarnpkg.com/d3-drag/-/d3-drag-1.2.1.tgz#df8dd4c502fb490fc7462046a8ad98a5c479282d"
+  resolved "https://registry.yarnpkg.com/d3-drag/-/d3-drag-1.2.1.tgz#df8dd4c502fb490fc7462046a8ad98a5c479282d"
   dependencies:
     d3-dispatch "1"
     d3-selection "1"
 
 d3-dsv@1, d3-dsv@1.0.8:
   version "1.0.8"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-dsv/-/d3-dsv-1.0.8.tgz?dl=https://registry.yarnpkg.com/d3-dsv/-/d3-dsv-1.0.8.tgz#907e240d57b386618dc56468bacfe76bf19764ae"
+  resolved "https://registry.yarnpkg.com/d3-dsv/-/d3-dsv-1.0.8.tgz#907e240d57b386618dc56468bacfe76bf19764ae"
   dependencies:
     commander "2"
     iconv-lite "0.4"
@@ -98,11 +87,11 @@ d3-dsv@1, d3-dsv@1.0.8:
 
 d3-ease@1, d3-ease@1.0.3:
   version "1.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-ease/-/d3-ease-1.0.3.tgz?dl=https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.3.tgz#68bfbc349338a380c44d8acc4fbc3304aa2d8c0e"
+  resolved "https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.3.tgz#68bfbc349338a380c44d8acc4fbc3304aa2d8c0e"
 
 d3-force@1.1.0:
   version "1.1.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-force/-/d3-force-1.1.0.tgz?dl=https://registry.yarnpkg.com/d3-force/-/d3-force-1.1.0.tgz#cebf3c694f1078fcc3d4daf8e567b2fbd70d4ea3"
+  resolved "https://registry.yarnpkg.com/d3-force/-/d3-force-1.1.0.tgz#cebf3c694f1078fcc3d4daf8e567b2fbd70d4ea3"
   dependencies:
     d3-collection "1"
     d3-dispatch "1"
@@ -111,57 +100,57 @@ d3-force@1.1.0:
 
 d3-format@1:
   version "1.3.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-format/-/d3-format-1.3.0.tgz?dl=https://registry.yarnpkg.com/d3-format/-/d3-format-1.3.0.tgz#a3ac44269a2011cdb87c7b5693040c18cddfff11"
+  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.3.0.tgz#a3ac44269a2011cdb87c7b5693040c18cddfff11"
 
 d3-format@1.2.2:
   version "1.2.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-format/-/d3-format-1.2.2.tgz?dl=https://registry.yarnpkg.com/d3-format/-/d3-format-1.2.2.tgz#1a39c479c8a57fe5051b2e67a3bee27061a74e7a"
+  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.2.2.tgz#1a39c479c8a57fe5051b2e67a3bee27061a74e7a"
 
 d3-geo@1.9.1:
   version "1.9.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-geo/-/d3-geo-1.9.1.tgz?dl=https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.9.1.tgz#157e3b0f917379d0f73bebfff3be537f49fa7356"
+  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.9.1.tgz#157e3b0f917379d0f73bebfff3be537f49fa7356"
   dependencies:
     d3-array "1"
 
 d3-hierarchy@1.1.5:
   version "1.1.5"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-hierarchy/-/d3-hierarchy-1.1.5.tgz?dl=https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-1.1.5.tgz#a1c845c42f84a206bcf1c01c01098ea4ddaa7a26"
+  resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-1.1.5.tgz#a1c845c42f84a206bcf1c01c01098ea4ddaa7a26"
 
 d3-interpolate@1:
   version "1.2.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-interpolate/-/d3-interpolate-1.2.0.tgz?dl=https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.2.0.tgz#40d81bd8e959ff021c5ea7545bc79b8d22331c41"
+  resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.2.0.tgz#40d81bd8e959ff021c5ea7545bc79b8d22331c41"
   dependencies:
     d3-color "1"
 
 d3-interpolate@1.1.6:
   version "1.1.6"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-interpolate/-/d3-interpolate-1.1.6.tgz?dl=https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.1.6.tgz#2cf395ae2381804df08aa1bf766b7f97b5f68fb6"
+  resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.1.6.tgz#2cf395ae2381804df08aa1bf766b7f97b5f68fb6"
   dependencies:
     d3-color "1"
 
 d3-path@1, d3-path@1.0.5:
   version "1.0.5"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-path/-/d3-path-1.0.5.tgz?dl=https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.5.tgz#241eb1849bd9e9e8021c0d0a799f8a0e8e441764"
+  resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.5.tgz#241eb1849bd9e9e8021c0d0a799f8a0e8e441764"
 
 d3-polygon@1.0.3:
   version "1.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-polygon/-/d3-polygon-1.0.3.tgz?dl=https://registry.yarnpkg.com/d3-polygon/-/d3-polygon-1.0.3.tgz#16888e9026460933f2b179652ad378224d382c62"
+  resolved "https://registry.yarnpkg.com/d3-polygon/-/d3-polygon-1.0.3.tgz#16888e9026460933f2b179652ad378224d382c62"
 
 d3-quadtree@1, d3-quadtree@1.0.3:
   version "1.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-quadtree/-/d3-quadtree-1.0.3.tgz?dl=https://registry.yarnpkg.com/d3-quadtree/-/d3-quadtree-1.0.3.tgz#ac7987e3e23fe805a990f28e1b50d38fcb822438"
+  resolved "https://registry.yarnpkg.com/d3-quadtree/-/d3-quadtree-1.0.3.tgz#ac7987e3e23fe805a990f28e1b50d38fcb822438"
 
 d3-queue@3.0.7:
   version "3.0.7"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-queue/-/d3-queue-3.0.7.tgz?dl=https://registry.yarnpkg.com/d3-queue/-/d3-queue-3.0.7.tgz#c93a2e54b417c0959129d7d73f6cf7d4292e7618"
+  resolved "https://registry.yarnpkg.com/d3-queue/-/d3-queue-3.0.7.tgz#c93a2e54b417c0959129d7d73f6cf7d4292e7618"
 
 d3-random@1.1.0:
   version "1.1.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-random/-/d3-random-1.1.0.tgz?dl=https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.0.tgz#6642e506c6fa3a648595d2b2469788a8d12529d3"
+  resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.0.tgz#6642e506c6fa3a648595d2b2469788a8d12529d3"
 
 d3-request@1.0.6:
   version "1.0.6"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-request/-/d3-request-1.0.6.tgz?dl=https://registry.yarnpkg.com/d3-request/-/d3-request-1.0.6.tgz#a1044a9ef4ec28c824171c9379fae6d79474b19f"
+  resolved "https://registry.yarnpkg.com/d3-request/-/d3-request-1.0.6.tgz#a1044a9ef4ec28c824171c9379fae6d79474b19f"
   dependencies:
     d3-collection "1"
     d3-dispatch "1"
@@ -170,7 +159,7 @@ d3-request@1.0.6:
 
 d3-scale@1.0.7:
   version "1.0.7"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-scale/-/d3-scale-1.0.7.tgz?dl=https://registry.yarnpkg.com/d3-scale/-/d3-scale-1.0.7.tgz#fa90324b3ea8a776422bd0472afab0b252a0945d"
+  resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-1.0.7.tgz#fa90324b3ea8a776422bd0472afab0b252a0945d"
   dependencies:
     d3-array "^1.2.0"
     d3-collection "1"
@@ -182,31 +171,31 @@ d3-scale@1.0.7:
 
 d3-selection@1, d3-selection@1.3.0, d3-selection@^1.1.0:
   version "1.3.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-selection/-/d3-selection-1.3.0.tgz?dl=https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.3.0.tgz#d53772382d3dc4f7507bfb28bcd2d6aed2a0ad6d"
+  resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.3.0.tgz#d53772382d3dc4f7507bfb28bcd2d6aed2a0ad6d"
 
 d3-shape@1.2.0:
   version "1.2.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-shape/-/d3-shape-1.2.0.tgz?dl=https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.2.0.tgz#45d01538f064bafd05ea3d6d2cb748fd8c41f777"
+  resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.2.0.tgz#45d01538f064bafd05ea3d6d2cb748fd8c41f777"
   dependencies:
     d3-path "1"
 
 d3-time-format@2, d3-time-format@2.1.1:
   version "2.1.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-time-format/-/d3-time-format-2.1.1.tgz?dl=https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-2.1.1.tgz#85b7cdfbc9ffca187f14d3c456ffda268081bb31"
+  resolved "https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-2.1.1.tgz#85b7cdfbc9ffca187f14d3c456ffda268081bb31"
   dependencies:
     d3-time "1"
 
 d3-time@1, d3-time@1.0.8:
   version "1.0.8"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-time/-/d3-time-1.0.8.tgz?dl=https://registry.yarnpkg.com/d3-time/-/d3-time-1.0.8.tgz#dbd2d6007bf416fe67a76d17947b784bffea1e84"
+  resolved "https://registry.yarnpkg.com/d3-time/-/d3-time-1.0.8.tgz#dbd2d6007bf416fe67a76d17947b784bffea1e84"
 
 d3-timer@1, d3-timer@1.0.7:
   version "1.0.7"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-timer/-/d3-timer-1.0.7.tgz?dl=https://registry.yarnpkg.com/d3-timer/-/d3-timer-1.0.7.tgz#df9650ca587f6c96607ff4e60cc38229e8dd8531"
+  resolved "https://registry.yarnpkg.com/d3-timer/-/d3-timer-1.0.7.tgz#df9650ca587f6c96607ff4e60cc38229e8dd8531"
 
 d3-transition@1, d3-transition@1.1.1:
   version "1.1.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-transition/-/d3-transition-1.1.1.tgz?dl=https://registry.yarnpkg.com/d3-transition/-/d3-transition-1.1.1.tgz#d8ef89c3b848735b060e54a39b32aaebaa421039"
+  resolved "https://registry.yarnpkg.com/d3-transition/-/d3-transition-1.1.1.tgz#d8ef89c3b848735b060e54a39b32aaebaa421039"
   dependencies:
     d3-color "1"
     d3-dispatch "1"
@@ -217,11 +206,11 @@ d3-transition@1, d3-transition@1.1.1:
 
 d3-voronoi@1.1.2:
   version "1.1.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-voronoi/-/d3-voronoi-1.1.2.tgz?dl=https://registry.yarnpkg.com/d3-voronoi/-/d3-voronoi-1.1.2.tgz#1687667e8f13a2d158c80c1480c5a29cb0d8973c"
+  resolved "https://registry.yarnpkg.com/d3-voronoi/-/d3-voronoi-1.1.2.tgz#1687667e8f13a2d158c80c1480c5a29cb0d8973c"
 
 d3-zoom@1.7.1:
   version "1.7.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3-zoom/-/d3-zoom-1.7.1.tgz?dl=https://registry.yarnpkg.com/d3-zoom/-/d3-zoom-1.7.1.tgz#02f43b3c3e2db54f364582d7e4a236ccc5506b63"
+  resolved "https://registry.yarnpkg.com/d3-zoom/-/d3-zoom-1.7.1.tgz#02f43b3c3e2db54f364582d7e4a236ccc5506b63"
   dependencies:
     d3-dispatch "1"
     d3-drag "1"
@@ -231,7 +220,7 @@ d3-zoom@1.7.1:
 
 d3@^4.12.2:
   version "4.13.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/d3/-/d3-4.13.0.tgz?dl=https://registry.yarnpkg.com/d3/-/d3-4.13.0.tgz#ab236ff8cf0cfc27a81e69bf2fb7518bc9b4f33d"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-4.13.0.tgz#ab236ff8cf0cfc27a81e69bf2fb7518bc9b4f33d"
   dependencies:
     d3-array "1.2.1"
     d3-axis "1.0.8"
@@ -264,21 +253,9 @@ d3@^4.12.2:
     d3-voronoi "1.1.2"
     d3-zoom "1.7.1"
 
-defined@^1.0.0:
-  version "1.0.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/defined/-/defined-1.0.0.tgz?dl=https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
-
-"detective@>= 0.0.3":
-  version "5.1.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/detective/-/detective-5.1.0.tgz?dl=https://registry.yarnpkg.com/detective/-/detective-5.1.0.tgz#7a20d89236d7b331ccea65832e7123b5551bb7cb"
-  dependencies:
-    acorn-node "^1.3.0"
-    defined "^1.0.0"
-    minimist "^1.1.1"
-
 editorconfig@^0.13.2:
   version "0.13.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/editorconfig/-/editorconfig-0.13.3.tgz?dl=https://registry.yarnpkg.com/editorconfig/-/editorconfig-0.13.3.tgz#e5219e587951d60958fd94ea9a9a008cdeff1b34"
+  resolved "https://registry.yarnpkg.com/editorconfig/-/editorconfig-0.13.3.tgz#e5219e587951d60958fd94ea9a9a008cdeff1b34"
   dependencies:
     bluebird "^3.0.5"
     commander "^2.9.0"
@@ -288,151 +265,85 @@ editorconfig@^0.13.2:
 
 iconv-lite@0.4:
   version "0.4.23"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/iconv-lite/-/iconv-lite-0.4.23.tgz?dl=https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
 ini@^1.3.4:
   version "1.3.5"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/ini/-/ini-1.3.5.tgz?dl=https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
-
-"joose@>= 3.14.0", "joose@>= 3.16.0":
-  version "3.50.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/joose/-/joose-3.50.0.tgz?dl=https://registry.yarnpkg.com/joose/-/joose-3.50.0.tgz#0926824d43f640a0f47370bfca748a929344b483"
-  dependencies:
-    detective ">= 0.0.3"
-    optimist "*"
-    temp "*"
-
-"joosex-namespace-depended@>= 0.11.0":
-  version "0.18.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/joosex-namespace-depended/-/joosex-namespace-depended-0.18.0.tgz?dl=https://registry.yarnpkg.com/joosex-namespace-depended/-/joosex-namespace-depended-0.18.0.tgz#3d82c113a331b2b1b860193a7bf3fc3ed56f9f1c"
-  dependencies:
-    joose ">= 3.16.0"
-    joosex-simplerequest ">= 0.2.1"
-
-"joosex-simplerequest@>= 0.2.1":
-  version "0.2.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/joosex-simplerequest/-/joosex-simplerequest-0.2.2.tgz?dl=https://registry.yarnpkg.com/joosex-simplerequest/-/joosex-simplerequest-0.2.2.tgz#0c9e1cb0d00a2e760abc1fded3be4977f81847c0"
-  dependencies:
-    joose ">= 3.14.0"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
 jquery@^3.1.1:
   version "3.3.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/jquery/-/jquery-3.3.1.tgz?dl=https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-beautify@*:
   version "1.7.5"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/js-beautify/-/js-beautify-1.7.5.tgz?dl=https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.7.5.tgz#69d9651ef60dbb649f65527b53674950138a7919"
+  resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.7.5.tgz#69d9651ef60dbb649f65527b53674950138a7919"
   dependencies:
     config-chain "~1.1.5"
     editorconfig "^0.13.2"
     mkdirp "~0.5.0"
     nopt "~3.0.1"
 
-json2@*:
-  version "0.4.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/json2/-/json2-0.4.0.tgz?dl=https://registry.yarnpkg.com/json2/-/json2-0.4.0.tgz#4f658ea900acc5acd7f8565977f16f41287810f9"
-  dependencies:
-    joose ">= 3.14.0"
-    joosex-namespace-depended ">= 0.11.0"
-
 jsplumb@^2.3.2:
   version "2.7.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/jsplumb/-/jsplumb-2.7.1.tgz?dl=https://registry.yarnpkg.com/jsplumb/-/jsplumb-2.7.1.tgz#d9c46ad660252d22960954e1e9e8f03c17fe1267"
+  resolved "https://registry.yarnpkg.com/jsplumb/-/jsplumb-2.7.1.tgz#d9c46ad660252d22960954e1e9e8f03c17fe1267"
 
 lru-cache@^3.2.0:
   version "3.2.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/lru-cache/-/lru-cache-3.2.0.tgz?dl=https://registry.yarnpkg.com/lru-cache/-/lru-cache-3.2.0.tgz#71789b3b7f5399bec8565dda38aa30d2a097efee"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-3.2.0.tgz#71789b3b7f5399bec8565dda38aa30d2a097efee"
   dependencies:
     pseudomap "^1.0.1"
 
 minimist@0.0.8:
   version "0.0.8"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/minimist/-/minimist-0.0.8.tgz?dl=https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
-
-minimist@^1.1.1:
-  version "1.2.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/minimist/-/minimist-1.2.0.tgz?dl=https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-
-minimist@~0.0.1:
-  version "0.0.10"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/minimist/-/minimist-0.0.10.tgz?dl=https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
 mkdirp@~0.5.0:
   version "0.5.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/mkdirp/-/mkdirp-0.5.1.tgz?dl=https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
 
 nopt@~3.0.1:
   version "3.0.6"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/nopt/-/nopt-3.0.6.tgz?dl=https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
   dependencies:
     abbrev "1"
 
-optimist@*:
-  version "0.6.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/optimist/-/optimist-0.6.1.tgz?dl=https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
-  dependencies:
-    minimist "~0.0.1"
-    wordwrap "~0.0.2"
-
-os-tmpdir@^1.0.0:
-  version "1.0.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/os-tmpdir/-/os-tmpdir-1.0.2.tgz?dl=https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
-
 proto-list@~1.2.1:
   version "1.2.4"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/proto-list/-/proto-list-1.2.4.tgz?dl=https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
+  resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
 
 pseudomap@^1.0.1:
   version "1.0.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/pseudomap/-/pseudomap-1.0.2.tgz?dl=https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
+  resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
 requirejs@~2.1.22:
   version "2.1.22"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/requirejs/-/requirejs-2.1.22.tgz?dl=https://registry.yarnpkg.com/requirejs/-/requirejs-2.1.22.tgz#dd78fd2d34180c0d62c724b5b8aebc0664e0366f"
-
-rimraf@~2.2.6:
-  version "2.2.8"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/rimraf/-/rimraf-2.2.8.tgz?dl=https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+  resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.1.22.tgz#dd78fd2d34180c0d62c724b5b8aebc0664e0366f"
 
 rw@1:
   version "1.3.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/rw/-/rw-1.3.3.tgz?dl=https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+  resolved "https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
 
 "safer-buffer@>= 2.1.2 < 3":
   version "2.1.2"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/safer-buffer/-/safer-buffer-2.1.2.tgz?dl=https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
+  resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
 
 semver@^5.1.0:
   version "5.5.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/semver/-/semver-5.5.0.tgz?dl=https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 sigmund@^1.0.1:
   version "1.0.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/sigmund/-/sigmund-1.0.1.tgz?dl=https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
-
-temp@*:
-  version "0.8.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/temp/-/temp-0.8.3.tgz?dl=https://registry.yarnpkg.com/temp/-/temp-0.8.3.tgz#e0c6bc4d26b903124410e4fed81103014dfc1f59"
-  dependencies:
-    os-tmpdir "^1.0.0"
-    rimraf "~2.2.6"
-
-wordwrap@~0.0.2:
-  version "0.0.3"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/wordwrap/-/wordwrap-0.0.3.tgz?dl=https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
+  resolved "https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
 
 x-editable@^1.5.1:
   version "1.5.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/x-editable/-/x-editable-1.5.1.tgz?dl=https://registry.yarnpkg.com/x-editable/-/x-editable-1.5.1.tgz#2edbb8911ef2c5d61f63f06b0cf020be0fcc5849"
+  resolved "https://registry.yarnpkg.com/x-editable/-/x-editable-1.5.1.tgz#2edbb8911ef2c5d61f63f06b0cf020be0fcc5849"
 
 xmlhttprequest@1:
   version "1.8.0"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz?dl=https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
-
-xtend@^4.0.1:
-  version "4.0.1"
-  resolved "https://repo.splunk.com/artifactory/api/npm/npm/xtend/-/xtend-4.0.1.tgz?dl=https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
