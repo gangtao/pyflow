@@ -56,6 +56,8 @@ define(["model/flow", "util"], function(Flow, Util) {
         };
 
     var FLOW_PANEL_ID = "flow-panel";
+    var DEFAULT_FLOW_NAME = "untitled";
+    var DEFAULT_FLOW_ID = "pyflow.sample"
 
     var Canvas = function Canvas(rootId, nodeSpec, nodeInspector) {
         this._instance = jsPlumb.getInstance({
@@ -67,9 +69,11 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._nodeSpec = nodeSpec;
         this._inspector = nodeInspector;
         this._selectedNode = undefined;
-        this._currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
+        this._heading = undefined;
+        this._currentFlow = new Flow(DEFAULT_FLOW_ID, DEFAULT_FLOW_NAME);
         this._inspector.onNotify(this._update, this);
         this._panel = undefined;
+        this._titleSpan = undefined;
     };
 
     Canvas.prototype.getNodeSpecById = function(id) {
@@ -85,30 +89,32 @@ define(["model/flow", "util"], function(Flow, Util) {
         this._panel = Util.addPanel(root, "Flow");
         var me = this;
 
-        var heading = root.select(".panel-heading");
-        heading.append("br");
+        this._heading = root.select(".panel-heading");
+        this._titleSpan = this._heading.append("span").classed("label label-primary", true).style("margin-left", "5px");
+        this._titleSpan.text(this._currentFlow.flow().name);
+        this._heading.append("br");
 
-        heading.append("button").classed("glyphicon glyphicon-plus-sign flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-plus-sign flowbutton", true).on("click", function() {
             me._newflow();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-floppy-open flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-floppy-open flowbutton", true).on("click", function() {
             me._load();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-floppy-save flowbutton", true).on("click", function() {
             me._save();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-trash  flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-trash  flowbutton", true).on("click", function() {
             me._clear();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-search flowbutton", true).on("click", function() {
             me._showFlowSource();
         });
 
-        heading.append("button").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function() {
+        this._heading.append("button").classed("glyphicon glyphicon-remove-circle flowbutton", true).on("click", function() {
             me._removeNode();
         }).style("visibility", "hidden");
 
@@ -413,6 +419,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         $("#new_flow_btn").click(function() {
             $("#flow_new_modal").modal("hide");
             me._currentFlow = new Flow($("#flowid").text(), $("#flowname").text());
+            me._titleSpan.text(me._currentFlow.flow().name);
         });
         $("#flow_new_modal").modal("show");
     };
@@ -449,6 +456,7 @@ define(["model/flow", "util"], function(Flow, Util) {
         var me = this;
         this._clear();
         this._currentFlow = new Flow(flow.id, flow.name);
+        me._titleSpan.text(me._currentFlow.flow().name);
 
         flow.nodes.map(function(node) {
             me._currentFlow.addnode(node);
