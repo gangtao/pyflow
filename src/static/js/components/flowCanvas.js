@@ -56,17 +56,15 @@ define(["model/flow", "util"], function(Flow, Util) {
         };
 
     var FLOW_PANEL_ID = "flow-panel";
-    var instance = jsPlumb.getInstance({
-        Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-        DragOptions: { cursor: "pointer", zIndex: 2000 },
-        Container: FLOW_PANEL_ID
-    });
-
 
     var Canvas = function Canvas(rootId, nodeSpec, nodeInspector) {
+        this._instance = jsPlumb.getInstance({
+            Connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
+            DragOptions: { cursor: "pointer", zIndex: 2000 },
+            Container: FLOW_PANEL_ID
+        });
         this._rootId = rootId;
         this._nodeSpec = nodeSpec;
-        this._instance = instance;
         this._inspector = nodeInspector;
         this._selectedNode = undefined;
         this._currentFlow = new Flow("pyflow.builder.gen", "SampleFlow");
@@ -82,6 +80,7 @@ define(["model/flow", "util"], function(Flow, Util) {
     };
 
     Canvas.prototype.render = function() {
+        this._clear();
         var root = d3.select("#" + this._rootId);
         this._panel = Util.addPanel(root, "Flow");
         var me = this;

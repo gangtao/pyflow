@@ -1,5 +1,6 @@
 define(["comp/treeview", "comp/flowCanvas", "comp/flowInspector", "util"], function(TreeView, FlowCanvas, FlowInspector, Util) {
     var Flow = {};
+    var canvas = undefined;
 
     Flow.render = function() {
         $("#mainUI").empty();
@@ -20,10 +21,9 @@ define(["comp/treeview", "comp/flowCanvas", "comp/flowInspector", "util"], funct
             // Init Flow Inspector
             var inspector = new FlowInspector("flowInspector");
             inspector.render();
-
-            // Init Flow Canvas Panel
-            var flowCanvas = new FlowCanvas("flowCanvas", nodeTreeSpecification, inspector );
-            flowCanvas.render(); 
+            
+            canvas = new FlowCanvas("flowCanvas", nodeTreeSpecification, inspector );
+            canvas.render(); 
         });
     }
 
