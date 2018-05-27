@@ -8,8 +8,6 @@
             "y": "48px", 
             "x": "77px"
           }, 
-          "id": "node1527137681280", 
-          "name": "Append", 
           "ports": [
             {
               "name": "a", 
@@ -19,7 +17,9 @@
               "name": "b", 
               "value": "cd"
             }
-          ]
+          ], 
+          "name": "Append", 
+          "id": "node1527137681280"
         }, 
         {
           "name": "Append", 
@@ -43,9 +43,9 @@
             "y": "118px", 
             "x": "312px"
           }, 
-          "id": "node1527137688270", 
+          "ports": [], 
           "name": "Error", 
-          "ports": []
+          "id": "node1527137688270"
         }
       ], 
       "id": "pyflow.sample.error", 
@@ -69,14 +69,14 @@
             "y": "70px", 
             "x": "37px"
           }, 
-          "id": "node1527108601395", 
-          "name": "Self", 
           "ports": [
             {
               "name": "a", 
               "value": "true"
             }
-          ]
+          ], 
+          "name": "Self", 
+          "id": "node1527108601395"
         }, 
         {
           "spec_id": "pyflow.logic.self", 
@@ -84,14 +84,14 @@
             "y": "184px", 
             "x": "40px"
           }, 
-          "id": "node1527108602911", 
-          "name": "Self", 
           "ports": [
             {
               "name": "a", 
               "value": "true"
             }
-          ]
+          ], 
+          "name": "Self", 
+          "id": "node1527108602911"
         }, 
         {
           "spec_id": "pyflow.logic.not", 
@@ -99,9 +99,9 @@
             "y": "9px", 
             "x": "270px"
           }, 
-          "id": "node1527108607514", 
+          "ports": [], 
           "name": "Not", 
-          "ports": []
+          "id": "node1527108607514"
         }, 
         {
           "spec_id": "pyflow.logic.not", 
@@ -109,9 +109,9 @@
             "y": "280px", 
             "x": "274px"
           }, 
-          "id": "node1527108611102", 
+          "ports": [], 
           "name": "Not", 
-          "ports": []
+          "id": "node1527108611102"
         }, 
         {
           "spec_id": "pyflow.logic.and", 
@@ -119,9 +119,9 @@
             "y": "119px", 
             "x": "511px"
           }, 
-          "id": "node1527108634951", 
+          "ports": [], 
           "name": "And", 
-          "ports": []
+          "id": "node1527108634951"
         }, 
         {
           "spec_id": "pyflow.logic.and", 
@@ -129,9 +129,9 @@
             "y": "218px", 
             "x": "537px"
           }, 
-          "id": "node1527108637547", 
+          "ports": [], 
           "name": "And", 
-          "ports": []
+          "id": "node1527108637547"
         }, 
         {
           "name": "Or", 
@@ -182,6 +182,99 @@
       ], 
       "name": "Xor"
     }, 
+    "pyflow.sample.xor1": {
+      "nodes": [
+        {
+          "spec_id": "pyflow.logic.selfandnot", 
+          "ui": {
+            "y": "81px", 
+            "x": "121px"
+          }, 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "true"
+            }
+          ], 
+          "name": "Self and Not", 
+          "id": "node1527448342301"
+        }, 
+        {
+          "spec_id": "pyflow.logic.selfandnot", 
+          "ui": {
+            "y": "200px", 
+            "x": "53px"
+          }, 
+          "ports": [
+            {
+              "name": "a", 
+              "value": "false"
+            }
+          ], 
+          "name": "Self and Not", 
+          "id": "node1527448358756"
+        }, 
+        {
+          "spec_id": "pyflow.logic.and", 
+          "ui": {
+            "y": "10px", 
+            "x": "426px"
+          }, 
+          "ports": [], 
+          "name": "And", 
+          "id": "node1527448364884"
+        }, 
+        {
+          "spec_id": "pyflow.logic.and", 
+          "ui": {
+            "y": "236px", 
+            "x": "478px"
+          }, 
+          "ports": [], 
+          "name": "And", 
+          "id": "node1527448366929"
+        }, 
+        {
+          "name": "Or", 
+          "id": "node1527448391328", 
+          "ui": {
+            "y": "112px", 
+            "x": "744px"
+          }, 
+          "is_end": 1, 
+          "spec_id": "pyflow.logic.or", 
+          "ports": []
+        }
+      ], 
+      "id": "pyflow.sample.xor1", 
+      "links": [
+        {
+          "source": "node1527448342301:notself", 
+          "target": "node1527448364884:b"
+        }, 
+        {
+          "source": "node1527448342301:self", 
+          "target": "node1527448366929:a"
+        }, 
+        {
+          "source": "node1527448358756:self", 
+          "target": "node1527448364884:a"
+        }, 
+        {
+          "source": "node1527448358756:notself", 
+          "target": "node1527448366929:b"
+        }, 
+        {
+          "source": "node1527448364884:out", 
+          "target": "node1527448391328:a"
+        }, 
+        {
+          "source": "node1527448366929:out", 
+          "target": "node1527448391328:b"
+        }
+      ], 
+      "name": "Xor1"
+    }, 
     "pyflow.sample.math": {
       "nodes": [
         {
@@ -190,6 +283,8 @@
             "y": "69px", 
             "x": "160px"
           }, 
+          "id": "node1527101193950", 
+          "name": "Add", 
           "ports": [
             {
               "name": "a", 
@@ -199,9 +294,7 @@
               "name": "b", 
               "value": "3"
             }
-          ], 
-          "name": "Add", 
-          "id": "node1527101193950"
+          ]
         }, 
         {
           "spec_id": "pyflow.math.add", 
@@ -209,6 +302,8 @@
             "y": "213px", 
             "x": "163px"
           }, 
+          "id": "node1527101195573", 
+          "name": "Add", 
           "ports": [
             {
               "name": "a", 
@@ -218,9 +313,7 @@
               "name": "b", 
               "value": "5"
             }
-          ], 
-          "name": "Add", 
-          "id": "node1527101195573"
+          ]
         }, 
         {
           "spec_id": "pyflow.math.multiply", 
@@ -228,9 +321,9 @@
             "y": "160px", 
             "x": "450px"
           }, 
-          "ports": [], 
+          "id": "node1527101199970", 
           "name": "Multiply", 
-          "id": "node1527101199970"
+          "ports": []
         }, 
         {
           "name": "Division", 
@@ -269,7 +362,6 @@
   }, 
   "nodespec": {
     "pyflow.transform.append": {
-      "id": "pyflow.transform.append", 
       "port": {
         "input": [
           {
@@ -290,11 +382,11 @@
           }
         ]
       }, 
+      "id": "pyflow.transform.append", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: String,String\n    :returns: out\n    :rtype: String\n    \"\"\"\n\treturn a + b", 
       "title": "Append"
     }, 
     "pyflow.transform.error": {
-      "id": "pyflow.transform.error", 
       "port": {
         "input": [
           {
@@ -310,10 +402,12 @@
           }
         ]
       }, 
+      "id": "pyflow.transform.error", 
       "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: String\n    :returns: out\n    :rtype: String\n    \"\"\"\n\traise Exception(\"Always Failed!\")", 
       "title": "Error"
     }, 
     "pyflow.math.division": {
+      "id": "pyflow.math.division", 
       "port": {
         "input": [
           {
@@ -334,11 +428,11 @@
           }
         ]
       }, 
-      "id": "pyflow.math.division", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a / b", 
       "title": "Division"
     }, 
     "pyflow.logic.and": {
+      "id": "pyflow.logic.and", 
       "port": {
         "input": [
           {
@@ -359,11 +453,11 @@
           }
         ]
       }, 
-      "id": "pyflow.logic.and", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Boolean,Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn a and b", 
       "title": "And"
     }, 
     "pyflow.logic.self": {
+      "id": "pyflow.logic.self", 
       "port": {
         "input": [
           {
@@ -379,11 +473,11 @@
           }
         ]
       }, 
-      "id": "pyflow.logic.self", 
       "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn bool(a)", 
       "title": "Self"
     }, 
     "pyflow.math.multiply": {
+      "id": "pyflow.math.multiply", 
       "port": {
         "input": [
           {
@@ -404,11 +498,11 @@
           }
         ]
       }, 
-      "id": "pyflow.math.multiply", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a * b", 
       "title": "Multiply"
     }, 
     "pyflow.math.minus": {
+      "id": "pyflow.math.minus", 
       "port": {
         "input": [
           {
@@ -429,11 +523,11 @@
           }
         ]
       }, 
-      "id": "pyflow.math.minus", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a - b", 
       "title": "Minus"
     }, 
     "pyflow.logic.or": {
+      "id": "pyflow.logic.or", 
       "port": {
         "input": [
           {
@@ -454,11 +548,11 @@
           }
         ]
       }, 
-      "id": "pyflow.logic.or", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Boolean,Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn a or b", 
       "title": "Or"
     }, 
     "pyflow.math.add": {
+      "id": "pyflow.math.add", 
       "port": {
         "input": [
           {
@@ -479,11 +573,11 @@
           }
         ]
       }, 
-      "id": "pyflow.math.add", 
       "func": "def func(a,b):\n\t\"\"\"\n    :params: a,b\n    :ptypes: Int,Int\n    :returns: out\n    :rtype: Int\n    \"\"\"\n\treturn a + b", 
       "title": "Add"
     }, 
     "pyflow.logic.not": {
+      "id": "pyflow.logic.not", 
       "port": {
         "input": [
           {
@@ -499,9 +593,32 @@
           }
         ]
       }, 
-      "id": "pyflow.logic.not", 
       "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: Boolean\n    :returns: out\n    :rtype: Boolean\n    \"\"\"\n\treturn not a", 
       "title": "Not"
+    }, 
+    "pyflow.logic.selfandnot": {
+      "port": {
+        "input": [
+          {
+            "type": "Boolean", 
+            "name": "a", 
+            "order": 0
+          }
+        ], 
+        "output": [
+          {
+            "type": "Boolean", 
+            "name": "self"
+          }, 
+          {
+            "type": "Boolean", 
+            "name": "notself"
+          }
+        ]
+      }, 
+      "id": "pyflow.logic.selfandnot", 
+      "func": "def func(a):\n\t\"\"\"\n    :params: a\n    :ptypes: Boolean\n    :returns: self, notself\n    :rtype: Boolean, Boolean\n    \"\"\"\n\tresult = dict()\n\tresult[\"self\"] = a\n\tresult[\"notself\"] = not a\n\treturn result", 
+      "title": "Self and Not"
     }
   }
 }

@@ -120,8 +120,14 @@ define(["util"], function(Util) {
                     // TODO : update the flow to show the running result on the flow
                 }
 
+                function handleFlowRunFailure(data) {
+                    // TODO : handler flow failure
+                    inspector.showNodeDetails(node, flow);
+                    inspector.notify();
+                }
+
                 flow.setEndNode(d.id);
-                flow.run(handleFlowRunResult);
+                flow.run(handleFlowRunResult,handleFlowRunFailure);
             });
     };
 
